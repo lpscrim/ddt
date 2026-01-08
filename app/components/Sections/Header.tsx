@@ -43,7 +43,7 @@ export function Header() {
             className="md:hidden hover:opacity-70 transition-opacity"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <NavIcon color="primary" open={isMenuOpen} />
+            <NavIcon color="black" open={isMenuOpen} />
           </button>
         </div>
 
