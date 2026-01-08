@@ -5,13 +5,11 @@ import { Projects } from "./components/Sections/Projects";
 
 export default function Home() {
   return (
-    <div className="flex min-h-lvh flex-col items-center justify-center p-8">
-      <main>
-        <Hero />
-        <Projects />
-        <About />
-        <Contact />
-      </main>
-    </div>
+    <main className="min-h-screen w-full">
+      <Hero />
+      <Projects />
+      <About />
+      <Contact />
+    </main>
   );
 }
