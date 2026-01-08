@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
 
 interface Project {
   id: number;
@@ -7,15 +7,6 @@ interface Project {
   year: string;
   imageUrl: string;
 }
-
-// To use your own images, host them on GitHub and use the raw URL format:
-// https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/images/filename.jpg
-// 
-// Example setup:
-// 1. Create a public GitHub repo (e.g., "portfolio-images")
-// 2. Upload your images to an "images" folder
-// 3. Get the raw URL by clicking the image > "Raw" button
-// 4. Replace the imageUrl values below with your GitHub raw URLs
 
 const projects: Project[] = [
   {

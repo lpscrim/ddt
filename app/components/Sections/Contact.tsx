@@ -22,12 +22,12 @@ export function Contact() {
                 className="flex items-center gap-3 hover:opacity-70 transition-opacity group"
               >
                 <Mail size={20} className="text-muted-foreground" />
-                <span>HELLO@ALEXMORGAN.DESIGN</span>
+                <span>LPSCRIM@GMAIL.COM</span>
               </a>
               
               <div className="flex items-center gap-3 text-muted-foreground">
                 <span className="w-5" />
-                <span>NEW YORK, NY</span>
+                <span>SCOTLAND/ WORLD</span>
               </div>
             </div>
           </div>
@@ -59,9 +59,7 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="mt-24 pt-8 border-t border-border">
-          <p className="text-muted-foreground">© 2025 ALEX MORGAN. ALL RIGHTS RESERVED.</p>
-        </div>
+        
       </div>
     </section>
   );
