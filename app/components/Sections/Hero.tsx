@@ -20,13 +20,13 @@ export function Hero() {
           className="absolute left-0 right-0 top-0 bg-background"
           initial={{ height: 'calc(50% - 13.5svw)' }}
           animate={{ height: 0 }}
-          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <motion.div
           className="absolute left-0 right-0 bottom-0 bg-background"
           initial={{ height: 'calc(50% - 13.5svw)' }}
           animate={{ height: 0 }}
-          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <h2 className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10">
           DAYDREAMTEAM
@@ -44,13 +44,13 @@ export function Hero() {
           className="absolute left-0 right-0 top-0 bg-background"
           initial={{ height: 'calc(50% - 13.5svw)' }}
           animate={{ height: 0 }}
-          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <motion.div
           className="absolute left-0 right-0 bottom-0 bg-background"
           initial={{ height: 'calc(50% - 13.5svw)' }}
           animate={{ height: 0 }}
-          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <h2 className="absolute inset-0 flex items-center justify-center text-[12vw] font-mono tracking-widest font-bold text-background z-10">
           DAYDREAMTEAM
