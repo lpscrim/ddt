@@ -1,28 +1,58 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export function Hero() {
   return (
-    <section id="home" className="min-h-svh flex flex-col justify-center ">
-      {/* Top image strip */}
-      <div className="hidden md:block w-full relative h-[27lvw]  overflow-hidden">
+    <section id="home" className="min-h-svh flex flex-col justify-center items-center">
+      {/* Top image strip - Desktop */}
+      <div className="hidden md:flex w-full h-svh relative overflow-hidden justify-center items-center">
+        {/* Static image positioned in background */}
         <Image 
           src="/tree1.JPG" 
           alt="Tree background" 
           fill 
-          className="object-cover object-top"
+          className="object-cover object-center"
         />
-        <h2 className="absolute inset-0 flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[160px] 2xl:text-[200px] font-mono tracking-widest font-bold text-background">
+        {/* Animated mask overlays that shrink to reveal image */}
+        <motion.div
+          className="absolute left-0 right-0 top-0 bg-background"
+          initial={{ height: 'calc(50% - 13.5svw)' }}
+          animate={{ height: 0 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+        />
+        <motion.div
+          className="absolute left-0 right-0 bottom-0 bg-background"
+          initial={{ height: 'calc(50% - 13.5svw)' }}
+          animate={{ height: 0 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+        />
+        <h2 className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10">
           DAYDREAMTEAM
         </h2>
       </div>
-      <div className="block md:hidden w-full relative h-[27lvw]  overflow-hidden">
+      {/* Mobile */}
+      <div className="flex md:hidden w-full h-svh relative overflow-hidden justify-center items-center">
         <Image 
           src="/pic1.JPG" 
           alt="Tree background" 
           fill 
-          className="object-cover object-top"
+          className="object-cover object-center"
         />
-        <h2 className="absolute inset-0 flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[160px] 2xl:text-[200px] font-mono tracking-widest font-bold text-background">
+        <motion.div
+          className="absolute left-0 right-0 top-0 bg-background"
+          initial={{ height: 'calc(50% - 13.5svw)' }}
+          animate={{ height: 0 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+        />
+        <motion.div
+          className="absolute left-0 right-0 bottom-0 bg-background"
+          initial={{ height: 'calc(50% - 13.5svw)' }}
+          animate={{ height: 0 }}
+          transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
+        />
+        <h2 className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10">
           DAYDREAMTEAM
         </h2>
       </div>
