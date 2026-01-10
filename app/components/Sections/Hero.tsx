@@ -52,7 +52,7 @@ export function Hero() {
           animate={{ height: 0 }}
           transition={{ duration: 2, ease: 'easeInOut', delay: 2 }}
         />
-        <h2 className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10">
+        <h2 className="absolute inset-0 flex items-center justify-center text-[12vw] font-mono tracking-widest font-bold text-background z-10">
           DAYDREAMTEAM
         </h2>
       </div>
