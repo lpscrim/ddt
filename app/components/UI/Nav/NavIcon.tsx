@@ -16,9 +16,9 @@ export default function NavIcon( { open, color, hoverColor } : { open: boolean, 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span style={{ background: `var(--color-${currentColor})` }}></span>
-      <span style={{ background: `var(--color-${currentColor})` }}></span>
-      <span style={{ background: `var(--color-${currentColor})` }}></span>
+      <span style={{ background: `var(--${currentColor})` }}></span>
+      <span style={{ background: `var(--${currentColor})` }}></span>
+      <span style={{ background: `var(--${currentColor})` }}></span>
     </div>
   );
 }
