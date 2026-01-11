@@ -11,7 +11,7 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "URBAN PAVILION",
+    title: "LUNAR EXPLORATION",
     categories: ["IR", "LANDSCAPE", "ART"],
     year: "2024",
     imageUrl:
@@ -27,7 +27,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: "STRUCTURAL STUDY",
+    title: "GLACIAL WOOD",
     categories: ["IR", "TREES"],
     year: "2023",
     imageUrl:
@@ -35,7 +35,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "CONTEMPORARY MUSEUM",
+    title: "MISTY MOUNTAINS",
     categories: ["B+W", "LANDSCAPE"],
     year: "2023",
     imageUrl:
@@ -43,7 +43,7 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: "URBAN PLAZA",
+    title: "ETHEREAL CLOUDS",
     categories: ["IR", "LANDSCAPE", "ART"],
     year: "2023",
     imageUrl:
@@ -51,7 +51,7 @@ const projects: Project[] = [
   },
   {
     id: 6,
-    title: "MONOCHROME SKYE",
+    title: "MONOCHROME MIST",
     categories: ["ART", "B+W"],
     year: "2022",
     imageUrl:
