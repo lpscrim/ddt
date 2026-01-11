@@ -36,7 +36,7 @@ export function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-colors duration-500 ${isLight ? 'text-background' : 'text-foreground'} ${onHero ? '' : 'backdrop-blur-[1px]'}`}>
+    <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-6 transition-colors duration-500 ${isLight ? 'text-background' : 'text-foreground'} ${onHero ? '' : 'backdrop-blur-[1px]'}`}>
       <div className={`max-w-7xl mx-auto py-4`}>
         <div className="flex items-center justify-between">
           <button 
@@ -70,7 +70,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden flex flex-col gap-4 mt-6 pb-2">
+          <nav className="md:hidden flex flex-col gap-4 mt-6 pb-2 text-xl">
             <button onClick={() => scrollToSection('work')} className="text-left hover:opacity-70 transition-opacity">
               [WORK]
             </button>

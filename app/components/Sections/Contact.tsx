@@ -1,4 +1,4 @@
-import { Mail, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Instagram, Linkedin, Globe } from 'lucide-react';
 
 export function Contact() {
   return (
@@ -13,7 +13,7 @@ export function Contact() {
           <div className="space-y-8">
             <p className="text-lg">
               Available for commissioned work, collaborations, and inquiries.
-              Let's create something meaningful together.
+              Let`s create something meaningful together.
             </p>
             
             <div className="space-y-4">
@@ -37,7 +37,7 @@ export function Contact() {
               <p className="text-muted-foreground mb-4">[SOCIAL]</p>
               <div className="space-y-3">
                 <a 
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/daydreamteam/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 hover:opacity-70 transition-opacity"
@@ -46,13 +46,22 @@ export function Contact() {
                   <span>INSTAGRAM</span>
                 </a>
                 <a 
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/lewis-scrimgeour-13389b243/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 hover:opacity-70 transition-opacity"
                 >
                   <Linkedin size={20} className="text-muted-foreground" />
                   <span>LINKEDIN</span>
+                </a>
+                <a 
+                  href="https://lewisscrimgeour.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+                >
+                  <Globe size={20} className="text-muted-foreground" />
+                  <span>WEB DESIGN</span>
                 </a>
               </div>
             </div>
