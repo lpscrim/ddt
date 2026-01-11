@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function About() {
   return (
-    <section id="about" className="min-h-screen px-6 py-24 bg-muted/30">
+    <section id="about" className="min-h-screen px-6 xl:py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16">
           <p className="text-muted-foreground mb-2">[03]</p>

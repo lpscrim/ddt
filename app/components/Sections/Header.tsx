@@ -64,7 +64,7 @@ export function Header() {
             className="md:hidden hover:text-foreground transition-all cursor-crosshair -mr-4.75 "
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <NavIcon color={isLight ? 'background' : 'foreground'} open={isMenuOpen} />
+            <NavIcon color={isLight ? 'background' : 'foreground'} open={isMenuOpen} hoverColor='foreground' />
           </button>
         </div>
 
