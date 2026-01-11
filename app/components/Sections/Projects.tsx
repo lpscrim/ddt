@@ -96,6 +96,10 @@ export function Projects() {
             </div>
           ))}
         </div>
+        <div className="mt-24 text-center  ">
+          <button className="cursor-pointer text-muted-foreground hover:text-foreground text-xl py-1 px-4 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
+          </button>
+        </div>
       </div>
     </section>
   );

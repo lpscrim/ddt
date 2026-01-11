@@ -29,7 +29,7 @@ export function About() {
               alt="About Image 1"
               width={1600}
               height={900}
-              className=" h-full w-full lg:w-4/5 rounded-xs aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+              className=" h-full w-full lg:w-4/5 rounded-xs aspect-4/3 sm:aspect-video object-cover grayscale"
               />
 
           </div>

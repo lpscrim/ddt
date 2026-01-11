@@ -48,20 +48,20 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            <button onClick={() => scrollToSection('work')} className="hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('work')} className="pop-up hover:opacity-70 transition-opacity">
               [WORK]
             </button>
-            <button onClick={() => scrollToSection('about')} className="hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('about')} className="pop-up-2 hover:opacity-70 transition-opacity">
               [ABOUT]
             </button>
-            <button onClick={() => scrollToSection('contact')} className="hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('contact')} className="pop-up-3 hover:opacity-70 transition-opacity">
               [CONTACT]
             </button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden hover:opacity-70 transition-opacity"
+            className="md:hidden hover:opacity-70 transition-opacity -mr-4 "
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <NavIcon color={isLight ? 'background' : 'foreground'} open={isMenuOpen} />
@@ -71,13 +71,13 @@ export function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="md:hidden flex flex-col gap-4 mt-6 pb-2 text-xl">
-            <button onClick={() => scrollToSection('work')} className="text-left hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('work')} className="pop-up opacity-0 text-left hover:opacity-70 transition-opacity">
               [WORK]
             </button>
-            <button onClick={() => scrollToSection('about')} className="text-left hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('about')} className="pop-up-2 opacity-0 text-left hover:opacity-70 transition-opacity">
               [ABOUT]
             </button>
-            <button onClick={() => scrollToSection('contact')} className="text-left hover:opacity-70 transition-opacity">
+            <button onClick={() => scrollToSection('contact')} className="pop-up-3 opacity-0 text-left hover:opacity-70 transition-opacity">
               [CONTACT]
             </button>
           </nav>

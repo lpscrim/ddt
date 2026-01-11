@@ -152,3 +152,25 @@
 html {
   font-size: var(--font-size);
 }
+
+/* Animations */
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pop-up {
+  animation: pop-up 0.3s ease forwards;
+}
+.pop-up-2 {
+  animation: pop-up 0.3s ease 0.05s forwards;
+}
+.pop-up-3 {
+  animation: pop-up 0.3s ease 0.1s forwards;
+}
