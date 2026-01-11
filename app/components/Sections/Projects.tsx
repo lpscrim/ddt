@@ -74,7 +74,7 @@ export function Projects() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group cursor-pointer"
+              className="group cursor-crosshair"
             >
               <div className="relative aspect-4/5 bg-muted overflow-hidden mb-4 rounded-xs">
                 <ImageWithFallback
@@ -97,7 +97,7 @@ export function Projects() {
           ))}
         </div>
         <div className="mt-24 text-center  ">
-          <button className="cursor-pointer text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
+          <button className="cursor-crosshair text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
           </button>
         </div>
       </div>

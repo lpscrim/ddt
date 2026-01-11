@@ -19,9 +19,9 @@ export function Contact() {
             <div className="space-y-4">
               <a 
                 href="mailto:lpscrim@gmail.com"
-                className="flex items-center gap-3 hover:opacity-70 transition-opacity group"
+                className="flex items-center gap-3 hover:opacity-70 transition-opacity cursor-crosshair group"
               >
-                <Mail size={20} className="text-muted-foreground" />
+                <Mail size={20} className="text-muted-foreground " />
                 <span>LPSCRIM@GMAIL.COM</span>
               </a>
               
@@ -40,7 +40,7 @@ export function Contact() {
                   href="https://www.instagram.com/daydreamteam/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+                  className="flex items-center cursor-crosshair gap-3 hover:opacity-70 transition-opacity"
                 >
                   <Instagram size={20} className="text-muted-foreground" />
                   <span>INSTAGRAM</span>
@@ -49,7 +49,7 @@ export function Contact() {
                   href="https://www.linkedin.com/in/lewis-scrimgeour-13389b243/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+                  className="flex items-center cursor-crosshair gap-3 hover:opacity-70 transition-opacity"
                 >
                   <Linkedin size={20} className="text-muted-foreground" />
                   <span>LINKEDIN</span>
@@ -58,7 +58,7 @@ export function Contact() {
                   href="https://lewisscrimgeour.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:opacity-70 transition-opacity whitespace-nowrap"
+                  className="flex items-center gap-3 cursor-crosshair hover:opacity-70 transition-opacity whitespace-nowrap"
                 >
                   <Globe size={20} className="text-muted-foreground" />
                   <span>WEB DESIGN</span>

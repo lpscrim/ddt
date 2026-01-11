@@ -41,27 +41,27 @@ export function Header() {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => scrollToSection('home')}
-            className="hover:text-muted-foreground transition-all"
+            className="hover:text-foreground transition-all cursor-crosshair"
           >
             <span className="tracking-tight title font-semibold">DAYDREAMTEAM</span>
           </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            <button onClick={() => scrollToSection('work')} className="title pop-up hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('work')} className="title pop-up hover:text-foreground transition-all cursor-crosshair">
               [WORK]
             </button>
-            <button onClick={() => scrollToSection('about')} className="title pop-up-2 hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('about')} className="title pop-up-2 hover:text-foreground transition-all cursor-crosshair">
               [ABOUT]
             </button>
-            <button onClick={() => scrollToSection('contact')} className="title pop-up-3 hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('contact')} className="title pop-up-3 hover:text-foreground transition-all cursor-crosshair">
               [CONTACT]
             </button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden hover:text-muted-foreground transition-all -mr-4.75 "
+            className="md:hidden hover:text-foreground transition-all cursor-crosshair -mr-4.75 "
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <NavIcon color={isLight ? 'background' : 'foreground'} open={isMenuOpen} />
@@ -71,13 +71,13 @@ export function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="md:hidden flex flex-col gap-4 mt-6 pb-2 text-xl">
-            <button onClick={() => scrollToSection('work')} className="title pop-up opacity-0 text-left hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('work')} className="title pop-up opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
               [WORK]
             </button>
-            <button onClick={() => scrollToSection('about')} className="title pop-up-2 opacity-0 text-left hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('about')} className="title pop-up-2 opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
               [ABOUT]
             </button>
-            <button onClick={() => scrollToSection('contact')} className="title pop-up-3 opacity-0 text-left hover:text-muted-foreground transition-all">
+            <button onClick={() => scrollToSection('contact')} className="title pop-up-3 opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
               [CONTACT]
             </button>
           </nav>
