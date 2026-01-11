@@ -28,9 +28,14 @@ export function Hero() {
           animate={{ height: 0 }}
           transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
-        <h2 className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10">
+        <motion.h2 
+          className="absolute inset-0 flex items-center justify-center text-[12.5vw] font-mono tracking-widest font-bold text-background z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 7, delay: 0.15 }}
+        >
           DAYDREAMTEAM
-        </h2>
+        </motion.h2>
       </div>
       {/* Mobile */}
       <div className="flex md:hidden w-full h-svh relative overflow-hidden justify-center items-center">

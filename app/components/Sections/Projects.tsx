@@ -76,11 +76,11 @@ export function Projects() {
               key={project.id}
               className="group cursor-pointer"
             >
-              <div className="relative aspect-4/5 bg-muted overflow-hidden mb-4">
+              <div className="relative aspect-4/5 bg-muted overflow-hidden mb-4 rounded-xs">
                 <ImageWithFallback
                   src={project.imageUrl}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500  group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
