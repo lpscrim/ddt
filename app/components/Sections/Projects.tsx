@@ -3,7 +3,7 @@ import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
 interface Project {
   id: number;
   title: string;
-  category: string;
+  categories: string[];
   year: string;
   imageUrl: string;
 }
