@@ -25,7 +25,7 @@ export function About() {
 
           <div className="flex justify-end items-center">
             <Image 
-              src="/me_Sun2.svg"  
+              src="/Me_Sun2.svg"  
               alt="About Image 1"
               width={1600}
               height={900}
