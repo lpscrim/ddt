@@ -49,13 +49,13 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
             <button onClick={() => scrollToSection('work')} className="title pop-up hover:text-foreground transition-all cursor-crosshair">
-              [WORK]
+              WORK
             </button>
             <button onClick={() => scrollToSection('about')} className="title pop-up-2 hover:text-foreground transition-all cursor-crosshair">
-              [ABOUT]
+              ABOUT
             </button>
             <button onClick={() => scrollToSection('contact')} className="title pop-up-3 hover:text-foreground transition-all cursor-crosshair">
-              [CONTACT]
+              CONTACT
             </button>
           </nav>
 
@@ -72,13 +72,13 @@ export function Header() {
         {isMenuOpen && (
           <nav className="md:hidden flex flex-col gap-4 mt-6 pb-2 text-xl">
             <button onClick={() => scrollToSection('work')} className="title pop-up opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
-              [WORK]
+              WORK
             </button>
             <button onClick={() => scrollToSection('about')} className="title pop-up-2 opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
-              [ABOUT]
+              ABOUT
             </button>
             <button onClick={() => scrollToSection('contact')} className="title pop-up-3 opacity-0 text-left hover:text-foreground transition-all cursor-crosshair">
-              [CONTACT]
+              CONTACT
             </button>
           </nav>
         )}
