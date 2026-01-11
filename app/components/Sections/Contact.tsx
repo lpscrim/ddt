@@ -58,7 +58,7 @@ export function Contact() {
                   href="https://lewisscrimgeour.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-3 hover:opacity-70 transition-opacity whitespace-nowrap"
                 >
                   <Globe size={20} className="text-muted-foreground" />
                   <span>WEB DESIGN</span>
