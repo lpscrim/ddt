@@ -76,7 +76,7 @@ export function Projects() {
               key={project.id}
               className="group cursor-pointer"
             >
-              <div className="relative aspect-[4/5] bg-muted overflow-hidden mb-4">
+              <div className="relative aspect-4/5 bg-muted overflow-hidden mb-4">
                 <ImageWithFallback
                   src={project.imageUrl}
                   alt={project.title}
