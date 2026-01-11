@@ -61,7 +61,7 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden hover:opacity-70 transition-opacity -mr-4 "
+            className="md:hidden hover:opacity-70 transition-opacity -mr-4.75 "
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <NavIcon color={isLight ? 'background' : 'foreground'} open={isMenuOpen} />
