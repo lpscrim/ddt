@@ -36,8 +36,8 @@ export function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${isLight ? 'text-background' : 'text-foreground'}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
+    <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-colors duration-500 ${isLight ? 'text-background' : 'text-foreground'} ${onHero ? '' : 'backdrop-blur-[1px]'}`}>
+      <div className={`max-w-7xl mx-auto py-4`}>
         <div className="flex items-center justify-between">
           <button 
             onClick={() => scrollToSection('home')}
