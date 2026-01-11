@@ -17,9 +17,9 @@ export function About() {
               and I strive to capture these elements in my work.
             </p>
             <p>
-              With a background in both architecture and design, I approach
-              each project as an opportunity to blur the lines between disciplines
-              and push the boundaries of conventional design thinking.
+              Drawing from my experience in architecture and design, I see every
+              project as a chance to bridge creative disciplines and challenge
+              traditional approaches to visual storytelling.
             </p>
           </div>
 
