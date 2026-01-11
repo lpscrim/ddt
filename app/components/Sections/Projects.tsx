@@ -12,50 +12,50 @@ const projects: Project[] = [
   {
     id: 1,
     title: "URBAN PAVILION",
-    category: "ARCHITECTURE",
+    categories: ["IR", "LANDSCAPE", "ART"],
     year: "2024",
     imageUrl:
-      "https://images.unsplash.com/photo-1681216868987-b7268753b81c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBidWlsZGluZ3xlbnwxfHx8fDE3NjA0Mjg0Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (1).webp",
   },
   {
     id: 2,
     title: "MINIMAL RESIDENCE",
-    category: "INTERIOR",
+    categories: [ "IR", "ARCHITECTURE"],
     year: "2024",
     imageUrl:
-      "https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwaW50ZXJpb3IlMjBkZXNpZ258ZW58MXx8fHwxNzYwNDI2NDE3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (10).webp",
   },
   {
     id: 3,
     title: "STRUCTURAL STUDY",
-    category: "CONCEPT",
+    categories: ["IR", "TREES"],
     year: "2023",
     imageUrl:
-      "https://images.unsplash.com/photo-1603688083577-faf89b0082c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwc3RydWN0dXJlfGVufDF8fHx8MTc2MDQ1Nzc0Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (3).webp",
   },
   {
     id: 4,
     title: "CONTEMPORARY MUSEUM",
-    category: "ARCHITECTURE",
+    categories: ["B+W", "LANDSCAPE"],
     year: "2023",
     imageUrl:
-      "https://images.unsplash.com/photo-1616418534243-ab757ff8ce3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzYwNTMyMDEwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (9).webp",
   },
   {
     id: 5,
     title: "URBAN PLAZA",
-    category: "URBAN DESIGN",
+    categories: ["IR", "LANDSCAPE", "ART"],
     year: "2023",
     imageUrl:
-      "https://images.unsplash.com/photo-1573049227581-9bdfd2069326?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGRlc2lnbiUyMHNwYWNlfGVufDF8fHx8MTc2MDUzNTg2NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (11).webp",
   },
   {
     id: 6,
-    title: "ABSTRACT FORM",
-    category: "ART",
+    title: "MONOCHROME SKYE",
+    categories: ["ART", "B+W"],
     year: "2022",
     imageUrl:
-      "https://images.unsplash.com/photo-1596716147725-bc96cc16147d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGFyY2hpdGVjdHVyZSUyMGRldGFpbHxlbnwxfHx8fDE3NjA1MzU4Njd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    "/photos/photo (8).webp",
   },
 ];
 
@@ -89,7 +89,7 @@ export function Projects() {
                   {project.title}
                 </h3>
                 <div className="flex gap-4 text-muted-foreground">
-                  <span>[{project.category}]</span>
+                  <span>[{project.categories.map(category => category).join(', ')}]</span>
                   <span>{project.year}</span>
                 </div>
               </div>
