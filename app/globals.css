@@ -213,6 +213,10 @@ h1, h2, h3, h4, button, .title {
   font-family: 'Futura PT', sans-serif;
 }
 
+#contact a {
+  font-family: 'Futura PT', sans-serif;
+}
+
 /* Animations */
 @keyframes pop-up {
   0% {
