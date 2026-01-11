@@ -9,8 +9,8 @@ export function Contact() {
           <h2 className="text-3xl md:text-5xl tracking-tight">GET IN TOUCH</h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-16">
-          <div className="space-y-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16">
+          <div className="space-y-8 lg:col-span-2">
             <p className="text-lg">
               Available for commissioned work, collaborations, and inquiries.
               Let`s create something meaningful together.
@@ -18,7 +18,7 @@ export function Contact() {
             
             <div className="space-y-4">
               <a 
-                href="mailto:hello@alexmorgan.design"
+                href="mailto:lpscrim@gmail.com"
                 className="flex items-center gap-3 hover:opacity-70 transition-opacity group"
               >
                 <Mail size={20} className="text-muted-foreground" />
@@ -35,7 +35,7 @@ export function Contact() {
           <div className="space-y-8">
             <div>
               <p className="text-muted-foreground mb-4">[SOCIAL]</p>
-              <div className="space-y-3">
+              <div className="space-y-3 lg:flex lg:flex-row lg:gap-8 lg:space-y-0">
                 <a 
                   href="https://www.instagram.com/daydreamteam/"
                   target="_blank"

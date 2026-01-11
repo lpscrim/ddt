@@ -62,7 +62,7 @@ const projects: Project[] = [
 export function Projects() {
   return (
     <section id="work" className="min-h-screen px-6 py-24">
-      <div className="max-w-7xl mx-auto">
+      <div className=" mx-auto">
         <div className="mb-16">
           <p className="text-muted-foreground mb-2">[02]</p>
           <h2 className="text-3xl md:text-5xl tracking-tight">
@@ -97,7 +97,7 @@ export function Projects() {
           ))}
         </div>
         <div className="mt-24 text-center  ">
-          <button className="cursor-pointer text-muted-foreground hover:text-foreground text-xl py-1 px-4 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
+          <button className="cursor-pointer text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
           </button>
         </div>
       </div>
