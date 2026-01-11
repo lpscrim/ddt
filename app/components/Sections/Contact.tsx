@@ -5,7 +5,7 @@ export function Contact() {
     <section id="contact" className="min-h-screen px-6 py-24 flex items-center">
       <div className="max-w-7xl mx-auto w-full">
         <div className="mb-16">
-          <p className="text-muted-foreground mb-2">[04]</p>
+          <p className="text-muted-foreground mb-2">04</p>
           <h2 className="text-3xl md:text-5xl tracking-tight">GET IN TOUCH</h2>
         </div>
 
@@ -34,7 +34,7 @@ export function Contact() {
 
           <div className="space-y-8">
             <div>
-              <p className="text-muted-foreground mb-4">[SOCIAL]</p>
+              <p className="text-muted-foreground mb-4">SOCIAL</p>
               <div className="space-y-3 lg:flex lg:flex-row lg:gap-8 lg:space-y-0">
                 <a 
                   href="https://www.instagram.com/daydreamteam/"

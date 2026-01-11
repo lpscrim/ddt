@@ -5,7 +5,7 @@ export function About() {
     <section id="about" className="min-h-screen px-6 xl:py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16">
-          <p className="text-muted-foreground mb-2">[03]</p>
+          <p className="text-muted-foreground mb-2">03</p>
           <h2 className="text-3xl md:text-5xl tracking-tight">ABOUT</h2>
         </div>
 
