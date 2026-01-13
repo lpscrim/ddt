@@ -16,14 +16,18 @@ export function getProjects(): Project[] {
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-  const projects: Project[] = folders.map((folder, index) => {
-    // Parse folder name: {project}_{date}_{category,category}
+  const projects: Project[] = folders.map((folder) => {
+    // Parse folder name: {id}_{name}_{date}_{category,category}
     const parts = folder.split("_");
     
-    // Handle case where project name might contain underscores
+    // Extract id from first part
+    const id = parseInt(parts.shift() ?? "0", 10);
+    
     // Last part is categories, second to last is date
     const categories = parts.pop()?.split(",") ?? [];
     const year = parts.pop() ?? new Date().getFullYear().toString();
+    
+    // Remaining parts form the project name
     const projectName = parts.join("_");
 
     // Format title: replace hyphens/underscores with spaces and uppercase
@@ -41,7 +45,7 @@ export function getProjects(): Project[] {
     const [coverImage, ...galleryImages] = images;
 
     return {
-      id: index + 1,
+      id,
       title,
       categories,
       year,
