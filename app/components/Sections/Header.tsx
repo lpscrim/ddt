@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import NavIcon from '../UI/Nav/NavIcon';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [onHero, setOnHero] = useState(true);
   const [inverted, setInverted] = useState(false);
+  const pathname = usePathname();
+
+  const isWorkPage = pathname === '/work';
 
   useEffect(() => {
     const timer = setTimeout(() => setInverted(true), 3200);
@@ -25,7 +29,7 @@ export function Header() {
     return () => observer.disconnect();
   }, []);
 
-  const isLight = onHero && inverted;
+  const isLight = !isWorkPage && onHero && inverted;
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);

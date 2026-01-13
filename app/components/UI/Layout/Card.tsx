@@ -8,7 +8,7 @@ export function Card(project: {
     year: string;
 }) {
   return (
-    <div className="relative aspect-4/5 bg-muted overflow-hidden mb-0 rounded-xs">
+    <div className="group relative aspect-4/5 bg-muted overflow-hidden mb-0 rounded-xs cursor-crosshair">
       <ImageWithFallback
         src={project.imageUrl}
         alt={project.title}
