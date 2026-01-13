@@ -91,8 +91,17 @@ export async function getProjects(): Promise<Project[]> {
       // Fetch images from Cloudinary
       const images = await fetchCloudinaryResources(folder);
 
+      // Sort so images named "0" (e.g., 0.webp, 0.jpg) come first as cover
+      const sortedImages = images.sort((a, b) => {
+        const aName = a.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
+        const bName = b.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
+        if (aName === '0') return -1;
+        if (bName === '0') return 1;
+        return aName.localeCompare(bName);
+      });
+
       // Use first image as cover, rest as gallery
-      const [coverImage, ...galleryImages] = images;
+      const [coverImage, ...galleryImages] = sortedImages;
 
       return {
         id,
