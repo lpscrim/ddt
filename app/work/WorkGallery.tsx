@@ -55,9 +55,9 @@ export function WorkGallery({
   };
 
   return (
-    <section id="work" className="min-h-screen px-1 py-0">
+    <section id="work" className="min-h-svh px-2 py-0">
       <div className="pt-16 pb-8 px-4 rounded-xs my-1 flex flex-wrap gap-4">
-        <div className="xl:w-1/2">
+        <div className="xl:w-1/2 text-sm sm:text-base">
           <div>
             <button
               onClick={() => { setViewMode("projects"); setSelectedCategories([]); }}
@@ -72,17 +72,17 @@ export function WorkGallery({
               PHOTOS [{filteredPhotos.length}]
             </button>
           </div>
-          <div className="flex flex-wrap gap-2 mt-2">
+          <div className="flex flex-wrap gap-0 mt-2">
             {sortedVisibleCategories.map(([category, count]) => {
               const categoryStr = String(category);
               const isSelected = selectedCategories.includes(categoryStr);
               const isUnselectable = count === 0;
               return (
-                <span key={categoryStr} className="inline-flex items-center ">
+                <span key={categoryStr} className="inline-flex items-center text-sm sm:text:base">
                   <button
                     onClick={() => !isUnselectable && toggleCategory(categoryStr)}
                     disabled={isUnselectable}
-                    className={`px-2 py-1 rounded transition-colors cursor-crosshair text-foreground ${isSelected ? "underline font-semibold" : ""} ${isUnselectable ? "opacity-30 cursor-not-allowed" : "hover:bg-background/10"}`}
+                    className={`pr-1 py-1 rounded transition-colors cursor-crosshair text-foreground ${isSelected ? "underline font-semibold" : ""} ${isUnselectable ? "opacity-30 cursor-not-allowed" : "hover:bg-background/10"}`}
                   >
                     {categoryStr} <span className="text-foreground/60">[{count}]</span>
                   </button>
@@ -93,7 +93,7 @@ export function WorkGallery({
         </div>
       </div>
       {viewMode === "projects" ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
           {filteredProjects.map((project) => (
             <Card
               key={project.id}
