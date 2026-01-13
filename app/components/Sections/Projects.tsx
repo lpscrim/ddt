@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
+import { ImageWithFallback } from "@/app/components/UI/Layout/ImageWithFallback";
 import { getProjects } from "@/app/data/projects";
 
 export async function Projects() {
