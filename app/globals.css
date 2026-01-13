@@ -258,4 +258,21 @@ fade-in {
   animation: fade-in 1s ease forwards;
 }
 
-/*Font*/
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--foreground, #030213);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background, #ffffff);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--foreground, #030213) var(--background, #ffffff);
+}
