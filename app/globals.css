@@ -56,6 +56,12 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Akshar';
+  src: 'Akshar-VariableFont_wght.ttf' format('truetype');
+  font-display: swap;
+}
+
 :root {
   font-family: 'IBM Plex Mono', monospace;
   --font-size: 16px;
@@ -253,7 +259,3 @@ fade-in {
 }
 
 /*Font*/
-
-@font-face {
-  font-family: 
-}

@@ -29,7 +29,7 @@ export function Hero() {
           transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <motion.h2 
-          className="absolute inset-0 pl-2 xl:pl-4 flex items-center justify-center text-[10.65vw] font-mono tracking-widest font-bold text-background z-10"
+          className="absolute inset-0 flex items-center justify-center text-[12vw] font-mono tracking-wide font-bold text-background z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 7, delay: 0.15 }}
@@ -58,7 +58,7 @@ export function Hero() {
           transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <motion.h2 
-          className="absolute inset-0 flex items-center justify-center text-[10.5vw] font-mono tracking-widest font-bold text-background z-10"
+          className="absolute inset-0 flex items-center justify-center text-[11.75vw] font-mono tracking-wide font-bold text-background z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 7, delay: 0.15 }}

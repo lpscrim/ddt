@@ -2,7 +2,7 @@ import { Mail, Instagram, Linkedin, Globe } from 'lucide-react';
 
 export function Contact() {
   return (
-    <section id="contact" className="min-h-screen px-6 py-24 flex items-center">
+    <section id="contact" className="min-h-[80svh] px-6 py-24 flex items-center">
       <div className="max-w-7xl mx-auto w-full">
         <div className="mb-16">
           <p className="text-muted-foreground mb-2">04</p>
