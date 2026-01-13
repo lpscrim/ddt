@@ -43,7 +43,7 @@ export function Header() {
             onClick={() => scrollToSection('home')}
             className="hover:text-foreground transition-colors cursor-crosshair"
           >
-            <span className="tracking-wide title font-bold">DAYDREAMTEAM</span>
+            <span className="tracking-wide title font-semibold">DAYDREAMTEAM</span>
           </button>
 
           {/* Desktop Navigation */}
