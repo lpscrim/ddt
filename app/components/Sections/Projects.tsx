@@ -1,7 +1,7 @@
 import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
-import { projects } from "@/app/data/projects";
+import { getProjects } from "@/app/data/projects";
 
-
+const projects = getProjects();
 
 
 export function Projects() {
