@@ -1,63 +1,8 @@
 import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
+import { projects } from "@/app/data/projects";
 
-interface Project {
-  id: number;
-  title: string;
-  categories: string[];
-  year: string;
-  imageUrl: string;
-}
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "LUNAR EXPLORATION",
-    categories: ["IR", "LANDSCAPE", "ART"],
-    year: "2024",
-    imageUrl:
-    "/photos/photo (1).webp",
-  },
-  {
-    id: 2,
-    title: "MINIMAL RESIDENCE",
-    categories: [ "IR", "ARCHITECTURE"],
-    year: "2024",
-    imageUrl:
-    "/photos/photo (10).webp",
-  },
-  {
-    id: 3,
-    title: "GLACIAL WOOD",
-    categories: ["IR", "TREES"],
-    year: "2023",
-    imageUrl:
-    "/photos/photo (3).webp",
-  },
-  {
-    id: 4,
-    title: "MISTY MOUNTAINS",
-    categories: ["B+W", "LANDSCAPE"],
-    year: "2023",
-    imageUrl:
-    "/photos/photo (9).webp",
-  },
-  {
-    id: 5,
-    title: "ETHEREAL CLOUDS",
-    categories: ["IR", "LANDSCAPE", "ART"],
-    year: "2023",
-    imageUrl:
-    "/photos/photo (11).webp",
-  },
-  {
-    id: 6,
-    title: "MONOCHROME MIST",
-    categories: ["ART", "B+W"],
-    year: "2022",
-    imageUrl:
-    "/photos/photo (8).webp",
-  },
-];
+
 
 export function Projects() {
   return (
@@ -71,7 +16,7 @@ export function Projects() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
+          {projects.slice(0, 6).map((project) => (
             <div
               key={project.id}
               className="group cursor-crosshair"
@@ -97,7 +42,7 @@ export function Projects() {
           ))}
         </div>
         <div className="mt-24 text-center  ">
-          <button className="cursor-crosshair text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 hover:shadow-lg hover:bg-foreground/1 rounded-xs transition-all duration-150 hover:-translate-y-px active:translate-y-1">MORE
+          <button className="cursor-crosshair text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 rounded-xs transition-all duration-550 group"><span className="group-hover:px-1 transition-all duration-500">[</span> MORE <span className="group-hover:px-1 transition-all duration-500">]</span>
           </button>
         </div>
       </div>
