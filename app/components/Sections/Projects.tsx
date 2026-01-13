@@ -25,7 +25,7 @@ export function Projects() {
                 <ImageWithFallback
                   src={project.imageUrl}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500  group-hover:scale-105"
+                  className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${project.categories.includes('COLOUR') ? 'grayscale group-hover:grayscale-0' : ''}`}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
