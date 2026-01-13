@@ -14,7 +14,7 @@ export const projects: Project[] = [
     categories: ["IR", "LANDSCAPE", "ART"],
     year: "2024",
     imageUrl:
-    "/photos/photo (1).webp",
+    "/photos/photo_lunar.webp",
     /*galleryImages: [
     ],*/
   },
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     categories: [ "IR", "ARCHITECTURE"],
     year: "2024",
     imageUrl:
-    "/photos/photo (10).webp",
+    "/photos/photo_house.webp",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ export const projects: Project[] = [
     categories: ["IR", "TREES"],
     year: "2023",
     imageUrl:
-    "/photos/photo (3).webp",
+    "/photos/photo_trees.webp",
   },
   {
     id: 4,
@@ -40,15 +40,15 @@ export const projects: Project[] = [
     categories: ["B+W", "LANDSCAPE"],
     year: "2023",
     imageUrl:
-    "/photos/photo (9).webp",
+    "/photos/photo_mountain.webp",
   },
   {
     id: 5,
-    title: "ETHEREAL CLOUDS",
+    title: "ETHEREAL CLOUD",
     categories: ["IR", "LANDSCAPE", "ART"],
     year: "2023",
     imageUrl:
-    "/photos/photo (11).webp",
+    "/photos/photo_cloud.webp",
   },
   {
     id: 6,
@@ -56,6 +56,6 @@ export const projects: Project[] = [
     categories: ["ART", "B+W"],
     year: "2022",
     imageUrl:
-    "/photos/photo (8).webp",
+    "/photos/photo_mist.webp",
   },
 ];
