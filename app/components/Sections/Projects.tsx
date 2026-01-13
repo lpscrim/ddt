@@ -1,10 +1,9 @@
 import { ImageWithFallback } from "@/app/figma/ImageWithFallback";
 import { getProjects } from "@/app/data/projects";
 
-const projects = getProjects();
-
-
-export function Projects() {
+export async function Projects() {
+  const projects = await getProjects();
+  
   return (
     <section id="work" className="min-h-screen px-6 py-24">
       <div className=" mx-auto">

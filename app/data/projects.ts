@@ -1,58 +1,109 @@
-import fs from "fs";
-import path from "path";
-
 interface Project {
   id: number;
   title: string;
   categories: string[];
   year: string;
-  imageUrl: string;
+  imageUrl: string;  // Cloudinary public ID
   galleryImages?: string[];
 }
 
-export function getProjects(): Project[] {
-  const photosDir = path.join(process.cwd(), "public/photos");
-  const folders = fs.readdirSync(photosDir, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+interface CloudinaryResource {
+  public_id: string;
+  secure_url: string;
+}
 
-  const projects: Project[] = folders.map((folder) => {
-    // Parse folder name: {id}_{name}_{date}_{category,category}
-    const parts = folder.split("_");
-    
-    // Extract id from first part
-    const id = parseInt(parts.shift() ?? "0", 10);
-    
-    // Last part is categories, second to last is date
-    const categories = parts.pop()?.split(",") ?? [];
-    const year = parts.pop() ?? new Date().getFullYear().toString();
-    
-    // Remaining parts form the project name
-    const projectName = parts.join("_");
+interface CloudinarySearchResponse {
+  resources: CloudinaryResource[];
+  next_cursor?: string;
+}
 
-    // Format title: replace hyphens/underscores with spaces and uppercase
-    const title = projectName
-      .replace(/[-_]/g, " ")
-      .toUpperCase();
+async function fetchCloudinaryResources(folder: string): Promise<string[]> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  
+  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
+  
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        expression: `folder:photos/${folder}/*`,
+        max_results: 500,
+      }),
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    }
+  );
+  
+  const data: CloudinarySearchResponse = await response.json();
+  return data.resources.map((r) => r.public_id).sort();
+}
 
-    // Get all images in the folder
-    const folderPath = path.join(photosDir, folder);
-    const images = fs.readdirSync(folderPath)
-      .filter((file) => /\.(webp|jpg|jpeg|png|gif)$/i.test(file))
-      .map((file) => `/photos/${folder}/${file}`);
+async function fetchCloudinaryFolders(): Promise<string[]> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  
+  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
+  
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/folders/photos`,
+    {
+      headers: {
+        'Authorization': `Basic ${auth}`,
+      },
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    }
+  );
+  
+  const data = await response.json();
+  return data.folders?.map((f: { name: string }) => f.name) ?? [];
+}
 
-    // Use first image as cover, rest as gallery
-    const [coverImage, ...galleryImages] = images;
+export async function getProjects(): Promise<Project[]> {
+  const folders = await fetchCloudinaryFolders();
+  
+  const projects: Project[] = await Promise.all(
+    folders.map(async (folder) => {
+      // Parse folder name: {id}_{name}_{date}_{category,category}
+      const parts = folder.split("_");
+      
+      // Extract id from first part
+      const id = parseInt(parts.shift() ?? "0", 10);
+      
+      // Last part is categories, second to last is date
+      const categories = parts.pop()?.split(",") ?? [];
+      const year = parts.pop() ?? new Date().getFullYear().toString();
+      
+      // Remaining parts form the project name
+      const projectName = parts.join("_");
 
-    return {
-      id,
-      title,
-      categories,
-      year,
-      imageUrl: coverImage ?? "",
-      ...(galleryImages.length > 0 && { galleryImages }),
-    };
-  });
+      // Format title: replace hyphens/underscores with spaces and uppercase
+      const title = projectName
+        .replace(/[-_]/g, " ")
+        .toUpperCase();
+
+      // Fetch images from Cloudinary
+      const images = await fetchCloudinaryResources(folder);
+
+      // Use first image as cover, rest as gallery
+      const [coverImage, ...galleryImages] = images;
+
+      return {
+        id,
+        title,
+        categories,
+        year,
+        imageUrl: coverImage ?? "",
+        ...(galleryImages.length > 0 && { galleryImages }),
+      };
+    })
+  );
 
   // Sort by year (newest first), then by title
   return projects.sort((a, b) => {
