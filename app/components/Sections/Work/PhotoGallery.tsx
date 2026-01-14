@@ -1,7 +1,7 @@
 "use client";
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
 import Button from "../../UI/Layout/Button";
-import React, { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface PhotoGalleryProps {
   images: string[];
@@ -25,7 +25,11 @@ export function PhotoGallery({
   );
   const [isXL, setIsXL] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  // Refs for scrolling
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
     // Check if screen is XL (>=1280px)
     const checkXL = () =>
       setIsXL(window.matchMedia("(min-width: 1280px)").matches);
@@ -33,6 +37,21 @@ export function PhotoGallery({
     window.addEventListener("resize", checkXL);
     return () => window.removeEventListener("resize", checkXL);
   }, []);
+
+  useEffect(() => {
+    // Scroll to the starting image after a brief delay
+    const timer = setTimeout(() => {
+      if (imageRefs.current[startIndex]) {
+        imageRefs.current[startIndex]?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center',
+          inline: 'center'
+        });
+      }
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [startIndex]);
 
   if (!images.length) return null;
 
@@ -65,7 +84,7 @@ export function PhotoGallery({
   }
 
   return (
-    <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
+    <div ref={galleryRef} className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
       <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
         {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
         {!isProject && <span className="opacity-0">{"0"}</span>}
@@ -88,17 +107,21 @@ export function PhotoGallery({
             }
           >
             {row.map((idx) => (
-              <ImageWithFallback
+              <div 
                 key={images[idx] + idx}
-                src={images[idx]}
-                alt={`Photo ${idx + 1}`}
-                width={1200}
-                height={800}
-                fill={false}
-                className={` mx-auto h-full w-auto max-h-[90svh] object-cover`}
-                priority={idx === startIndex}
-                onLoad={(e) => handleImgLoad(idx, e)}
-              />
+                ref={(el) => { imageRefs.current[idx] = el; }}
+              >
+                <ImageWithFallback
+                  src={images[idx]}
+                  alt={`Photo ${idx + 1}`}
+                  width={1200}
+                  height={800}
+                  fill={false}
+                  className={` mx-auto h-full w-auto max-h-[90svh] object-cover`}
+                  priority={idx === startIndex}
+                  onLoad={(e) => handleImgLoad(idx, e)}
+                />
+              </div>
             ))}
           </div>
         ))}
