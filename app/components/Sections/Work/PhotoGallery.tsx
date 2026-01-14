@@ -41,11 +41,14 @@ export function PhotoGallery({
   useEffect(() => {
     // Scroll to the starting image after a brief delay
     const timer = setTimeout(() => {
-      if (imageRefs.current[startIndex]) {
-        imageRefs.current[startIndex]?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center',
-          inline: 'center'
+      const targetElement = imageRefs.current[startIndex];
+      if (targetElement) {
+        const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - 80; // Adjust this value for desired offset
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
         });
       }
     }, 300);
