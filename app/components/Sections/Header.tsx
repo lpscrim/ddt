@@ -47,7 +47,7 @@ export function Header() {
   const isLight = !isWorkPage && onHero;
 
   return (
-    <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-4 sm:px-6`}>
+    <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-6`}>
       {isWorkPage && (
         <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background z-0 pointer-events-none" />
       )}
@@ -56,7 +56,7 @@ export function Header() {
           {/* Logo with crossfade */}
           <button className="relative cursor-crosshair" onClick={() => conditionalScrollTo('')}>
             <span
-              className={`tracking-wide title font-semibold text-foreground hover:text-background transition-all duration-500 ${
+              className={`tracking-wide title font-semibold text-foreground hover:text-background left-0 top-0 transition-all duration-500 ${
                 isLight ? "opacity-0" : "opacity-100"
               }`}
             >
@@ -127,7 +127,7 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden cursor-crosshair -mr-4.75"
+            className="md:hidden cursor-crosshair -mr-4.75 -mt-4 -mb-3.75"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <NavIcon
@@ -140,7 +140,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className={`md:hidden flex flex-col gap-4 mt-6 pb-2 text-lg `}>
+          <nav className={`md:hidden flex flex-col gap-4 text-lg `}>
             <button
               className={`title pop-up opacity-0 text-left transition-colors ${
                 isLight

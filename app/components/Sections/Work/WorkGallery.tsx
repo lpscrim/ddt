@@ -105,7 +105,7 @@ export function WorkGallery({
 
 
   return (
-    <section id="work" className="min-h-svh px-2 py-0">
+    <section id="work" className="min-h-svh px-6 py-0">
       {!galleryOpen && (
         <MainGallery
           viewMode={viewMode}

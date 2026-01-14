@@ -12,14 +12,23 @@ interface PhotoGalleryProps {
   year: string;
 }
 
-
-export function PhotoGallery({ images, startIndex, onClose, isProject, name, year }: PhotoGalleryProps) {
-  const [ratios, setRatios] = useState<("vertical" | "horizontal" | null)[]>(Array(images.length).fill(null));
+export function PhotoGallery({
+  images,
+  startIndex,
+  onClose,
+  isProject,
+  name,
+  year,
+}: PhotoGalleryProps) {
+  const [ratios, setRatios] = useState<("vertical" | "horizontal" | null)[]>(
+    Array(images.length).fill(null)
+  );
   const [isXL, setIsXL] = useState<boolean>(false);
 
   React.useEffect(() => {
     // Check if screen is XL (>=1280px)
-    const checkXL = () => setIsXL(window.matchMedia("(min-width: 1280px)").matches);
+    const checkXL = () =>
+      setIsXL(window.matchMedia("(min-width: 1280px)").matches);
     checkXL();
     window.addEventListener("resize", checkXL);
     return () => window.removeEventListener("resize", checkXL);
@@ -33,7 +42,8 @@ export function PhotoGallery({ images, startIndex, onClose, isProject, name, yea
     e: React.SyntheticEvent<HTMLImageElement>
   ) => {
     const img = e.target as HTMLImageElement;
-    const orientation = img.naturalHeight > img.naturalWidth ? "vertical" : "horizontal";
+    const orientation =
+      img.naturalHeight > img.naturalWidth ? "vertical" : "horizontal";
     setRatios((r) => {
       const copy = [...r];
       copy[idx] = orientation;
@@ -45,11 +55,7 @@ export function PhotoGallery({ images, startIndex, onClose, isProject, name, yea
   const rows: Array<Array<number>> = [];
   let i = 0;
   while (i < images.length) {
-    if (
-      isXL &&
-      ratios[i] === "vertical" &&
-      ratios[i + 1] === "vertical"
-    ) {
+    if (isXL && ratios[i] === "vertical" && ratios[i + 1] === "vertical") {
       rows.push([i, i + 1]);
       i += 2;
     } else {
@@ -59,21 +65,16 @@ export function PhotoGallery({ images, startIndex, onClose, isProject, name, yea
   }
 
   return (
-    <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
-      <div className="fixed bg-background text-sm sm:text-base py-2 px-4 w-full ">
-      <Button onClick={onClose} size="base"      
-      >BACK</Button>
-          {isProject && <span className="text-foreground ml-4">{name}</span>}
+    <div className="w-full min-h-svh flex flex-col items-center py-14  bg-background">
+      <div className="fixed bg-background text-sm sm:text-base py-2 px-6 w-full flex items-center">
+        {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
+        {!isProject && <span className="opacity-0">{"0"}</span>}
       </div>
-        <div className="fixed bg-background text-sm sm:text-base py-2 px-2 w-full flex items-center justify-between">
-          {isProject && <span className="text-foreground">{name}</span>}
-          <button
-            className="z-10 px-2 text-foreground text-3xl"
-            onClick={onClose}
-          >
-            x
-          </button>
-        </div>
+      <div className="fixed mt-0.5 flex text-center right-0">
+        <Button onClick={onClose} size="sm">
+          BACK
+        </Button>
+      </div>
       <div className="flex flex-col w-full items-center space-y-40 pb-32 md:space-y-50 md:pb-16 lg:space-y-75">
         {rows.map((row, rIdx) => (
           <div

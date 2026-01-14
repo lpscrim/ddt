@@ -36,7 +36,7 @@ export function MainGallery({
 }: MainGalleryProps) {
   return (
     <>
-      <div className="pt-12 pb-4 px-4 rounded-xs flex flex-wrap gap-4">
+      <div className="pt-12 pb-4 px-0 rounded-xs flex flex-wrap gap-4">
         <div className="xl:w-1/2 text-sm sm:text-base py-2">
           <div>
             <button
@@ -73,7 +73,7 @@ export function MainGallery({
         </div>
       </div>
       {viewMode === "projects" ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-0">
           {filteredProjects.map((project, idx) => (
             <Card
               key={project.id}
