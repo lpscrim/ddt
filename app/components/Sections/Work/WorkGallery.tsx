@@ -103,26 +103,25 @@ export function WorkGallery({
 
   return (
     <section id="work" className="min-h-svh px-2 py-0">
-      <MainGallery
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        filteredProjects={filteredProjects}
-        filteredPhotos={filteredPhotos}
-        sortedVisibleCategories={sortedVisibleCategories}
-        toggleCategory={toggleCategory}
-        onCardClick={handleCardClick}
-      />
+      {!galleryOpen && (
+        <MainGallery
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          filteredProjects={filteredProjects}
+          filteredPhotos={filteredPhotos}
+          sortedVisibleCategories={sortedVisibleCategories}
+          toggleCategory={toggleCategory}
+          onCardClick={handleCardClick}
+        />
+      )}
       {galleryOpen && (
-        <>
-          {console.log('PhotoGallery images:', galleryImages, 'startIndex:', galleryStart)}
           <PhotoGallery
             images={galleryImages}
             startIndex={galleryStart}
             onClose={() => setGalleryOpen(false)}
           />
-        </>
       )}
     </section>
   );

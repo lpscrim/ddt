@@ -52,7 +52,6 @@ export function ImageWithFallback({
       fill={fill}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
-      priority={priority}
       onError={handleError}
       {...rest}
     />
