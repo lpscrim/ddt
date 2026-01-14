@@ -121,6 +121,8 @@ export function WorkGallery({
             images={galleryImages}
             startIndex={galleryStart}
             onClose={() => setGalleryOpen(false)}
+            isProject={viewMode === "projects"}
+            name=""
           />
       )}
     </section>

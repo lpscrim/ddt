@@ -49,9 +49,9 @@ export function Header() {
   return (
     <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-4 sm:px-6`}>
       {isWorkPage && (
-        <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background/30 z-0 pointer-events-none" />
+        <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background z-0 pointer-events-none" />
       )}
-      <div className="relative mx-auto py-4 z-10">
+      <div className="relative mx-auto py-2 z-10">
         <div className="flex items-center justify-between">
           {/* Logo with crossfade */}
           <button className="relative cursor-crosshair" onClick={() => conditionalScrollTo('')}>

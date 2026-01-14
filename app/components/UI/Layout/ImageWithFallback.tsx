@@ -13,6 +13,7 @@ interface ImageWithFallbackProps {
   width?: number;
   height?: number;
   priority?: boolean;
+  onLoad?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }
 
 export function ImageWithFallback({
@@ -23,6 +24,7 @@ export function ImageWithFallback({
   width,
   height,
   priority = false,
+  onLoad,
   ...rest
 }: ImageWithFallbackProps) {
   const [didError, setDidError] = useState(false)
@@ -52,6 +54,8 @@ export function ImageWithFallback({
       fill={fill}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
+      preload={priority}
+      onLoad={onLoad}
       onError={handleError}
       {...rest}
     />
