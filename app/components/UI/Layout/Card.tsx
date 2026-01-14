@@ -14,7 +14,7 @@ export function Card(project: {
         alt={project.title}
         className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
           project.categories.includes("COLOUR")
-            ? "grayscale group-hover:grayscale-0"
+            ? "md:grayscale group-hover:grayscale-0"
             : ""
         }`}
       />

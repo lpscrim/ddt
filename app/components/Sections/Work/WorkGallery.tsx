@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card } from "../../UI/Layout/Card";
+import { MainGallery } from "./MainGallery";
 
 interface Project {
   id: number;
@@ -23,6 +23,7 @@ export function WorkGallery({
   categoryCounts,
   allPhotos,
 }: WorkGalleryProps) {
+
   const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -34,16 +35,40 @@ export function WorkGallery({
     ? filteredProjects.flatMap((p) => [p.imageUrl, ...(p.galleryImages || [])])
     : allPhotos;
 
-  // Remaining counts for visible items
-  const visibleCategoryCounts = filteredProjects.reduce((acc, project) => {
-    project.categories.forEach((category) => {
-      acc[category] = (acc[category] || 0) + 1;
+  // Category counts: projects or photos mode
+  let visibleCategoryCounts: Record<string, number> = {};
+  if (viewMode === "projects") {
+    visibleCategoryCounts = filteredProjects.reduce((acc, project) => {
+      project.categories.forEach((category) => {
+        acc[category] = (acc[category] || 0) + 1;
+      });
+      return acc;
+    }, {} as Record<string, number>);
+  } else {
+    // In photos mode, count categories for visible photos
+    // Build a map of photo -> categories
+    const photoToCategories: Record<string, string[]> = {};
+    projects.forEach((project) => {
+      // Main image
+      photoToCategories[project.imageUrl] = project.categories;
+      // Gallery images
+      (project.galleryImages || []).forEach(img => {
+        photoToCategories[img] = project.categories;
+      });
     });
-    return acc;
-  }, {} as Record<string, number>);
+    filteredPhotos.forEach((photo) => {
+      const cats = photoToCategories[photo] || [];
+      cats.forEach((cat) => {
+        visibleCategoryCounts[cat] = (visibleCategoryCounts[cat] || 0) + 1;
+      });
+    });
+  }
+
   // Use the array of [category, count] pairs for all categories
-  const sortedVisibleCategories = categoryCounts.map(([cat]) => [cat, visibleCategoryCounts[cat] || 0])
+  const sortedVisibleCategories: [string, number][] = categoryCounts
+    .map(([cat]) => [cat, visibleCategoryCounts[cat] || 0] as [string, number])
     .sort((a, b) => Number(b[1]) - Number(a[1]));
+
 
   // Add/remove category handlers
   const toggleCategory = (cat: string) => {
@@ -54,70 +79,20 @@ export function WorkGallery({
     }
   };
 
+
   return (
     <section id="work" className="min-h-svh px-2 py-0">
-      <div className="pt-16 pb-8 px-4 rounded-xs my-1 flex flex-wrap gap-4">
-        <div className="xl:w-1/2 text-sm sm:text-base">
-          <div>
-            <button
-              onClick={() => { setViewMode("projects"); setSelectedCategories([]); }}
-              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" && selectedCategories.length === 0 ? "text-foreground" : "text-foreground/50"}`}
-            >
-              PROJECTS [{filteredProjects.length}]
-            </button>
-            <button
-              onClick={() => { setViewMode("photos"); setSelectedCategories([]); }}
-              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "photos" && selectedCategories.length === 0 ? "text-foreground" : "text-foreground/50"}`}
-            >
-              PHOTOS [{filteredPhotos.length}]
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-0 mt-2">
-            {sortedVisibleCategories.map(([category, count]) => {
-              const categoryStr = String(category);
-              const isSelected = selectedCategories.includes(categoryStr);
-              const isUnselectable = count === 0;
-              return (
-                <span key={categoryStr} className="inline-flex items-center text-sm sm:text:base">
-                  <button
-                    onClick={() => !isUnselectable && toggleCategory(categoryStr)}
-                    disabled={isUnselectable}
-                    className={`pr-1 py-1 rounded transition-colors cursor-crosshair text-foreground ${isSelected ? "underline font-semibold" : ""} ${isUnselectable ? "opacity-30 cursor-not-allowed" : "hover:bg-background/10"}`}
-                  >
-                    {categoryStr} <span className="text-foreground/60">[{count}]</span>
-                  </button>
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      {viewMode === "projects" ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-4">
-          {filteredProjects.map((project) => (
-            <Card
-              key={project.id}
-              categories={project.categories}
-              imageUrl={project.imageUrl}
-              galleryImages={project.galleryImages}
-              year={project.year}
-              title={project.title}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
-          {filteredPhotos.map((photo, index) => (
-            <Card
-              key={index}
-              categories={[]}
-              imageUrl={photo}
-              year=""
-              title=""
-            />
-          ))}
-        </div>
-      )}
+      <MainGallery
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        filteredProjects={filteredProjects}
+        filteredPhotos={filteredPhotos}
+        sortedVisibleCategories={sortedVisibleCategories}
+        toggleCategory={toggleCategory}
+      />
     </section>
   );
+
 }
