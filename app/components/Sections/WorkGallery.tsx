@@ -55,7 +55,7 @@ export function WorkGallery({
   };
 
   return (
-    <section id="work" className="min-h-svh px-0 py-0">
+    <section id="work" className="min-h-svh px-2 py-0">
       <div className="pt-16 pb-8 px-4 rounded-xs my-1 flex flex-wrap gap-4">
         <div className="xl:w-1/2 text-sm sm:text-base">
           <div>
@@ -93,7 +93,7 @@ export function WorkGallery({
         </div>
       </div>
       {viewMode === "projects" ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-4">
           {filteredProjects.map((project) => (
             <Card
               key={project.id}
