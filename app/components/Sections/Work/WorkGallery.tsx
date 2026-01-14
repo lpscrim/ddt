@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card } from "../UI/Layout/Card";
+import { Card } from "../../UI/Layout/Card";
 
 interface Project {
   id: number;
@@ -42,7 +42,7 @@ export function WorkGallery({
     return acc;
   }, {} as Record<string, number>);
   // Use the array of [category, count] pairs for all categories
-  const sortedVisibleCategories = categoryCounts.map(([cat, _]) => [cat, visibleCategoryCounts[cat] || 0])
+  const sortedVisibleCategories = categoryCounts.map(([cat]) => [cat, visibleCategoryCounts[cat] || 0])
     .sort((a, b) => Number(b[1]) - Number(a[1]));
 
   // Add/remove category handlers
