@@ -58,10 +58,10 @@ export function PhotoGallery({ images, startIndex, onClose, isProject, name }: P
   }
 
   return (
-    <div className="w-full min-h-svh flex flex-col items-center py-16  bg-background">
-      <div className="fixed bg-background text-sm sm:text-base py-2 px-4 w-full border">
+    <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
+      <div className="fixed bg-background text-sm sm:text-base py-2 px-4 w-full ">
       <button
-        className="px-2 text-foreground text-base"
+        className="px-2 text-foreground"
         onClick={onClose}
       >
         BACK TO MAIN

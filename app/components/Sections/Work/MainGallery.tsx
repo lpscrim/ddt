@@ -36,8 +36,8 @@ export function MainGallery({
 }: MainGalleryProps) {
   return (
     <>
-      <div className="pt-16 pb-8 px-4 rounded-xs my-1 flex flex-wrap gap-4">
-        <div className="xl:w-1/2 text-sm sm:text-base">
+      <div className="pt-12 pb-4 px-4 rounded-xs flex flex-wrap gap-4">
+        <div className="xl:w-1/2 text-sm sm:text-base py-2">
           <div>
             <button
               onClick={() => { setViewMode("projects"); setSelectedCategories([]); }}
