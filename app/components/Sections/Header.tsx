@@ -9,16 +9,12 @@ import NavIcon from "../UI/Nav/NavIcon";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [onHero, setOnHero] = useState(true);
-  const [inverted, setInverted] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   const isWorkPage = pathname === "/work";
 
-  useEffect(() => {
-    const timer = setTimeout(() => setInverted(true), 3200);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   useEffect(() => {
     const hero = document.getElementById("home");
@@ -30,7 +26,7 @@ export function Header() {
     );
     observer.observe(hero);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   const conditionalScrollTo = (hash: string) => {
     if (pathname === "/") {
@@ -48,7 +44,7 @@ export function Header() {
     }
   };
 
-  const isLight = !isWorkPage && onHero && inverted;
+  const isLight = !isWorkPage && onHero;
 
   return (
     <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-4 sm:px-6`}>
