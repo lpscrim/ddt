@@ -1,6 +1,7 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
+import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
+
 interface PhotoGalleryProps {
   images: string[];
   startIndex: number;
@@ -24,7 +25,7 @@ export function PhotoGallery({ images, startIndex, onClose }: PhotoGalleryProps)
         onClick={() => setCurrent((c) => (c > 0 ? c - 1 : images.length - 1))}
         aria-label="Previous"
       >&#8592;</button>
-      <Image
+      <ImageWithFallback
         src={images[current]}
         alt="Full size"
         className="max-h-[90vh] max-w-[90vw] object-contain rounded shadow-lg"

@@ -1,6 +1,5 @@
 "use client";
 
-import { i } from "framer-motion/client";
 import { Card } from "../../UI/Layout/Card";
 
 interface Project {

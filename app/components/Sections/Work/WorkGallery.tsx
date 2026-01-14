@@ -115,11 +115,14 @@ export function WorkGallery({
         onCardClick={handleCardClick}
       />
       {galleryOpen && (
-        <PhotoGallery
-          images={galleryImages}
-          startIndex={galleryStart}
-          onClose={() => setGalleryOpen(false)}
-        />
+        <>
+          {console.log('PhotoGallery images:', galleryImages, 'startIndex:', galleryStart)}
+          <PhotoGallery
+            images={galleryImages}
+            startIndex={galleryStart}
+            onClose={() => setGalleryOpen(false)}
+          />
+        </>
       )}
     </section>
   );
