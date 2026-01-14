@@ -65,15 +65,17 @@ export function PhotoGallery({
   }
 
   return (
-    <div className="w-full min-h-svh flex flex-col items-center py-14  bg-background">
+    <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
       <div className="fixed bg-background text-sm sm:text-base py-2 px-6 w-full flex items-center">
         {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
         {!isProject && <span className="opacity-0">{"0"}</span>}
       </div>
-      <div className="fixed mt-0.5 flex text-center right-0">
+      <div className="fixed mt-0.5 flex text-center justify-end right-0 w-25">
+        <div className="mx-auto justify center" >
         <Button onClick={onClose} size="sm">
           BACK
         </Button>
+        </div>
       </div>
       <div className="flex flex-col w-full items-center space-y-40 pb-32 md:space-y-50 md:pb-16 lg:space-y-75">
         {rows.map((row, rIdx) => (
