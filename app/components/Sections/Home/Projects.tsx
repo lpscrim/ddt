@@ -1,6 +1,7 @@
 import { ImageWithFallback } from "@/app/components/UI/Layout/ImageWithFallback";
 import { getProjects } from "@/app/data/projects";
 import Button from "@/app/components/UI/Layout/Button";
+import Link from "next/link";
 
 export async function Projects() {
   const projects = await getProjects();
@@ -17,8 +18,9 @@ export async function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.sort((a,b) => a.id - b.id).slice(0, 6).map((project) => (
-            <div
+            <Link
               key={project.id}
+              href={`/work?project=${project.id}`}
               className="group cursor-crosshair"
             >
               <div className="relative aspect-4/5 bg-muted overflow-hidden mb-4 rounded-xs">
@@ -38,7 +40,7 @@ export async function Projects() {
                   <span>{project.year}</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="mt-24 text-center  ">

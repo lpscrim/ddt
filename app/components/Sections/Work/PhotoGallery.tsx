@@ -66,7 +66,7 @@ export function PhotoGallery({
 
   return (
     <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
-      <div className="fixed bg-background text-sm sm:text-base py-2 px-6 w-full flex items-center">
+      <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
         {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
         {!isProject && <span className="opacity-0">{"0"}</span>}
       </div>
@@ -77,7 +77,7 @@ export function PhotoGallery({
         </Button>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center space-y-40 pb-32 mt-16 sm:mt-8 md:space-y-50 md:pb-16 lg:space-y-75">
+      <div className={`flex flex-col w-full items-center space-y-40 pb-32  mt-16 sm:mt-12 md:space-y-50 md:pb-16 lg:space-y-75`}>
         {rows.map((row, rIdx) => (
           <div
             key={rIdx}

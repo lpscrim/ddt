@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { PhotoGallery } from "./PhotoGallery";
 import { MainGallery } from "./MainGallery";
 
@@ -27,12 +28,27 @@ export function WorkGallery({
 
   const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  
+
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [galleryStart, setGalleryStart] = useState(0);
-
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Open gallery if ?project=id is present
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const projectId = params.get('project');
+    if (projectId) {
+      const project = projects.find(p => String(p.id) === projectId);
+      if (project) {
+        setGalleryImages([project.imageUrl, ...(project.galleryImages || [])]);
+        setGalleryStart(0);
+        setSelectedProject(project);
+        setGalleryOpen(true);
+      }
+    }
+  }, [projects]);
 
   // Filtered projects/photos by selected categories
   const filteredProjects = selectedCategories.length > 0
