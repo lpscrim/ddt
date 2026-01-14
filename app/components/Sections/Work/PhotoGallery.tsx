@@ -77,7 +77,7 @@ export function PhotoGallery({
         </Button>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center space-y-40 pb-32 md:space-y-50 md:pb-16 lg:space-y-75">
+      <div className="flex flex-col w-full items-center space-y-40 pb-32 mt-16 sm:mt-8 md:space-y-50 md:pb-16 lg:space-y-75">
         {rows.map((row, rIdx) => (
           <div
             key={rIdx}
