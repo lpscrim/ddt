@@ -1,5 +1,6 @@
 import { ImageWithFallback } from "@/app/components/UI/Layout/ImageWithFallback";
 import { getProjects } from "@/app/data/projects";
+import Button from "@/app/components/UI/Layout/Button";
 
 export async function Projects() {
   const projects = await getProjects();
@@ -41,8 +42,7 @@ export async function Projects() {
           ))}
         </div>
         <div className="mt-24 text-center  ">
-          <button className="cursor-crosshair text-muted-foreground hover:text-foreground text-xl mg:text-2xl py-2 px-6 rounded-xs transition-all duration-550 group"><span className="group-hover:px-1 transition-all duration-500">[</span> MORE <span className="group-hover:px-1 transition-all duration-500">]</span>
-          </button>
+          <Button size="xl">MORE</Button>
         </div>
       </div>
     </section>

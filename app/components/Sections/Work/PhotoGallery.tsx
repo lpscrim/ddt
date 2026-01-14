@@ -1,6 +1,6 @@
 "use client";
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
-
+import Button from "../../UI/Layout/Button";
 import React, { useState } from "react";
 
 interface PhotoGalleryProps {
@@ -9,10 +9,11 @@ interface PhotoGalleryProps {
   onClose: () => void;
   isProject?: boolean;
   name: string;
+  year: string;
 }
 
 
-export function PhotoGallery({ images, startIndex, onClose, isProject, name }: PhotoGalleryProps) {
+export function PhotoGallery({ images, startIndex, onClose, isProject, name, year }: PhotoGalleryProps) {
   const [ratios, setRatios] = useState<("vertical" | "horizontal" | null)[]>(Array(images.length).fill(null));
   const [isXL, setIsXL] = useState<boolean>(false);
 
@@ -60,14 +61,19 @@ export function PhotoGallery({ images, startIndex, onClose, isProject, name }: P
   return (
     <div className="w-full min-h-svh flex flex-col items-center py-12  bg-background">
       <div className="fixed bg-background text-sm sm:text-base py-2 px-4 w-full ">
-      <button
-        className="px-2 text-foreground"
-        onClick={onClose}
-      >
-        BACK TO MAIN
-      </button>
-        {isProject && <span className="text-foreground">{name}</span>}
+      <Button onClick={onClose} size="base"      
+      >BACK</Button>
+          {isProject && <span className="text-foreground ml-4">{name}</span>}
       </div>
+        <div className="fixed bg-background text-sm sm:text-base py-2 px-2 w-full flex items-center justify-between">
+          {isProject && <span className="text-foreground">{name}</span>}
+          <button
+            className="z-10 px-2 text-foreground text-3xl"
+            onClick={onClose}
+          >
+            x
+          </button>
+        </div>
       <div className="flex flex-col w-full items-center space-y-40 pb-32 md:space-y-50 md:pb-16 lg:space-y-75">
         {rows.map((row, rIdx) => (
           <div

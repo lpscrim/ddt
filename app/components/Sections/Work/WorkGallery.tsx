@@ -27,6 +27,12 @@ export function WorkGallery({
 
   const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [galleryStart, setGalleryStart] = useState(0);
+
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Filtered projects/photos by selected categories
   const filteredProjects = selectedCategories.length > 0
@@ -72,10 +78,6 @@ export function WorkGallery({
 
 
 
-  // PhotoGallery modal state
-  const [galleryOpen, setGalleryOpen] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<string[]>([]);
-  const [galleryStart, setGalleryStart] = useState(0);
 
   // Add/remove category handlers
   const toggleCategory = (cat: string) => {
@@ -95,6 +97,7 @@ export function WorkGallery({
       const imgs = [project.imageUrl, ...(project.galleryImages || [])];
       setGalleryImages(imgs);
       setGalleryStart(0);
+      setSelectedProject(project);
     }
     setGalleryOpen(true);
   };
@@ -122,7 +125,8 @@ export function WorkGallery({
             startIndex={galleryStart}
             onClose={() => setGalleryOpen(false)}
             isProject={viewMode === "projects"}
-            name=""
+            name={selectedProject ? selectedProject.title : ""}
+            year={selectedProject ? selectedProject.year : ""}
           />
       )}
     </section>
