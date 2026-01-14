@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PhotoGallery } from "./PhotoGallery";
 import { MainGallery } from "./MainGallery";
 
 interface Project {
@@ -70,6 +71,12 @@ export function WorkGallery({
     .sort((a, b) => Number(b[1]) - Number(a[1]));
 
 
+
+  // PhotoGallery modal state
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [galleryStart, setGalleryStart] = useState(0);
+
   // Add/remove category handlers
   const toggleCategory = (cat: string) => {
     if (selectedCategories.includes(cat)) {
@@ -78,6 +85,20 @@ export function WorkGallery({
       setSelectedCategories([...selectedCategories, cat]);
     }
   };
+
+  // Handler to open gallery
+  const handleCardClick = (mode: "photos" | "projects", index: number, project?: typeof projects[number]) => {
+    if (mode === "photos") {
+      setGalleryImages(filteredPhotos);
+      setGalleryStart(index);
+    } else if (mode === "projects" && project) {
+      const imgs = [project.imageUrl, ...(project.galleryImages || [])];
+      setGalleryImages(imgs);
+      setGalleryStart(0);
+    }
+    setGalleryOpen(true);
+  };
+
 
 
   return (
@@ -91,7 +112,15 @@ export function WorkGallery({
         filteredPhotos={filteredPhotos}
         sortedVisibleCategories={sortedVisibleCategories}
         toggleCategory={toggleCategory}
+        onCardClick={handleCardClick}
       />
+      {galleryOpen && (
+        <PhotoGallery
+          images={galleryImages}
+          startIndex={galleryStart}
+          onClose={() => setGalleryOpen(false)}
+        />
+      )}
     </section>
   );
 

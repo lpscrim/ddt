@@ -1,5 +1,6 @@
 "use client";
 
+import { i } from "framer-motion/client";
 import { Card } from "../../UI/Layout/Card";
 
 interface Project {
@@ -20,6 +21,7 @@ export interface MainGalleryProps {
   filteredPhotos: string[];
   sortedVisibleCategories: [string, number][];
   toggleCategory: (cat: string) => void;
+  onCardClick: (mode: "photos" | "projects", index: number, project?: Project) => void;
 }
 
 export function MainGallery({
@@ -31,6 +33,7 @@ export function MainGallery({
   filteredPhotos,
   sortedVisibleCategories,
   toggleCategory,
+    onCardClick,
 }: MainGalleryProps) {
   return (
     <>
@@ -72,7 +75,7 @@ export function MainGallery({
       </div>
       {viewMode === "projects" ? (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-4">
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project, idx) => (
             <Card
               key={project.id}
               categories={project.categories}
@@ -80,6 +83,7 @@ export function MainGallery({
               galleryImages={project.galleryImages}
               year={project.year}
               title={project.title}
+              handleOnClick={() => onCardClick("projects", idx, project)}
             />
           ))}
         </div>
@@ -92,6 +96,7 @@ export function MainGallery({
               imageUrl={photo}
               year=""
               title=""
+              handleOnClick={() => onCardClick("photos", index)}
             />
           ))}
         </div>

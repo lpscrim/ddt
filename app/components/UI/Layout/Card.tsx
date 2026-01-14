@@ -4,11 +4,12 @@ export function Card(project: {
   imageUrl: string;
   title: string;
   categories: string[];
-    galleryImages?: string[];
-    year: string;
+  galleryImages?: string[];
+  year: string;
+  handleOnClick?: () => void;
 }) {
   return (
-    <div className="group relative aspect-4/5 bg-muted overflow-hidden mb-0 rounded-xs cursor-crosshair">
+    <div onClick={project.handleOnClick} className="group relative aspect-4/5 bg-muted overflow-hidden mb-0 rounded-xs cursor-crosshair">
       <ImageWithFallback
         src={project.imageUrl}
         alt={project.title}
