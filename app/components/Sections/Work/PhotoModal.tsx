@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
  
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
 import Button from "../../UI/Layout/Button";
@@ -39,6 +39,32 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
    // Refs for thumbnails
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const imageWrapRef = useRef<HTMLDivElement | null>(null);
+
+  const [thumbStripTop, setThumbStripTop] = useState<number | null>(null);
+
+  const positionThumbStrip = useCallback(() => {
+    if (!isOpen) return;
+    if (images.length <= 1) return;
+
+    const stripEl = stripRef.current;
+    const imageEl = imageWrapRef.current;
+    if (!stripEl || !imageEl) return;
+
+    const imageRect = imageEl.getBoundingClientRect();
+    const stripRect = stripEl.getBoundingClientRect();
+
+    // Midpoint between bottom of image and bottom of screen
+    const targetCenterY = (imageRect.bottom + window.innerHeight) / 2;
+    let nextTop = targetCenterY - stripRect.height / 2;
+
+    // Keep it on-screen
+    const minTop = 8;
+    const maxTop = window.innerHeight - stripRect.height - 8;
+    nextTop = Math.max(minTop, Math.min(maxTop, nextTop));
+
+    setThumbStripTop(nextTop);
+  }, [isOpen, images.length]);
 
   // Center active thumbnail when index changes
   useEffect(() => {
@@ -63,6 +89,18 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       behavior: "smooth",
     });
   }, [index, images.length, isOpen]);
+
+  // Reposition the strip when the modal opens, the image changes, or viewport resizes
+  useEffect(() => {
+    if (!isOpen) return;
+    const raf = requestAnimationFrame(positionThumbStrip);
+    const onResize = () => positionThumbStrip();
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [isOpen, image, positionThumbStrip]);
 
   const handleThumbWheel = (e: React.WheelEvent<HTMLDivElement>) => {
   if (images.length < 2) return;
@@ -128,14 +166,17 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           >
           </button>
         )}
-        <ImageWithFallback
-          src={image}
-          alt="Gallery"
-          width={1200}
-          height={800}
-          fill={false}
-          className="max-h-[82vh] max-w-[90vw] object-contain rounded-xs"
-        />
+        <div ref={imageWrapRef}>
+          <ImageWithFallback
+            src={image}
+            alt="Gallery"
+            width={1200}
+            height={800}
+            fill={false}
+            className="max-h-[82vh] max-w-[90vw] object-contain rounded-xs"
+            onLoad={positionThumbStrip}
+          />
+        </div>
         {hasNext && (
           <button
             className="absolute focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
@@ -149,7 +190,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {images.length > 1 && (
         <div 
           ref={stripRef}
-          className="absolute bottom-0 px-4 flex items-center overflow-x-auto w-full space-x-0 py-2.5 hide-scrollbar bg-background z-999"
+          className="fixed left-0 right-0 px-4 flex items-center overflow-x-auto w-full space-x-0 py-2.5 hide-scrollbar bg-background z-999"
+          style={thumbStripTop === null ? undefined : { top: thumbStripTop }}
           
         >
           {images.map((img, idx) => (
