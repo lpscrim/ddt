@@ -1,6 +1,6 @@
-
-import React, { useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
+import Button from "../../UI/Layout/Button";
 
 interface PhotoModalProps {
   isOpen: boolean;
@@ -40,40 +40,42 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-lg">
-      <button
-        className="absolute top-4 right-4 text-white text-2xl"
-        onClick={onClose}
-        aria-label="Close"
-      >
-        ×
-      </button>
-      {hasPrev && (
-        <button
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl"
-          onClick={onPrev}
-          aria-label="Previous"
-        >
-          ‹
-        </button>
-      )}
-      <ImageWithFallback
-        src={image}
-        alt="Gallery"
-        width={1200}
-        height={800}
-        fill={false}
-        className="max-h-[80vh] max-w-[90vw] rounded shadow-lg object-contain"
-      />
-      {hasNext && (
-        <button
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl"
-          onClick={onNext}
-          aria-label="Next"
-        >
-          ›
-        </button>
-      )}
+    <div className="fixed inset-0 top-16 z-50 flex flex-col">
+      <div className="py-4 justify-end right-0 w-25">
+        <div className="flex mx-auto justify-center absolute top-0 right-4 w-25 -mr-4 text-foreground z-60">
+          <Button onClick={onClose} size="sm">
+            BACK
+          </Button>
+        </div>
+      </div>
+      <div className="fixed items-center justify-center inset-0 top-17 z-50 flex ">
+        {hasPrev && (
+          <button
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground text-3xl"
+            onClick={onPrev}
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+        )}
+        <ImageWithFallback
+          src={image}
+          alt="Gallery"
+          width={1200}
+          height={800}
+          fill={false}
+          className="max-h-[83vh] max-w-[90vw] object-contain"
+        />
+        {hasNext && (
+          <button
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground text-3xl"
+            onClick={onNext}
+            aria-label="Next"
+          >
+            ›
+          </button>
+        )}
+      </div>
     </div>
   );
 };

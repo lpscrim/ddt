@@ -105,7 +105,7 @@ export function WorkGallery({
 
   return (
     <section id="work" className="min-h-svh px-6 py-0">
-      <MainGallery
+      {!modalOpen && <MainGallery
         viewMode={viewMode}
         setViewMode={setViewMode}
         selectedCategories={selectedCategories}
@@ -115,7 +115,7 @@ export function WorkGallery({
         sortedVisibleCategories={sortedVisibleCategories}
         toggleCategory={toggleCategory}
         onCardClick={handleCardClick}
-      />
+      /> }
       <PhotoModal
         isOpen={modalOpen}
         image={modalImages[modalIndex] || ""}
