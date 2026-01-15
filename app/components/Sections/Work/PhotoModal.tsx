@@ -107,7 +107,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] flex overflow-x-auto space-x-0 py-1 bg-background z-999">
+        <div className="absolute bottom-0 justify-center px-4 flex overflow-x-auto space-x-0 py-1 bg-background z-999">
           {images.map((img, idx) => (
             <button
               key={img + idx}
