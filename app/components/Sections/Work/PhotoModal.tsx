@@ -107,19 +107,19 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] flex overflow-x-auto space-x-0 py-4 bg-background z-999">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] flex overflow-x-auto space-x-0 py-1 bg-background z-999">
           {images.map((img, idx) => (
             <button
               key={img + idx}
               onClick={() => changePhotoId(idx)}
               className={` ${idx === index ? " shadow-lg" : ""} rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
-              style={{ width: 40, height: 50 }}
+              style={{ width: 30, height: 40 }}
             >
               <ImageWithFallback
                 src={img}
                 alt={`Thumbnail ${idx + 1}`}
                 width={40}
-                height={50}
+                height={40}
                 fill={false}
                 className={`object-cover h-full ${idx === index ? "brightness-110" : "brightness-50"}`}
               />
