@@ -159,13 +159,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      if (hasPrev) {
-        onPrev();
+      if (hasNext) {
+        onNext();
       }
     },
     onSwipedRight: () => {
-      if (hasNext) {
-        onNext();
+      if (hasPrev) {
+        onPrev();
       }
     },
     trackMouse: true,
