@@ -74,7 +74,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           width={1200}
           height={800}
           fill={false}
-          className="max-h-[83vh] max-w-[90vw] object-contain"
+          className="max-h-[82vh] max-w-[90vw] object-contain"
         />
         {hasNext && (
           <button
