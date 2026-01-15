@@ -130,7 +130,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
         <div 
-          className="absolute bottom-0 justify-center px-43 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999"
+          className="absolute bottom-0 justify-center px-4 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999"
           
         >
           {images.map((img, idx) => (
