@@ -56,7 +56,7 @@ export function Header() {
           {/* Logo with crossfade */}
           <button className="relative cursor-crosshair" onClick={() => conditionalScrollTo('')}>
             <span
-              className={`tracking-wide title font-semibold text-foreground hover:text-background left-0 top-0 transition-all duration-500 ${
+              className={`tracking-wide title font-semibold text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
                 isLight ? "opacity-0" : "opacity-100"
               }`}
             >
@@ -76,7 +76,7 @@ export function Header() {
             <button className="relative title text-xl">
               <Link href="/work" className="cursor-crosshair">
                 <span
-                  className={`text-foreground hover:text-background transition-all duration-500 ${
+                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                     isLight ? "opacity-0" : "opacity-100"
                   }`}
                 >
@@ -93,7 +93,7 @@ export function Header() {
             </button>
             <button className="relative title text-xl cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
                 <span
-                  className={`text-foreground hover:text-background transition-all duration-500 ${
+                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                     isLight ? "opacity-0" : "opacity-100"
                   }`}
                 >
@@ -107,9 +107,9 @@ export function Header() {
                   ABOUT
                 </span>
             </button>
-            <button className="relative title text-xl cursor-crosshair" onClick={() => conditionalScrollTo('#contact')}>
+            <button className="relative title text-xl cursor-crosshair " onClick={() => conditionalScrollTo('#contact')}>
                 <span
-                  className={`text-foreground hover:text-background transition-all duration-500 ${
+                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                     isLight ? "opacity-0" : "opacity-100"
                   }`}
                 >
@@ -140,12 +140,12 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className={`md:hidden flex flex-col gap-4 text-lg `}>
+          <nav className={`md:hidden flex flex-col gap-4 text-lg pt-4 `}>
             <button
               className={`title pop-up opacity-0 text-left transition-colors ${
                 isLight
                   ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-background"
+                  : "text-foreground hover:text-muted-foreground"
               }`}
             >
               <Link href="/work" className="cursor-crosshair">
@@ -153,10 +153,10 @@ export function Header() {
               </Link>
             </button>
             <button
-              className={`title pop-up-2 opacity-0 text-left transition-colors ${
+              className={`title pop-up-2 opacity-0 text-left transition-colors cursor-crosshair ${
                 isLight
                   ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-background"
+                  : "text-foreground hover:text-muted-foreground"
               }`}
               onClick={() => { conditionalScrollTo('#about'); }}
             >
@@ -166,7 +166,7 @@ export function Header() {
               className={`title pop-up opacity-0 text-left transition-colors cursor-crosshair ${
                 isLight
                   ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-background"
+                  : "text-foreground hover:text-muted-foreground"
               }`}
               onClick={() => conditionalScrollTo('#contact')}
             >
