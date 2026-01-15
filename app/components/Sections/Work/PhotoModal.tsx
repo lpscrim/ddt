@@ -40,6 +40,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const lastWheelAtRef = useRef<number>(0);
 
   const [thumbStripTop, setThumbStripTop] = useState<number | null>(null);
 
@@ -102,15 +104,40 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     };
   }, [isOpen, image, positionThumbStrip]);
 
-  const handleThumbWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-  if (images.length < 2) return;
-  e.preventDefault();
-  if (e.deltaY < 0 && index > 0) {
-    changePhotoId(index - 1);
-  } else if (e.deltaY > 0 && index < images.length - 1) {
-    changePhotoId(index + 1);
-  }
-};
+  const handleThumbWheel = useCallback(
+    (e: WheelEvent) => {
+      if (images.length < 2) return;
+
+      // Ignore tiny trackpad noise
+      if (Math.abs(e.deltaY) < 4) return;
+
+      // Throttle so one scroll gesture = one step
+      const now = performance.now();
+      if (now - lastWheelAtRef.current < 120) return;
+      lastWheelAtRef.current = now;
+
+      // We want to consume the wheel (don’t scroll the page behind the modal)
+      e.preventDefault();
+
+      if (e.deltaY < 0 && index > 0) {
+        changePhotoId(index - 1);
+      } else if (e.deltaY > 0 && index < images.length - 1) {
+        changePhotoId(index + 1);
+      }
+    },
+    [images.length, index, changePhotoId]
+  );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const el = modalRef.current;
+    if (!el) return;
+
+    el.addEventListener("wheel", handleThumbWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", handleThumbWheel as EventListener);
+    };
+  }, [isOpen, handleThumbWheel]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -122,7 +149,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     [isOpen, onClose, onPrev, onNext, hasPrev, hasNext]
   );
 
-    const handlers = useSwipeable({
+  const handlers = useSwipeable({
     onSwipedLeft: () => {
       if (hasPrev) {
         onPrev();
@@ -136,6 +163,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     trackMouse: true,
   });
 
+  const { ref: swipeableRef, ...swipeHandlers } = handlers;
+
   useEffect(() => {
     if (!isOpen) return;
     window.addEventListener("keydown", handleKeyDown);
@@ -145,7 +174,14 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 top-14 z-50 flex flex-col bg-background" onWheel={handleThumbWheel} {...handlers}>
+    <div
+      ref={(el) => {
+        modalRef.current = el;
+        swipeableRef(el);
+      }}
+      className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
+      {...swipeHandlers}
+    >
       <div className="py-0 flex flex-row w-full justify-between">
         <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
