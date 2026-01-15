@@ -37,14 +37,32 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
 }) => {
 
    // Refs for thumbnails
+  const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // Center active thumbnail when index changes
   useEffect(() => {
-    if (images.length > 1 && thumbRefs.current[index]) {
-      thumbRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    }
-  }, [index, images.length]);
+    if (!isOpen) return;
+    if (images.length <= 1) return;
+
+    const stripEl = stripRef.current;
+    const activeThumb = thumbRefs.current[index];
+    if (!stripEl || !activeThumb) return;
+
+    const stripRect = stripEl.getBoundingClientRect();
+    const thumbRect = activeThumb.getBoundingClientRect();
+
+    const delta =
+      thumbRect.left -
+      stripRect.left +
+      thumbRect.width / 2 -
+      stripRect.width / 2;
+
+    stripEl.scrollTo({
+      left: stripEl.scrollLeft + delta,
+      behavior: "smooth",
+    });
+  }, [index, images.length, isOpen]);
 
   const handleThumbWheel = (e: React.WheelEvent<HTMLDivElement>) => {
   if (images.length < 2) return;
@@ -130,7 +148,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
         <div 
-          className="absolute bottom-0 justify-center px-4 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999"
+          ref={stripRef}
+          className="absolute bottom-0 px-4 flex items-center overflow-x-auto w-full space-x-0 py-2.5 hide-scrollbar bg-background z-999"
           
         >
           {images.map((img, idx) => (
