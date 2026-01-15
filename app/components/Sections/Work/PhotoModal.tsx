@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
 import Button from "../../UI/Layout/Button";
+import { useSwipeable } from "react-swipeable";
 
 interface PhotoModalProps {
   isOpen: boolean;
@@ -37,6 +38,20 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     [isOpen, onClose, onPrev, onNext, hasPrev, hasNext]
   );
 
+    const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (hasPrev) {
+        onPrev();
+      }
+    },
+    onSwipedRight: () => {
+      if (hasNext) {
+        onNext();
+      }
+    },
+    trackMouse: true,
+  });
+
   useEffect(() => {
     if (!isOpen) return;
     window.addEventListener("keydown", handleKeyDown);
@@ -46,7 +61,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 top-16 z-50 flex flex-col">
+    <div className="fixed inset-0 top-16 z-50 flex flex-col" {...handlers}>
       <div className="py-0 flex flex-row w-full justify-between">
         <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
@@ -61,11 +76,10 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       <div className="fixed items-center justify-center inset-0 top-17 z-50 flex ">
         {hasPrev && (
           <button
-            className="absolute left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            className="absolute focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
             onClick={onPrev}
             aria-label="Previous"
           >
-            
           </button>
         )}
         <ImageWithFallback
@@ -78,7 +92,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         />
         {hasNext && (
           <button
-            className="absolute right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            className="absolute focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
             onClick={onNext}
             aria-label="Next"
           >
