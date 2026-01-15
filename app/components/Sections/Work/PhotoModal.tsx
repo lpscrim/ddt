@@ -46,6 +46,16 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     }
   }, [index, images.length]);
 
+  const handleThumbWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+  if (images.length < 2) return;
+  e.preventDefault();
+  if (e.deltaY < 0 && index > 0) {
+    changePhotoId(index - 1);
+  } else if (e.deltaY > 0 && index < images.length - 1) {
+    changePhotoId(index + 1);
+  }
+};
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -79,7 +89,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 top-16 z-50 flex flex-col bg-background" {...handlers}>
+    <div className="fixed inset-0 top-14 z-50 flex flex-col bg-background" onWheel={handleThumbWheel} {...handlers}>
       <div className="py-0 flex flex-row w-full justify-between">
         <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
@@ -91,7 +101,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           </Button>
         </div>
       </div>
-      <div className="fixed items-center justify-center inset-0 top-17 z-50 flex ">
+      <div className="fixed items-center justify-center inset-0 top-10 z-50 flex ">
         {hasPrev && (
           <button
             className="absolute focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
@@ -119,7 +129,10 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 justify-center px-4 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999">
+        <div 
+          className="absolute bottom-0 justify-center px-43 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999"
+          
+        >
           {images.map((img, idx) => (
             <button
               key={img + idx}
