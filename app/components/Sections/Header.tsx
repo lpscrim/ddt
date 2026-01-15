@@ -133,7 +133,7 @@ export function Header() {
             <NavIcon
               color={isLight ? "background" : "foreground"}
               open={isMenuOpen}
-              hoverColor="foreground"
+              hoverColor={isLight ? "background" : "foreground"}
             />
           </button>
         </div>
@@ -142,23 +142,26 @@ export function Header() {
         {isMenuOpen && (
           <nav className={`md:hidden flex flex-col gap-4 text-lg pt-4 `}>
             <button
+              onClick={() => setIsMenuOpen(false)}
               className={`title pop-up opacity-0 text-left transition-colors ${
                 isLight
                   ? "text-background hover:text-foreground"
                   : "text-foreground hover:text-muted-foreground"
               }`}
+              
             >
               <Link href="/work" className="cursor-crosshair">
                 WORK
               </Link>
             </button>
             <button
+            
               className={`title pop-up-2 opacity-0 text-left transition-colors cursor-crosshair ${
                 isLight
                   ? "text-background hover:text-foreground"
                   : "text-foreground hover:text-muted-foreground"
               }`}
-              onClick={() => { conditionalScrollTo('#about'); }}
+              onClick={() => { conditionalScrollTo('#about'); setIsMenuOpen(false); }}
             >
                 ABOUT
             </button>
@@ -168,7 +171,7 @@ export function Header() {
                   ? "text-background hover:text-foreground"
                   : "text-foreground hover:text-muted-foreground"
               }`}
-              onClick={() => conditionalScrollTo('#contact')}
+              onClick={() => { conditionalScrollTo('#contact'); setIsMenuOpen(false); }}
             >
                 CONTACT
             </button>
