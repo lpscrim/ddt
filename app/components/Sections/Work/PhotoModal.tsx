@@ -67,7 +67,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 top-16 z-50 flex flex-col" {...handlers}>
+    <div className="fixed inset-0 top-16 z-50 flex flex-col bg-background" {...handlers}>
       <div className="py-0 flex flex-row w-full justify-between">
         <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
@@ -94,7 +94,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           width={1200}
           height={800}
           fill={false}
-          className="max-h-[82vh] max-w-[90vw] object-contain"
+          className="max-h-[82vh] max-w-[90vw] object-contain rounded-xs"
         />
         {hasNext && (
           <button
@@ -112,7 +112,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             <button
               key={img + idx}
               onClick={() => changePhotoId(idx)}
-              className={`border ${idx === index ? " shadow-lg" : ""} rounded-xs overflow-x-hidden  focus:outline-none shrink-0`}
+              className={` ${idx === index ? " shadow-lg" : ""} rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
               style={{ width: 40, height: 50 }}
             >
               <ImageWithFallback

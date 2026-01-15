@@ -113,7 +113,7 @@ export function WorkGallery({
   };
 
   return (
-    <section id="work" className="min-h-svh px-6">
+    <section id="work" className="min-h-[75svh] px-6">
       {!modalOpen && <MainGallery
         viewMode={viewMode}
         setViewMode={setViewMode}
