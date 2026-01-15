@@ -108,10 +108,12 @@ export function WorkGallery({
     setModalOpen(true);
   };
 
-
+  const handleThumbClick = (idx: number) => {
+    setModalIndex(idx);
+  };
 
   return (
-    <section id="work" className="min-h-[84.5svh] px-6">
+    <section id="work" className="min-h-svh px-6">
       {!modalOpen && <MainGallery
         viewMode={viewMode}
         setViewMode={setViewMode}
@@ -126,6 +128,8 @@ export function WorkGallery({
       <PhotoModal
         isOpen={modalOpen}
         image={modalImages[modalIndex] || ""}
+        images={modalImages}
+        index={modalIndex}
         onClose={() => setModalOpen(false)}
         onPrev={() => setModalIndex((prev) => (prev > 0 ? prev - 1 : prev))}
         onNext={() => setModalIndex((prev) => (prev < modalImages.length - 1 ? prev + 1 : prev))}
@@ -134,6 +138,7 @@ export function WorkGallery({
         hasNext={modalIndex < modalImages.length - 1}
         name={name}
         year={year}
+        changePhotoId={handleThumbClick}
       />
     </section>
   );

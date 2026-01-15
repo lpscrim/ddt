@@ -11,9 +11,12 @@ interface PhotoModalProps {
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
-    isProject: boolean;
-    name: string;
-    year: string;
+  isProject: boolean;
+  name: string;
+  year: string;
+  images?: string[];
+  index?: number;
+  changePhotoId?: (idx: number) => void;
 }
 
 export const PhotoModal: React.FC<PhotoModalProps> = ({
@@ -24,9 +27,12 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   onNext,
   hasPrev,
   hasNext,
-    isProject,
-    name,
-    year,
+  isProject,
+  name,
+  year,
+  images = [],
+  index = 0,
+  changePhotoId = () => {},
 }) => {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -96,10 +102,31 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             onClick={onNext}
             aria-label="Next"
           >
-            
           </button>
         )}
       </div>
+      {/* Tiny scrollable thumbnail strip */}
+      {images.length > 1 && (
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] flex overflow-x-auto space-x-0 py-4 bg-background z-999">
+          {images.map((img, idx) => (
+            <button
+              key={img + idx}
+              onClick={() => changePhotoId(idx)}
+              className={`border ${idx === index ? " shadow-lg" : ""} rounded-xs overflow-x-hidden  focus:outline-none shrink-0`}
+              style={{ width: 40, height: 50 }}
+            >
+              <ImageWithFallback
+                src={img}
+                alt={`Thumbnail ${idx + 1}`}
+                width={40}
+                height={50}
+                fill={false}
+                className={`object-cover h-full ${idx === index ? "brightness-110" : "brightness-50"}`}
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
