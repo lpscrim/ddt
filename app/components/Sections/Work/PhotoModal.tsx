@@ -40,6 +40,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
+  const viewerRef = useRef<HTMLDivElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const lastWheelAtRef = useRef<number>(0);
 
@@ -50,14 +51,21 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     if (images.length <= 1) return;
 
     const stripEl = stripRef.current;
-    const imageEl = imageWrapRef.current;
-    if (!stripEl || !imageEl) return;
+    const viewerEl = viewerRef.current;
+    if (!stripEl || !viewerEl) return;
 
-    const imageRect = imageEl.getBoundingClientRect();
+    const viewerRect = viewerEl.getBoundingClientRect();
     const stripRect = stripEl.getBoundingClientRect();
 
-    // Midpoint between bottom of image and bottom of screen
-    const targetCenterY = (imageRect.bottom + window.innerHeight) / 2;
+    // Use the *maximum* image height (from class max-h-[82vh]) so position
+    // doesn't change when an image renders shorter (e.g. landscape).
+    const MAX_IMAGE_VH = 0.82;
+    const maxImageHeight = Math.min(viewerRect.height, window.innerHeight * MAX_IMAGE_VH);
+    const viewerCenterY = (viewerRect.top + viewerRect.bottom) / 2;
+    const maxImageBottom = viewerCenterY + maxImageHeight / 2;
+
+    // Midpoint between bottom of max image area and bottom of screen
+    const targetCenterY = (maxImageBottom + window.innerHeight) / 2;
     let nextTop = targetCenterY - stripRect.height / 2;
 
     // Keep it on-screen
@@ -193,7 +201,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           </Button>
         </div>
       </div>
-      <div className="fixed items-center justify-center inset-0 top-10 z-50 flex ">
+      <div ref={viewerRef} className="fixed items-center justify-center inset-0 top-10 z-50 flex ">
         {hasPrev && (
           <button
             className="absolute focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
