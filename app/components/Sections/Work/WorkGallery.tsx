@@ -32,6 +32,9 @@ export function WorkGallery({
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImages, setModalImages] = useState<string[]>([]);
   const [modalIndex, setModalIndex] = useState<number>(0);
+  const [isProject, setIsProject] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
 
   // Filtered projects/photos by selected categories
@@ -93,8 +96,12 @@ export function WorkGallery({
     if (mode === "photos") {
       setModalImages(filteredPhotos);
       setModalIndex(index);
+      setIsProject(false);
     } else if (mode === "projects" && project) {
       const imgs = [project.imageUrl, ...(project.galleryImages || [])];
+      setIsProject(true);
+      setName(project.title);
+      setYear(project.year);
       setModalImages(imgs);
       setModalIndex(0);
     }
@@ -123,7 +130,10 @@ export function WorkGallery({
         onPrev={() => setModalIndex((prev) => (prev > 0 ? prev - 1 : prev))}
         onNext={() => setModalIndex((prev) => (prev < modalImages.length - 1 ? prev + 1 : prev))}
         hasPrev={modalIndex > 0}
+        isProject={isProject}
         hasNext={modalIndex < modalImages.length - 1}
+        name={name}
+        year={year}
       />
     </section>
   );

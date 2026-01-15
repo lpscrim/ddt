@@ -10,6 +10,9 @@ interface PhotoModalProps {
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+    isProject: boolean;
+    name: string;
+    year: string;
 }
 
 export const PhotoModal: React.FC<PhotoModalProps> = ({
@@ -20,6 +23,9 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   onNext,
   hasPrev,
   hasNext,
+    isProject,
+    name,
+    year,
 }) => {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -41,8 +47,12 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
 
   return (
     <div className="fixed inset-0 top-16 z-50 flex flex-col">
-      <div className="py-4 justify-end right-0 w-25">
-        <div className="flex mx-auto justify-center absolute top-0 right-4 w-25 -mr-4 text-foreground z-60">
+      <div className="py-0 flex flex-row w-full justify-between">
+        <div className="fixed text-sm sm:text-base py-2 px-6 w-full flex items-center">
+          {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
+          {!isProject && <span className="opacity-0">{"0"}</span>}
+        </div>
+        <div className="flex mx-auto justify-center w-25 -mr-4 text-foreground z-60">
           <Button onClick={onClose} size="sm">
             BACK
           </Button>
@@ -51,11 +61,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       <div className="fixed items-center justify-center inset-0 top-17 z-50 flex ">
         {hasPrev && (
           <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground text-3xl"
+            className="absolute left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
             onClick={onPrev}
             aria-label="Previous"
           >
-            ‹
+            
           </button>
         )}
         <ImageWithFallback
@@ -68,11 +78,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         />
         {hasNext && (
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground text-3xl"
+            className="absolute right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
             onClick={onNext}
             aria-label="Next"
           >
-            ›
+            
           </button>
         )}
       </div>
