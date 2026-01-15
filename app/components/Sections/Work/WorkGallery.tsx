@@ -1,8 +1,8 @@
 
 "use client";
 
-import React, { useState } from "react";
-import { PhotoGallery } from "./PhotoGallery";
+import  { useState } from "react";
+import { PhotoModal } from "./PhotoModal";
 import { MainGallery } from "./MainGallery";
 
 interface Project {
@@ -29,26 +29,10 @@ export function WorkGallery({
   const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const [galleryOpen, setGalleryOpen] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<string[]>([]);
-  const [galleryStart, setGalleryStart] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState<string[]>([]);
+  const [modalIndex, setModalIndex] = useState<number>(0);
 
-  // Open gallery if ?project=id is present
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const params = new URLSearchParams(window.location.search);
-    const projectId = params.get('project');
-    if (projectId) {
-      const project = projects.find(p => String(p.id) === projectId);
-      if (project) {
-        setGalleryImages([project.imageUrl, ...(project.galleryImages || [])]);
-        setGalleryStart(0);
-        setSelectedProject(project);
-        setGalleryOpen(true);
-      }
-    }
-  }, [projects]);
 
   // Filtered projects/photos by selected categories
   const filteredProjects = selectedCategories.length > 0
@@ -107,44 +91,40 @@ export function WorkGallery({
   // Handler to open gallery
   const handleCardClick = (mode: "photos" | "projects", index: number, project?: typeof projects[number]) => {
     if (mode === "photos") {
-      setGalleryImages(filteredPhotos);
-      setGalleryStart(index);
+      setModalImages(filteredPhotos);
+      setModalIndex(index);
     } else if (mode === "projects" && project) {
       const imgs = [project.imageUrl, ...(project.galleryImages || [])];
-      setGalleryImages(imgs);
-      setGalleryStart(0);
-      setSelectedProject(project);
+      setModalImages(imgs);
+      setModalIndex(0);
     }
-    setGalleryOpen(true);
+    setModalOpen(true);
   };
 
 
 
   return (
     <section id="work" className="min-h-svh px-6 py-0">
-      {!galleryOpen && (
-        <MainGallery
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-          filteredProjects={filteredProjects}
-          filteredPhotos={filteredPhotos}
-          sortedVisibleCategories={sortedVisibleCategories}
-          toggleCategory={toggleCategory}
-          onCardClick={handleCardClick}
-        />
-      )}
-      {galleryOpen && (
-          <PhotoGallery
-            images={galleryImages}
-            startIndex={galleryStart}
-            onClose={() => setGalleryOpen(false)}
-            isProject={viewMode === "projects"}
-            name={selectedProject ? selectedProject.title : ""}
-            year={selectedProject ? selectedProject.year : ""}
-          />
-      )}
+      <MainGallery
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        filteredProjects={filteredProjects}
+        filteredPhotos={filteredPhotos}
+        sortedVisibleCategories={sortedVisibleCategories}
+        toggleCategory={toggleCategory}
+        onCardClick={handleCardClick}
+      />
+      <PhotoModal
+        isOpen={modalOpen}
+        image={modalImages[modalIndex] || ""}
+        onClose={() => setModalOpen(false)}
+        onPrev={() => setModalIndex((prev) => (prev > 0 ? prev - 1 : prev))}
+        onNext={() => setModalIndex((prev) => (prev < modalImages.length - 1 ? prev + 1 : prev))}
+        hasPrev={modalIndex > 0}
+        hasNext={modalIndex < modalImages.length - 1}
+      />
     </section>
   );
 
