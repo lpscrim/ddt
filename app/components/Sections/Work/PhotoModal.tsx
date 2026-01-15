@@ -1,4 +1,5 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
+ 
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
 import Button from "../../UI/Layout/Button";
 import { useSwipeable } from "react-swipeable";
@@ -34,6 +35,17 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   index = 0,
   changePhotoId = () => {},
 }) => {
+
+   // Refs for thumbnails
+  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Center active thumbnail when index changes
+  useEffect(() => {
+    if (images.length > 1 && thumbRefs.current[index]) {
+      thumbRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+  }, [index, images.length]);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -107,10 +119,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 justify-center px-4 flex overflow-x-auto space-x-0 py-1 bg-background z-999">
+        <div className="absolute bottom-0 justify-center px-4 flex overflow-x-auto w-full space-x-0 py-1 hide-scrollbar bg-background z-999">
           {images.map((img, idx) => (
             <button
               key={img + idx}
+              ref={el => { thumbRefs.current[idx] = el; }}
               onClick={() => changePhotoId(idx)}
               className={` ${idx === index ? " shadow-lg" : ""} rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
               style={{ width: 30, height: 40 }}
