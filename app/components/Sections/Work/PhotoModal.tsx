@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useRef, useState } from "react";
- 
+
 import { ImageWithFallback } from "../../UI/Layout/ImageWithFallback";
 import Button from "../../UI/Layout/Button";
 import { useSwipeable } from "react-swipeable";
@@ -37,8 +37,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   index = 0,
   changePhotoId = () => {},
 }) => {
-
-   // Refs for thumbnails
+  // Refs for thumbnails
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
@@ -119,7 +118,10 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     // Use the *maximum* image height (from class max-h-[82vh]) so position
     // doesn't change when an image renders shorter (e.g. landscape).
     const MAX_IMAGE_VH = 0.82;
-    const maxImageHeight = Math.min(viewerRect.height, window.innerHeight * MAX_IMAGE_VH);
+    const maxImageHeight = Math.min(
+      viewerRect.height,
+      window.innerHeight * MAX_IMAGE_VH
+    );
     const viewerCenterY = (viewerRect.top + viewerRect.bottom) / 2;
     const maxImageBottom = viewerCenterY + maxImageHeight / 2;
 
@@ -256,30 +258,47 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
       {...swipeHandlers}
     >
-      <div className="relative py-0 flex flex-row w-full justify-between">
-        <div className="flex py-2 px-6 w-full items-center">
-          {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
+      <div className="relative py-0 flex flex-row w-full justify-between z-100 bg-background ">
+        <div className="flex py-2 px-6 w-full items-center z-100">
+          {isProject && (
+            <span className="text-foreground">
+              {name} {year}
+            </span>
+          )}
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
-        <div className="flex justify-center w-30 md:w-29 text-foreground z-90">
-          <Button onClick={() => setTextOpen(!textOpen)} size="sm">
-            TEXT
-          </Button>
-        </div>
-        <div className="flex justify-center w-30 md:w-29 text-foreground z-90">
-          <Button onClick={onClose} size="sm">
-            BACK
-          </Button>
+        <div className="flex flex-row  w-50">
+          {isProject && text && (
+            <div className="flex justify-center w-22 text-foreground z-100 ">
+              <Button onClick={() => setTextOpen(!textOpen)} size="sm">
+                TEXT
+              </Button>
+            </div>
+          )}
+          <div className="flex justify-center w-24 md:w-23 text-foreground z-100">
+            <Button onClick={onClose} size="sm">
+              BACK
+            </Button>
+          </div>
         </div>
       </div>
-    {isProject && text && textOpen && (
-        <div className="relative flex w-full min-h-[40svh] z-90 py-4 bg-background items-center">
-          <div className="max-w-3xl mx-auto px-6 text-center text-foreground">
+      {isProject && text && (
+        <div
+          className={`relative flex w-full border-b border-foreground z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
+            textOpen ? "translate-y-0 opacity-100" : ""
+          }  transition-all duration-300 ease-in-out overflow-y-auto z-40`}
+        >
+          <div
+            className={`max-w-3xl mx-auto px-6 text-center text-foreground `}
+          >
             <p className="whitespace-pre-line">{text}</p>
           </div>
-      </div>
+        </div>
       )}
-      <div ref={viewerRef} className="fixed items-center justify-center inset-0 top-10 z-60 flex  ">
+      <div
+        ref={viewerRef}
+        className="fixed items-center justify-center inset-0 top-10 z-60 flex  "
+      >
         {hasPrev && (
           <button
             className="absolute z-80 cursor-chevron-left focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
@@ -288,8 +307,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               onPrev();
             }}
             aria-label="Previous"
-          >
-          </button>
+          ></button>
         )}
         <div
           ref={(el) => {
@@ -329,24 +347,26 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               onNext();
             }}
             aria-label="Next"
-          >
-          </button>
+          ></button>
         )}
       </div>
       {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
-        <div 
+        <div
           ref={stripRef}
           className="fixed left-0 right-0 px-4 flex items-center overflow-x-auto w-full space-x-0 py-2.5 hide-scrollbar bg-background z-999"
           style={thumbStripTop === null ? undefined : { top: thumbStripTop }}
-          
         >
           {images.map((img, idx) => (
             <button
               key={img + idx}
-              ref={el => { thumbRefs.current[idx] = el; }}
+              ref={(el) => {
+                thumbRefs.current[idx] = el;
+              }}
               onClick={() => changePhotoId(idx)}
-              className={` ${idx === index ? " shadow-lg" : ""} rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
+              className={` ${
+                idx === index ? " shadow-lg" : ""
+              } rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
               style={{ width: 30, height: 40 }}
             >
               <ImageWithFallback
@@ -355,7 +375,9 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 width={40}
                 height={40}
                 fill={false}
-                className={`object-cover h-full ${idx === index ? "brightness-110" : "brightness-50"}`}
+                className={`object-cover h-full ${
+                  idx === index ? "brightness-110" : "brightness-50"
+                }`}
               />
             </button>
           ))}
