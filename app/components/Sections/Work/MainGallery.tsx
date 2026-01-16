@@ -75,6 +75,7 @@ export function MainGallery({
       {viewMode === "projects" ? (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-0">
           {filteredProjects.map((project, idx) => (
+            <div key={project.id} className="relative group">
             <Card
               key={project.id}
               categories={project.categories}
@@ -84,6 +85,16 @@ export function MainGallery({
               title={project.title}
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
+            <div className="absolute top-8 px-4 group-hover:opacity-100 opacity-0 flex flex-col group-hover:mt-2 z-60 transition-all duration-500">
+                <h3 className="tracking-tight text-background">
+                  {project.title}
+                </h3>
+                <div className="flex gap-4 text-background">
+                  <span>[{project.categories.map(category => category).join(', ')}]</span>
+                  <span>{project.year}</span>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
