@@ -219,6 +219,20 @@ h1, h2, h3, h4, button, .title {
   font-family: 'Futura PT', sans-serif;
 }
 
+@layer utilities {
+  /* Custom chevron cursors for gallery navigation. Fallbacks keep behavior usable everywhere. */
+  .cursor-chevron-left {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20width%3D'32'%20height%3D'32'%20viewBox%3D'0%200%2032%2032'%3E%3Cpath%20d%3D'M19%208l-8%208%208%208'%20fill%3D'none'%20stroke%3D'%23111'%20stroke-width%3D'3'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'/%3E%3C/svg%3E") 16 16,
+      w-resize;
+  }
+
+  .cursor-chevron-right {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20width%3D'32'%20height%3D'32'%20viewBox%3D'0%200%2032%2032'%3E%3Cpath%20d%3D'M13%208l8%208-8%208'%20fill%3D'none'%20stroke%3D'%23111'%20stroke-width%3D'3'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'/%3E%3C/svg%3E") 16 16,
+      e-resize;
+  }
+
+}
+
 #contact a {
   font-family: 'Futura PT', sans-serif;
 }
@@ -286,11 +300,4 @@ html {
 .hide-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
-}
-
-cursor-chevron-left {
-  cursor: url('/icons/chevron-left.cur'), auto;
-}
-cursor-chevron-right {
-  cursor: url('/icons/chevron-right.cur'), auto;
 }
