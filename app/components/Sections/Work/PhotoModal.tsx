@@ -49,6 +49,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   // Loading progress bar ied to load event;)
   const [loadProgress, setLoadProgress] = useState(0);
   const [showLoadProgress, setShowLoadProgress] = useState(false);
+  const [textOpen, setTextOpen] = useState(false);
   const progressTimerRef = useRef<number | null>(null);
   const progressHideTimerRef = useRef<number | null>(null);
   const progressStartedForImageRef = useRef<string | null>(null);
@@ -261,11 +262,23 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
         <div className="flex justify-center w-30 md:w-29 text-foreground z-90">
+          <Button onClick={() => setTextOpen(!textOpen)} size="sm">
+            TEXT
+          </Button>
+        </div>
+        <div className="flex justify-center w-30 md:w-29 text-foreground z-90">
           <Button onClick={onClose} size="sm">
             BACK
           </Button>
         </div>
       </div>
+    {isProject && text && textOpen && (
+        <div className="relative flex w-full min-h-[40svh] z-90 py-4 bg-background items-center">
+          <div className="max-w-3xl mx-auto px-6 text-center text-foreground">
+            <p className="whitespace-pre-line">{text}</p>
+          </div>
+      </div>
+      )}
       <div ref={viewerRef} className="fixed items-center justify-center inset-0 top-10 z-60 flex  ">
         {hasPrev && (
           <button
