@@ -268,14 +268,14 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
         <div className="flex flex-row  w-50">
-          {isProject && text && (
-            <div className="flex justify-center w-22 text-foreground z-100 ">
+            <div className="flex justify-center w-21 -mr-4 text-foreground z-100">
+              {isProject && text && (
               <Button onClick={() => setTextOpen(!textOpen)} size="sm">
                 TEXT
               </Button>
+                        )}
             </div>
-          )}
-          <div className="flex justify-center w-24 md:w-23 text-foreground z-100">
+          <div className="flex justify-center w-23 md:w-23 text-foreground z-100">
             <Button onClick={onClose} size="sm">
               BACK
             </Button>
