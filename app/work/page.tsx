@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getProjects } from "../data/projects";
 import { WorkGallery } from "../components/Sections/Work/WorkGallery";
 
@@ -24,11 +25,13 @@ export default async function WorkPage() {
 
   return (
     <main>
-      <WorkGallery 
-        projects={projects} 
-        categoryCounts={sortedCategories} 
-        allPhotos={allPhotos} 
-      />
+      <Suspense fallback={null}>
+        <WorkGallery 
+          projects={projects} 
+          categoryCounts={sortedCategories} 
+          allPhotos={allPhotos} 
+        />
+      </Suspense>
     </main>
   );
 }
