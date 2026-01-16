@@ -332,7 +332,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             width={1200}
             height={800}
             fill={false}
-            className="max-h-[82vh] max-w-[90vw] object-contain rounded-xs"
+            className="max-h-[82vh] max-w-[90vw] object-contain"
             onLoad={() => {
               finishProgress();
               positionThumbStrip();
