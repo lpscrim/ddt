@@ -47,9 +47,9 @@ export function Header() {
   const isLight = !isWorkPage && onHero;
 
   return (
-    <header className={`fixed text-xl top-0 left-0 right-0 z-50 px-6`}>
-      {isWorkPage && (
-        <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background z-0 pointer-events-none" />
+    <header className={`fixed text-xl top-0 left-0 right-0 z-999 px-6`}>
+      {!isLight && (
+        <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background z-0 pointer-events-none transition-all duration-500" />
       )}
       <div className="relative mx-auto py-4 z-10">
         <div className="flex items-center justify-between">
@@ -57,14 +57,14 @@ export function Header() {
           <button className="relative cursor-crosshair" onClick={() => conditionalScrollTo('')}>
             <span
               className={`tracking-wide title font-semibold text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
-                isLight ? "opacity-0" : "opacity-100"
+                isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
               }`}
             >
               DAYDREAMTEAM
             </span>
             <span
               className={`tracking-wide title font-semibold text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                isLight ? "opacity-100" : "opacity-0"
+                isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
               }`}
             >
               DAYDREAMTEAM
@@ -77,14 +77,14 @@ export function Header() {
               <Link href="/work" className="cursor-crosshair">
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0" : "opacity-100"
+                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
                   }`}
                 >
                   WORK
                 </span>
                 <span
                   className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100" : "opacity-0"
+                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
                 >
                   WORK
@@ -94,14 +94,14 @@ export function Header() {
             <button className="relative title text-xl cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0" : "opacity-100"
+                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
                   }`}
                 >
                   ABOUT
                 </span>
                 <span
                   className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100" : "opacity-0"
+                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
                 >
                   ABOUT
@@ -110,14 +110,14 @@ export function Header() {
             <button className="relative title text-xl cursor-crosshair " onClick={() => conditionalScrollTo('#contact')}>
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0" : "opacity-100"
+                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
                   }`}
                 >
                   CONTACT
                 </span>
                 <span
                   className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100" : "opacity-0"
+                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
                 >
                   CONTACT
