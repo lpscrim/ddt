@@ -17,6 +17,9 @@ interface CloudinarySearchResponse {
   next_cursor?: string;
 }
 
+const CLOUDINARY_CACHE_TAG = "cloudinary-projects";
+const CLOUDINARY_REVALIDATE_SECONDS = 60 * 60; // 1 hour
+
 async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
@@ -36,7 +39,10 @@ async function fetchCloudinaryResources(folder: string): Promise<string[]> {
         expression: `folder:photos/${folder}/*`,
         max_results: 500,
       }),
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      next: {
+        revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+        tags: [CLOUDINARY_CACHE_TAG],
+      },
     }
   );
   
@@ -57,7 +63,10 @@ async function fetchCloudinaryFolders(): Promise<string[]> {
       headers: {
         'Authorization': `Basic ${auth}`,
       },
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      next: {
+        revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+        tags: [CLOUDINARY_CACHE_TAG],
+      },
     }
   );
   
