@@ -13,6 +13,7 @@ interface Project {
   year: string;
   imageUrl: string;
   galleryImages?: string[];
+  text?: string;
 }
 
 interface WorkGalleryProps {
@@ -40,6 +41,7 @@ export function WorkGallery({
   const [isProject, setIsProject] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [year, setYear] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
   const lastOpenedProjectIdRef = useRef<number | null>(null);
 
@@ -108,6 +110,7 @@ export function WorkGallery({
       setModalImages(filteredPhotos);
       setModalIndex(index);
       setIsProject(false);
+      setText("");
     } else if (mode === "projects" && project) {
       const imgs = [project.imageUrl, ...(project.galleryImages || [])];
       setIsProject(true);
@@ -115,6 +118,7 @@ export function WorkGallery({
       setYear(project.year);
       setModalImages(imgs);
       setModalIndex(0);
+      setText(project.text || "");
     }
     setModalOpen(true);
   };
@@ -144,6 +148,7 @@ export function WorkGallery({
       setIsProject(true);
       setName(project.title);
       setYear(project.year);
+      setText(project.text || "");
       setModalImages(imgs);
       setModalIndex(0);
       setModalOpen(true);
@@ -197,6 +202,7 @@ export function WorkGallery({
         hasNext={modalIndex < modalImages.length - 1}
         name={name}
         year={year}
+        text={text}
         changePhotoId={handleThumbClick}
       />
     </section>

@@ -9,6 +9,7 @@ interface Project {
   year: string;
   imageUrl: string;
   galleryImages?: string[];
+  text?: string;
 }
 
 export interface MainGalleryProps {

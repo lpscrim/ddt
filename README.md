@@ -63,3 +63,9 @@ curl "https://daydreamteam.co.uk/api/revalidate?secret=YOUR_SECRET"
 ```
 
 That clears the cached Cloudinary data and revalidates `/` and `/work`.
+
+### Project Descriptions
+
+If you upload a `description.txt` file alongside a project's images in its Cloudinary folder, the app will load it into `project.text`.
+
+(Legacy `description.cd` is also supported.)

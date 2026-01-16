@@ -58,6 +58,9 @@ async function processDirectory(inputDir, outputDir) {
       await processDirectory(inputPath, outputPath);
     } else if (/\.(jpg|jpeg|png|webp|gif)$/i.test(entry.name)) {
       await compressImage(inputPath, outputPath);
+    } else if (/^description\.(txt|cd)$/i.test(entry.name)) {
+      fs.copyFileSync(inputPath, outputPath);
+      console.log(`✓ ${entry.name} - copied`);
     }
   }
 }

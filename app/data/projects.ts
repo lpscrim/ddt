@@ -5,6 +5,7 @@ interface Project {
   year: string;
   imageUrl: string;  // Cloudinary public ID
   galleryImages?: string[];
+  text: string;
 }
 
 interface CloudinaryResource {
@@ -19,6 +20,15 @@ interface CloudinarySearchResponse {
 
 const CLOUDINARY_CACHE_TAG = "cloudinary-projects";
 const CLOUDINARY_REVALIDATE_SECONDS = 60 * 60; // 1 hour
+
+function isDescriptionPublicId(publicId: string): boolean {
+  const last = publicId.split("/").pop() ?? "";
+  return last === "description" || last === "description.txt" || last === "description.cd";
+}
+
+function normalizeText(text: string): string {
+  return text.replace(/\r\n/g, "\n").trim();
+}
 
 async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -47,7 +57,85 @@ async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   );
   
   const data: CloudinarySearchResponse = await response.json();
-  return data.resources.map((r) => r.public_id).sort();
+  return data.resources
+    .map((r) => r.public_id)
+    .filter((publicId) => !isDescriptionPublicId(publicId))
+    .sort();
+}
+
+async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) return "";
+
+  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
+
+  try {
+    const searchBody = {
+      expression: `folder:photos/${folder}/*`,
+      max_results: 200,
+    };
+
+    // Some Cloudinary accounts support this raw-specific endpoint; some don't.
+    // If it fails, fall back to the generic search endpoint with resource_type=raw.
+    const rawResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/resources/raw/search`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(searchBody),
+        next: {
+          revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+          tags: [CLOUDINARY_CACHE_TAG],
+        },
+      }
+    );
+
+    const response = rawResponse.ok
+      ? rawResponse
+      : await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Basic ${auth}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...searchBody,
+              resource_type: "raw",
+              type: "upload",
+            }),
+            next: {
+              revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+              tags: [CLOUDINARY_CACHE_TAG],
+            },
+          }
+        );
+
+    if (!response.ok) return "";
+
+    const data: CloudinarySearchResponse = await response.json();
+    const descriptionResource = data.resources.find((r) => isDescriptionPublicId(r.public_id));
+    if (!descriptionResource?.secure_url) return "";
+
+    const textResponse = await fetch(descriptionResource.secure_url, {
+      next: {
+        revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+        tags: [CLOUDINARY_CACHE_TAG],
+      },
+    });
+
+    if (!textResponse.ok) return "";
+    return normalizeText(await textResponse.text());
+  } catch {
+    return "";
+  }
 }
 
 async function fetchCloudinaryFolders(): Promise<string[]> {
@@ -100,6 +188,9 @@ export async function getProjects(): Promise<Project[]> {
       // Fetch images from Cloudinary
       const images = await fetchCloudinaryResources(folder);
 
+      // Fetch optional project description text (from description.cd uploaded as a raw file)
+      const text = await fetchCloudinaryDescriptionText(folder);
+
       // Sort so images named "0" (e.g., 0.webp, 0.jpg) come first as cover
       const sortedImages = images.sort((a, b) => {
         const aName = a.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
@@ -119,6 +210,7 @@ export async function getProjects(): Promise<Project[]> {
         year,
         imageUrl: coverImage ?? "",
         ...(galleryImages.length > 0 && { galleryImages }),
+        text,
       };
     })
   );
