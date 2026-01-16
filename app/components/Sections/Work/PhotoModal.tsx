@@ -191,11 +191,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {...swipeHandlers}
     >
       <div className="py-0 flex flex-row w-full justify-between">
-        <div className="flex text-sm sm:text-base py-2 px-6 w-full items-center">
+        <div className="flex py-2 px-6 w-full items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
-        <div className="flex justify-center w-30 text-foreground z-60">
+        <div className="flex justify-center w-30 md:w-29 text-foreground z-60">
           <Button onClick={onClose} size="sm">
             BACK
           </Button>
