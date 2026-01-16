@@ -1,6 +1,8 @@
 import { getProjects } from "../data/projects";
 import { WorkGallery } from "../components/Sections/Work/WorkGallery";
 
+
+
 export default async function WorkPage() {
   const projects = await getProjects();
 
