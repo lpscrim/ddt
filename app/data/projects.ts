@@ -10,11 +10,12 @@ interface Project {
 
 interface CloudinaryResource {
   public_id: string;
-  secure_url: string;
+  secure_url?: string;
   format?: string;
   filename?: string;
   original_filename?: string;
   display_name?: string;
+  created_at?: string;
 }
 
 interface CloudinarySearchResponse {
@@ -25,108 +26,87 @@ interface CloudinarySearchResponse {
 const CLOUDINARY_CACHE_TAG = "cloudinary-projects";
 const CLOUDINARY_REVALIDATE_SECONDS = 60 * 60; // 1 hour
 
-function getLastPathSegment(publicId: string): string {
-  return publicId.split("/").pop() ?? "";
+const DESCRIPTION_FORMATS = ["txt", "cd"] as const;
+
+function getLastPathSegment(value: string): string {
+  return value.split("/").pop() ?? "";
 }
 
 function stripExtension(filename: string): string {
   return filename.replace(/\.[^.]+$/, "");
 }
 
-function getDescriptionIndexFromAnyName(name: string): number | null {
-  const trimmed = name.trim();
-  if (!trimmed) return null;
-  return getDescriptionIndexFromFilename(trimmed);
+function getDescriptionIndexFromName(name: string): number | null {
+  // Supports: description.txt, description_1.txt, description_2.cd, etc.
+  // Also supports Cloudinary-generated unique IDs like: description_ab12cd.txt
+  const last = getLastPathSegment(name.trim());
+  if (!last) return null;
+
+  const base = stripExtension(last).toLowerCase();
+  const match = base.match(/^description(?:_(\d+))?$/);
+  if (!match) return null;
+  if (!match[1]) return 0;
+
+  const n = Number(match[1]);
+  return Number.isFinite(n) ? n : null;
+}
+
+function isDescriptionLikeName(name: string): boolean {
+  const last = getLastPathSegment(name.trim()).toLowerCase();
+  if (!last) return false;
+  const base = stripExtension(last);
+  return base === "description" || base.startsWith("description_");
 }
 
 function getResourceNameCandidates(resource: CloudinaryResource): string[] {
   const candidates: string[] = [];
-
   if (resource.display_name) candidates.push(resource.display_name);
   if (resource.filename) candidates.push(resource.filename);
+
   if (resource.original_filename) {
     const format = (resource.format ?? "").trim();
     candidates.push(format ? `${resource.original_filename}.${format}` : resource.original_filename);
   }
 
   candidates.push(getLastPathSegment(resource.public_id));
-
   return candidates;
 }
 
-function getDescriptionIndexFromFilename(filename: string): number | null {
-  // Supports: description.txt, description_1.txt, description_2.cd, etc.
-  const base = stripExtension(filename).toLowerCase();
-  const match = base.match(/^description(?:_(\d+))?$/);
-  if (!match) return null;
-  if (!match[1]) return 0;
-  const n = Number(match[1]);
-  return Number.isFinite(n) ? n : null;
+function getDescriptionIndex(resource: CloudinaryResource): number | null {
+  const candidates = getResourceNameCandidates(resource);
+  const numericIndices = candidates
+    .map(getDescriptionIndexFromName)
+    .filter((n): n is number => typeof n === "number")
+    .sort((a, b) => a - b);
+
+  if (numericIndices.length > 0) return numericIndices[0];
+  if (candidates.some(isDescriptionLikeName)) return 1000;
+  return null;
 }
 
 function isDescriptionResource(resource: CloudinaryResource): boolean {
-  const candidates = getResourceNameCandidates(resource);
-  const hasDescriptionName = candidates.some((c) => getDescriptionIndexFromAnyName(c) !== null);
-  if (!hasDescriptionName) return false;
+  if (getDescriptionIndex(resource) === null) return false;
 
   const format = (resource.format ?? "").toLowerCase();
-  if (format) return format === "txt" || format === "cd";
+  if (format) return (DESCRIPTION_FORMATS as readonly string[]).includes(format);
 
   // Fallback if Cloudinary didn't provide `format`
-  const lower = filename.toLowerCase();
-  return lower.endsWith(".txt") || lower.endsWith(".cd");
+  return getResourceNameCandidates(resource).some((name) => {
+    const lower = name.toLowerCase();
+    return lower.endsWith(".txt") || lower.endsWith(".cd");
+  });
 }
 
 function normalizeText(text: string): string {
   return text.replace(/\r\n/g, "\n").trim();
 }
 
-function isLikelyImagePublicId(publicId: string): boolean {
-  const last = getLastPathSegment(publicId);
-  const lower = last.toLowerCase();
-  const extMatch = lower.match(/\.([a-z0-9]+)$/);
-  if (!extMatch) return true;
-
-  const ext = extMatch[1];
-  return [
-    "jpg",
-    "jpeg",
-    "png",
-    "webp",
-    "gif",
-    "avif",
-    "heic",
-    "heif",
-    "tif",
-    "tiff",
-    "bmp",
-  ].includes(ext);
-}
-
-function isLikelyImageResource(resource: CloudinaryResource): boolean {
-  const format = (resource.format ?? "").toLowerCase();
-  if (format) {
-    return [
-      "jpg",
-      "jpeg",
-      "png",
-      "webp",
-      "gif",
-      "avif",
-      "heic",
-      "heif",
-      "tif",
-      "tiff",
-      "bmp",
-    ].includes(format);
-  }
-  return isLikelyImagePublicId(resource.public_id);
-}
-
 async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) return [];
   
   const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
   
@@ -141,14 +121,9 @@ async function fetchCloudinaryResources(folder: string): Promise<string[]> {
       body: JSON.stringify({
         expression: `folder:photos/${folder}/*`,
         max_results: 500,
-        fields: [
-          "public_id",
-          "secure_url",
-          "format",
-          "filename",
-          "original_filename",
-          "display_name",
-        ],
+        resource_type: "image",
+        type: "upload",
+        fields: ["public_id", "format", "filename", "original_filename", "display_name"],
       }),
       next: {
         revalidate: CLOUDINARY_REVALIDATE_SECONDS,
@@ -159,7 +134,7 @@ async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   
   const data: CloudinarySearchResponse = await response.json();
   return data.resources
-    .filter((r) => !isDescriptionResource(r) && isLikelyImageResource(r))
+    .filter((r) => !isDescriptionResource(r))
     .map((r) => r.public_id)
     .sort();
 }
@@ -174,22 +149,29 @@ async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
   const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
 
   try {
-    const searchBody = {
-      expression: `folder:photos/${folder}/*`,
-      max_results: 200,
-    };
-
-    // Some Cloudinary accounts support this raw-specific endpoint; some don't.
-    // If it fails, fall back to the generic search endpoint with resource_type=raw.
-    const rawResponse = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/resources/raw/search`,
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
       {
         method: "POST",
         headers: {
           Authorization: `Basic ${auth}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(searchBody),
+        body: JSON.stringify({
+          expression: `folder:photos/${folder}/*`,
+          max_results: 200,
+          resource_type: "raw",
+          type: "upload",
+          fields: [
+            "public_id",
+            "secure_url",
+            "format",
+            "filename",
+            "original_filename",
+            "display_name",
+            "created_at",
+          ],
+        }),
         next: {
           revalidate: CLOUDINARY_REVALIDATE_SECONDS,
           tags: [CLOUDINARY_CACHE_TAG],
@@ -197,41 +179,18 @@ async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
       }
     );
 
-    const response = rawResponse.ok
-      ? rawResponse
-      : await fetch(
-          `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Basic ${auth}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...searchBody,
-              resource_type: "raw",
-              type: "upload",
-            }),
-            next: {
-              revalidate: CLOUDINARY_REVALIDATE_SECONDS,
-              tags: [CLOUDINARY_CACHE_TAG],
-            },
-          }
-        );
-
     if (!response.ok) return "";
 
     const data: CloudinarySearchResponse = await response.json();
     const candidates = data.resources
       .filter((r) => isDescriptionResource(r))
-      .map((r) => {
-        const idx = getResourceNameCandidates(r)
-          .map((name) => getDescriptionIndexFromAnyName(name))
-          .filter((n): n is number => typeof n === "number")
-          .sort((a, b) => a - b)[0];
-        return { resource: r, idx: idx ?? Number.POSITIVE_INFINITY };
-      })
-      .sort((a, b) => a.idx - b.idx);
+      .map((r) => ({
+        resource: r,
+        idx: getDescriptionIndex(r) ?? Number.POSITIVE_INFINITY,
+        createdAtMs: r.created_at ? Date.parse(r.created_at) : 0,
+      }))
+      // Prefer lowest index (description.txt / description_0), then newest upload
+      .sort((a, b) => (a.idx - b.idx) || (b.createdAtMs - a.createdAtMs));
 
     const descriptionResource = candidates[0]?.resource;
     if (!descriptionResource?.secure_url) return "";

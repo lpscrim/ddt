@@ -284,7 +284,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {isProject && text && (
         <div
-          className={`relative flex w-full border-b border-foreground z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
+          className={`relative flex w-full border-b border-muted z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
             textOpen ? "translate-y-0 opacity-100" : ""
           }  transition-all duration-300 ease-in-out overflow-y-auto z-40`}
         >
