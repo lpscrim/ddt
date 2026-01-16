@@ -54,7 +54,7 @@ export function Header() {
       <div className="relative mx-auto py-4 z-10">
         <div className="flex items-center justify-between">
           {/* Logo with crossfade */}
-          <button className="relative cursor-crosshair" onClick={() => conditionalScrollTo('')}>
+          <button className="relative cursor-crosshair" onClick={() => { conditionalScrollTo(''); setIsMenuOpen(false); }}>
             <span
               className={`tracking-wide title font-semibold text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
                 isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
