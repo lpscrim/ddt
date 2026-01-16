@@ -287,3 +287,10 @@ html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+cursor-chevron-left {
+  cursor: url('/icons/chevron-left.cur'), auto;
+}
+cursor-chevron-right {
+  cursor: url('/icons/chevron-right.cur'), auto;
+}

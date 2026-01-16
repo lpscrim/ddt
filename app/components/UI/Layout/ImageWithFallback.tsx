@@ -37,10 +37,16 @@ export function ImageWithFallback({
   ...rest
 }: ImageWithFallbackProps) {
   const [didError, setDidError] = useState(false)
-  const [blurDataURL, setBlurDataURL] = useState<string | undefined>(() => {
-    if (blurDataURLProp) return blurDataURLProp
-    return blurDataUrlCache.get(src)
-  })
+
+  const [fetchedBlur, setFetchedBlur] = useState<
+    { src: string; blurDataURL: string } | null
+  >(null)
+
+  const blurDataURL = disableBlurPlaceholder
+    ? undefined
+    : blurDataURLProp ??
+      blurDataUrlCache.get(src) ??
+      (fetchedBlur?.src === src ? fetchedBlur.blurDataURL : undefined)
 
   const handleError = () => {
     setDidError(true)
@@ -51,11 +57,7 @@ export function ImageWithFallback({
     if (!src) return
     if (blurDataURLProp) return
 
-    const cached = blurDataUrlCache.get(src)
-    if (cached) {
-      setBlurDataURL(cached)
-      return
-    }
+    if (blurDataUrlCache.has(src)) return
 
     const controller = new AbortController()
 
@@ -70,7 +72,7 @@ export function ImageWithFallback({
         const next = data?.blurDataURL
         if (!next) return
         blurDataUrlCache.set(src, next)
-        setBlurDataURL(next)
+        setFetchedBlur({ src, blurDataURL: next })
       })
       .catch(() => {
         // Ignore; we can still load the full image normally.

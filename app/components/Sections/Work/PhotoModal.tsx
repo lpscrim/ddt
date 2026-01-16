@@ -44,7 +44,63 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   const modalRef = useRef<HTMLDivElement | null>(null);
   const lastWheelAtRef = useRef<number>(0);
 
+  // Loading progress bar ied to load event;)
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [showLoadProgress, setShowLoadProgress] = useState(false);
+  const progressTimerRef = useRef<number | null>(null);
+  const progressHideTimerRef = useRef<number | null>(null);
+  const progressStartedForImageRef = useRef<string | null>(null);
+
   const [thumbStripTop, setThumbStripTop] = useState<number | null>(null);
+
+  const startProgress = useCallback(() => {
+    if (progressTimerRef.current !== null) {
+      window.clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
+    if (progressHideTimerRef.current !== null) {
+      window.clearTimeout(progressHideTimerRef.current);
+      progressHideTimerRef.current = null;
+    }
+
+    setShowLoadProgress(true);
+    setLoadProgress(6);
+
+    // Fake progress: climb quickly to ~85%, then slow.
+    progressTimerRef.current = window.setInterval(() => {
+      setLoadProgress((p) => {
+        if (p >= 92) return p;
+        const step = p < 60 ? 9 : p < 80 ? 4 : 1;
+        return Math.min(92, p + step);
+      });
+    }, 120);
+  }, []);
+
+  const finishProgress = useCallback(() => {
+    if (progressTimerRef.current !== null) {
+      window.clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
+    setLoadProgress(100);
+    progressHideTimerRef.current = window.setTimeout(() => {
+      setShowLoadProgress(false);
+      setLoadProgress(0);
+      progressHideTimerRef.current = null;
+    }, 250);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (progressTimerRef.current !== null) {
+        window.clearInterval(progressTimerRef.current);
+        progressTimerRef.current = null;
+      }
+      if (progressHideTimerRef.current !== null) {
+        window.clearTimeout(progressHideTimerRef.current);
+        progressHideTimerRef.current = null;
+      }
+    };
+  }, []);
 
   const positionThumbStrip = useCallback(() => {
     if (!isOpen) return;
@@ -111,6 +167,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       window.removeEventListener("resize", onResize);
     };
   }, [isOpen, image, positionThumbStrip]);
+
+  const startProgressIfNeeded = useCallback(() => {
+    if (!image) return;
+    if (progressStartedForImageRef.current === image) return;
+    progressStartedForImageRef.current = image;
+    startProgress();
+  }, [image, startProgress]);
 
   const handleThumbWheel = useCallback(
     (e: WheelEvent) => {
@@ -190,27 +253,46 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
       {...swipeHandlers}
     >
-      <div className="py-0 flex flex-row w-full justify-between">
+      <div className="relative py-0 flex flex-row w-full justify-between">
         <div className="flex py-2 px-6 w-full items-center">
           {isProject && <span className="text-foreground">{name}{' '}{year}</span> }
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
-        <div className="flex justify-center w-30 md:w-29 text-foreground z-60">
+        <div className="flex justify-center w-30 md:w-29 text-foreground z-90">
           <Button onClick={onClose} size="sm">
             BACK
           </Button>
         </div>
       </div>
-      <div ref={viewerRef} className="fixed items-center justify-center inset-0 top-10 z-50 flex ">
+      <div ref={viewerRef} className="fixed items-center justify-center inset-0 top-10 z-60 flex  ">
         {hasPrev && (
           <button
-            className="absolute focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
-            onClick={onPrev}
+            className="absolute z-80 cursor-chevron-left focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            onClick={() => {
+              startProgress();
+              onPrev();
+            }}
             aria-label="Previous"
           >
           </button>
         )}
-        <div ref={imageWrapRef}>
+        <div
+          ref={(el) => {
+            imageWrapRef.current = el;
+            // Start the progress bar when the modal mounts or when the image element remounts.
+            // (Avoids setState-in-effect lint while still reacting to image changes.)
+            startProgressIfNeeded();
+          }}
+          className=""
+        >
+          {showLoadProgress && (
+            <div className="absolute left-0 right-0 top-[95vh] z-99 h-0.5 bg-foreground/20 overflow-hidden">
+              <div
+                className="h-full bg-foreground transition-[width] duration-150 ease-out"
+                style={{ width: `${loadProgress}%` }}
+              />
+            </div>
+          )}
           <ImageWithFallback
             src={image}
             alt="Gallery"
@@ -218,13 +300,19 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             height={800}
             fill={false}
             className="max-h-[82vh] max-w-[90vw] object-contain rounded-xs"
-            onLoad={positionThumbStrip}
+            onLoad={() => {
+              finishProgress();
+              positionThumbStrip();
+            }}
           />
         </div>
         {hasNext && (
           <button
-            className="absolute focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
-            onClick={onNext}
+            className="absolute  z-80  cursor-chevron-right focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            onClick={() => {
+              startProgress();
+              onNext();
+            }}
             aria-label="Next"
           >
           </button>
