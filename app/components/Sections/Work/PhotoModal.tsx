@@ -319,7 +319,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           className=""
         >
           {showLoadProgress && (
-            <div className="absolute left-0 right-0 top-[95vh] z-99 h-0.5 bg-foreground/20 overflow-hidden">
+            <div className="absolute left-6 right-6 top-[6vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
               <div
                 className="h-full bg-foreground transition-[width] duration-150 ease-out"
                 style={{ width: `${loadProgress}%` }}
@@ -332,6 +332,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             width={1200}
             height={800}
             fill={false}
+            sizes="90vw"
             className="max-h-[82vh] max-w-[90vw] object-contain"
             onLoad={() => {
               finishProgress();
@@ -375,6 +376,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 width={40}
                 height={40}
                 fill={false}
+                sizes="40px"
                 className={`object-cover h-full ${
                   idx === index ? "brightness-110" : "brightness-50"
                 }`}

@@ -17,9 +17,15 @@ interface ImageWithFallbackProps {
   fill?: boolean;
   width?: number;
   height?: number;
+  sizes?: string;
   priority?: boolean;
   blurDataURL?: string;
   disableBlurPlaceholder?: boolean;
+  fetchBlurPlaceholder?: boolean;
+  unoptimized?: boolean;
+  quality?: number | string;
+  format?: string;
+  dpr?: number | string;
   onLoad?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }
 
@@ -30,9 +36,15 @@ export function ImageWithFallback({
   fill = true,
   width,
   height,
+  sizes,
   priority = false,
   blurDataURL: blurDataURLProp,
   disableBlurPlaceholder = false,
+  fetchBlurPlaceholder = false,
+  unoptimized = true,
+  quality,
+  format,
+  dpr,
   onLoad,
   ...rest
 }: ImageWithFallbackProps) {
@@ -53,6 +65,10 @@ export function ImageWithFallback({
   }
 
   useEffect(() => {
+    // Fetching blur placeholders server-side is relatively expensive and can
+    // create a waterfall when rendering lots of images (e.g. galleries).
+    // Keep it opt-in; the default SVG placeholder is instant.
+    if (!fetchBlurPlaceholder) return
     if (disableBlurPlaceholder) return
     if (!src) return
     if (blurDataURLProp) return
@@ -79,7 +95,7 @@ export function ImageWithFallback({
       })
 
     return () => controller.abort()
-  }, [src, blurDataURLProp, disableBlurPlaceholder])
+  }, [src, blurDataURLProp, disableBlurPlaceholder, fetchBlurPlaceholder])
 
   if (didError) {
     return (
@@ -94,6 +110,17 @@ export function ImageWithFallback({
     )
   }
 
+  const computedSizes =
+    sizes ?? (fill ? '100vw' : width ? `${width}px` : undefined)
+
+  // Cloudinary automatic delivery optimizations.
+  // - format="auto" enables WebP/AVIF when supported
+  // - quality="auto" lets Cloudinary pick a good compression level
+  // - dpr="auto" serves crisp images without overshooting bytes
+  const computedFormat = format ?? 'auto'
+  const computedQuality = quality ?? 'auto:good'
+  const computedDpr = dpr ?? 'auto'
+
   return (
     <CldImage
       src={src}
@@ -102,7 +129,13 @@ export function ImageWithFallback({
       fill={fill}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
+      sizes={computedSizes}
+      format={computedFormat}
+      quality={computedQuality}
+      dpr={computedDpr}
       preload={priority}
+      loading={priority ? 'eager' : 'lazy'}
+      unoptimized={unoptimized}
       placeholder={disableBlurPlaceholder ? 'empty' : 'blur'}
       blurDataURL={disableBlurPlaceholder ? undefined : blurDataURL ?? DEFAULT_BLUR_DATA_URL}
       onLoad={onLoad}

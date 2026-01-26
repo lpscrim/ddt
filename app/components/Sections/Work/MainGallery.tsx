@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card } from "../../UI/Layout/Card";
 
 interface Project {
@@ -35,6 +36,19 @@ export function MainGallery({
   toggleCategory,
     onCardClick,
 }: MainGalleryProps) {
+  const INITIAL_PHOTOS_TO_RENDER = 96;
+  const PHOTOS_PAGE_SIZE = 96;
+
+  const [visiblePhotosCount, setVisiblePhotosCount] = useState(INITIAL_PHOTOS_TO_RENDER);
+
+  useEffect(() => {
+    // Reset pagination when switching modes or filters.
+    setVisiblePhotosCount(INITIAL_PHOTOS_TO_RENDER);
+  }, [viewMode, selectedCategories.join("|"), filteredPhotos.length]);
+
+  const photosToRender =
+    viewMode === "photos" ? filteredPhotos.slice(0, visiblePhotosCount) : filteredPhotos;
+
   return (
     <>
       <div className="pt-12 pb-4 px-0 rounded-xs flex flex-wrap gap-4">
@@ -84,6 +98,10 @@ export function MainGallery({
               galleryImages={project.galleryImages}
               year={project.year}
               title={project.title}
+              imageSizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+              imageWidth={900}
+              imageHeight={1125}
+              imageQuality="auto:eco"
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
             <div className="absolute top-8 px-4 group-hover:opacity-100 opacity-0 flex flex-col group-hover:mt-2 z-60 transition-all duration-500">
@@ -99,18 +117,39 @@ export function MainGallery({
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
-          {filteredPhotos.map((photo, index) => (
-            <Card
-              key={index}
-              categories={[]}
-              imageUrl={photo}
-              year=""
-              title=""
-              handleOnClick={() => onCardClick("photos", index)}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
+            {photosToRender.map((photo, index) => (
+              <Card
+                key={photo + index}
+                categories={[]}
+                imageUrl={photo}
+                year=""
+                title=""
+                imageSizes="(min-width: 1024px) 12.5vw, (min-width: 768px) 16.7vw, 33vw"
+                imageWidth={600}
+                imageHeight={750}
+                imageQuality="auto:eco"
+                handleOnClick={() => onCardClick("photos", index)}
+              />
+            ))}
+          </div>
+
+          {filteredPhotos.length > visiblePhotosCount && (
+            <div className="flex justify-center py-10">
+              <button
+                className="cursor-crosshair transition-opacity text-foreground/80 hover:text-foreground"
+                onClick={() =>
+                  setVisiblePhotosCount((n) =>
+                    Math.min(filteredPhotos.length, n + PHOTOS_PAGE_SIZE)
+                  )
+                }
+              >
+                LOAD MORE [{Math.min(filteredPhotos.length, visiblePhotosCount + PHOTOS_PAGE_SIZE)}/{filteredPhotos.length}]
+              </button>
+            </div>
+          )}
+        </>
       )}
     </>
   );
