@@ -258,6 +258,14 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
       {...swipeHandlers}
     >
+        {showLoadProgress && (
+            <div className="absolute left-6 right-6 top-[5vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
+              <div
+                className="h-full bg-foreground transition-[width] duration-150 ease-out"
+                style={{ width: `${loadProgress}%` }}
+              />
+            </div>
+          )}
       <div className="relative py-0 flex flex-row w-full justify-between z-100 bg-background ">
         <div className="flex py-2 px-6 w-full items-center z-100">
           {isProject && (
@@ -284,7 +292,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {isProject && text && (
         <div
-          className={`relative flex w-full border-b border-muted z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
+          className={` flex w-full border-b border-muted z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
             textOpen ? "translate-y-0 opacity-100" : ""
           }  transition-all duration-300 ease-in-out overflow-y-auto z-40`}
         >
@@ -318,14 +326,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           }}
           className=""
         >
-          {showLoadProgress && (
-            <div className="absolute left-6 right-6 top-[6vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
-              <div
-                className="h-full bg-foreground transition-[width] duration-150 ease-out"
-                style={{ width: `${loadProgress}%` }}
-              />
-            </div>
-          )}
+        
           <ImageWithFallback
             src={image}
             alt="Gallery"
@@ -342,7 +343,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         </div>
         {hasNext && (
           <button
-            className="absolute  z-80  cursor-chevron-right focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            className="absolute z-80 cursor-chevron-right focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
             onClick={() => {
               startProgress();
               onNext();
