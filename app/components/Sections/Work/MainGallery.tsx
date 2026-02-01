@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "../../UI/Layout/Card";
+
+const INITIAL_PHOTOS_TO_RENDER = 96;
+const PHOTOS_PAGE_SIZE = 96;
 
 interface Project {
   id: number;
@@ -36,18 +39,8 @@ export function MainGallery({
   toggleCategory,
     onCardClick,
 }: MainGalleryProps) {
-  const INITIAL_PHOTOS_TO_RENDER = 96;
-  const PHOTOS_PAGE_SIZE = 96;
-
-  const [visiblePhotosCount, setVisiblePhotosCount] = useState(INITIAL_PHOTOS_TO_RENDER);
-
-  useEffect(() => {
-    // Reset pagination when switching modes or filters.
-    setVisiblePhotosCount(INITIAL_PHOTOS_TO_RENDER);
-  }, [viewMode, selectedCategories.join("|"), filteredPhotos.length]);
-
-  const photosToRender =
-    viewMode === "photos" ? filteredPhotos.slice(0, visiblePhotosCount) : filteredPhotos;
+  const selectedCategoriesKey = selectedCategories.join("|");
+  const photosResetKey = `${selectedCategoriesKey}|${filteredPhotos.length}`;
 
   return (
     <>
@@ -118,38 +111,66 @@ export function MainGallery({
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
-            {photosToRender.map((photo, index) => (
-              <Card
-                key={photo + index}
-                categories={[]}
-                imageUrl={photo}
-                year=""
-                title=""
-                imageSizes="(min-width: 1024px) 12.5vw, (min-width: 768px) 16.7vw, 33vw"
-                imageWidth={600}
-                imageHeight={750}
-                imageQuality="auto:eco"
-                handleOnClick={() => onCardClick("photos", index)}
-              />
-            ))}
-          </div>
-
-          {filteredPhotos.length > visiblePhotosCount && (
-            <div className="flex justify-center py-10">
-              <button
-                className="cursor-crosshair transition-opacity text-foreground/80 hover:text-foreground"
-                onClick={() =>
-                  setVisiblePhotosCount((n) =>
-                    Math.min(filteredPhotos.length, n + PHOTOS_PAGE_SIZE)
-                  )
-                }
-              >
-                LOAD MORE [{Math.min(filteredPhotos.length, visiblePhotosCount + PHOTOS_PAGE_SIZE)}/{filteredPhotos.length}]
-              </button>
-            </div>
-          )}
+          <PhotosGrid
+            key={photosResetKey}
+            filteredPhotos={filteredPhotos}
+            onCardClick={onCardClick}
+          />
         </>
+      )}
+    </>
+  );
+}
+
+function PhotosGrid({
+  filteredPhotos,
+  onCardClick,
+}: {
+  filteredPhotos: string[];
+  onCardClick: (mode: "photos" | "projects", index: number) => void;
+}) {
+  const [visiblePhotosCount, setVisiblePhotosCount] = useState(
+    INITIAL_PHOTOS_TO_RENDER
+  );
+
+  const photosToRender = filteredPhotos.slice(0, visiblePhotosCount);
+
+  return (
+    <>
+      <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
+        {photosToRender.map((photo, index) => (
+          <Card
+            key={photo + index}
+            categories={[]}
+            imageUrl={photo}
+            year=""
+            title=""
+            imageSizes="(min-width: 1024px) 12.5vw, (min-width: 768px) 16.7vw, 33vw"
+            imageWidth={600}
+            imageHeight={750}
+            imageQuality="auto:eco"
+            handleOnClick={() => onCardClick("photos", index)}
+          />
+        ))}
+      </div>
+
+      {filteredPhotos.length > visiblePhotosCount && (
+        <div className="flex justify-center py-10">
+          <button
+            className="cursor-crosshair transition-opacity text-foreground/80 hover:text-foreground"
+            onClick={() =>
+              setVisiblePhotosCount((n) =>
+                Math.min(filteredPhotos.length, n + PHOTOS_PAGE_SIZE)
+              )
+            }
+          >
+            LOAD MORE [{Math.min(
+              filteredPhotos.length,
+              visiblePhotosCount + PHOTOS_PAGE_SIZE
+            )}
+            /{filteredPhotos.length}]
+          </button>
+        </div>
       )}
     </>
   );
