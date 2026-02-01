@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
 import { Header } from "./components/Sections/Header";
@@ -65,6 +65,11 @@ export const metadata: Metadata = {
     description:
       "Portfolio website of Lewis Scrimgeour, showcasing photography and visual art projects.",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
