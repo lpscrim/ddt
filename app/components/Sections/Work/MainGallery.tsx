@@ -97,12 +97,12 @@ export function MainGallery({
               imageQuality="auto:eco"
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
-            <div className="absolute top-8 px-4 group-hover:opacity-100 opacity-0 flex flex-col group-hover:mt-2 z-60 transition-all duration-500">
-                <h3 className="tracking-tight text-background">
+            <div className="absolute inset-x-0 top-8 px-4 group-hover:opacity-100 opacity-0 flex flex-col group-hover:mt-2 z-60 transition-all duration-500 pointer-events-none max-w-full">
+                <h3 className="tracking-tight text-background wrap-break-word">
                   {project.title}
                 </h3>
-                <div className="flex gap-4 text-background">
-                  <span>[{project.categories.map(category => category).join(', ')}]</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-background wrap-break-word max-w-full">
+                  <span className="wrap-break-word max-w-full">[{project.categories.map(category => category).join(', ')}]</span>
                   <span>{project.year}</span>
                 </div>
               </div>
