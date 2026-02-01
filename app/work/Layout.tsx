@@ -1,11 +1,11 @@
 
-export function WorkLayout({
+export default function WorkLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="border w-vw">
             {children}
         </div>
     );
