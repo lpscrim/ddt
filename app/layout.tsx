@@ -29,7 +29,7 @@ const seoKeywords = [
   "travel photography",
   "architecture photography",
   "Lewis Scrimgeour",
-  "DayDreamTeam",
+  "Daydreamteam",
 ];
 
 
@@ -37,8 +37,8 @@ const seoKeywords = [
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "DayDreamTeam",
-    template: "%s | DayDreamTeam",
+    default: "Daydreamteam",
+    template: "%s | Daydreamteam",
   },
   description:
     "Portfolio website of Lewis Scrimgeour, showcasing photography and visual art projects.",
@@ -49,19 +49,19 @@ export const metadata: Metadata = {
   category: "Photography",
   authors: [{ name: "Lewis Scrimgeour" }],
   creator: "Lewis Scrimgeour",
-  publisher: "DayDreamTeam",
+  publisher: "Daydreamteam",
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: "DayDreamTeam",
-    title: "DayDreamTeam",
+    siteName: "Daydreamteam",
+    title: "Daydreamteam",
     description:
       "Portfolio website of Lewis Scrimgeour, showcasing photography and visual art projects.",
     locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DayDreamTeam",
+    title: "Daydreamteam",
     description:
       "Portfolio website of Lewis Scrimgeour, showcasing photography and visual art projects.",
   },
