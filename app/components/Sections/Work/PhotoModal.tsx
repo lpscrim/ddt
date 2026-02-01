@@ -259,7 +259,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {...swipeHandlers}
     >
         {showLoadProgress && (
-            <div className="absolute left-6 right-6 top-[5vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
+            <div className="absolute left-6 right-6 top-[4.5vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
               <div
                 className="h-full bg-foreground transition-[width] duration-150 ease-out"
                 style={{ width: `${loadProgress}%` }}
