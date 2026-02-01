@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body
-        className="antialiased bg-background text-foreground"
+        className="antialiased bg-background text-foreground w-full"
       >
         <Header />
         {children}
