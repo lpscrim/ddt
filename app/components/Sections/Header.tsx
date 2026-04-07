@@ -49,7 +49,7 @@ export function Header() {
   return (
     <header className={`fixed text-xl top-0 left-0 right-0 z-999 px-6`}>
       {!isLight && (
-        <div className="absolute inset-0 w-full h-full backdrop-blur-sm bg-background z-0 pointer-events-none transition-all duration-500" />
+        <div className="absolute inset-0 w-full h-full bg-background/95 md:backdrop-blur-sm z-0 pointer-events-none transition-all duration-500" />
       )}
       <div className="relative mx-auto py-4 z-10">
         <div className="flex items-center justify-between">

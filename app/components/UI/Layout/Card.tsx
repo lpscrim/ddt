@@ -10,6 +10,8 @@ export function Card(project: {
   imageWidth?: number;
   imageHeight?: number;
   imageQuality?: number | string;
+  imageDpr?: number | string;
+  imagePriority?: boolean;
   handleOnClick?: () => void;
 }) {
   const useFill = project.imageWidth == null || project.imageHeight == null;
@@ -24,6 +26,8 @@ export function Card(project: {
         width={!useFill ? project.imageWidth : undefined}
         height={!useFill ? project.imageHeight : undefined}
         quality={project.imageQuality}
+        dpr={project.imageDpr}
+        priority={project.imagePriority}
         className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
           project.categories.includes("COLOUR")
             ? "md:grayscale group-hover:grayscale-0"
