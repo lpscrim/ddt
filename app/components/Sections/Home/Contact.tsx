@@ -16,7 +16,7 @@ export function Contact() {
               Let`s create something meaningful together.
             </p>
             
-            <div className="space-y-4">
+            <div className="flex flex-row gap-8 items-center justify-between">
               <a 
                 href="mailto:lpscrim@gmail.com"
                 className="flex items-center gap-3 hover:opacity-70 transition-opacity cursor-crosshair group"
@@ -25,14 +25,14 @@ export function Contact() {
                 <span>LPSCRIM@GMAIL.COM</span>
               </a>
               
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center gap-3 text-muted-foreground justify-end">
                 <span className="w-5" />
                 <span>SCOTLAND/ WORLD</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-8 ">
+          <div className="space-y-8 lg:col-start-3 lg:col-span-2">
             <div className=''>
               <p className="text-muted-foreground mb-4">SOCIAL</p>
               <div className="space-y-3 lg:flex lg:flex-row lg:gap-8 lg:space-y-0">

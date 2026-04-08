@@ -6,7 +6,7 @@ export function About() {
       <div className="w-full mx-auto">
         <div className="mb-16 lg:mb-32">
           <p className="text-muted-foreground mb-2">03</p>
-          <h2 className="text-3xl md:text-5xl tracking-tight">ABOUT</h2>
+          <h2 className="text-3xl md:text-5xl tracking-tight ">ABOUT</h2>
         </div>
 
         <div className="mb-32 max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
