@@ -62,6 +62,29 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Birdie';
+  src: url('/font/TAYBirdieRegular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bigbird';
+  src: url('/font/TAYBigbirdRegular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tallboy';
+  src: url('/font/TAYTallboy.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   font-family: 'IBM Plex Mono', monospace;
   --font-size: 16px;
@@ -216,7 +239,7 @@ html {
 }
 
 h1, h2, h3, h4, button, .title {
-  font-family: 'Futura PT', sans-serif;
+  font-family: 'Bigbird', sans-serif;
 }
 
 @layer utilities {

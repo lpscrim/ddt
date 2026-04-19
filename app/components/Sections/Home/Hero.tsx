@@ -30,7 +30,7 @@ export function Hero() {
           transition={{ duration: 2, ease: 'easeInOut', delay: 1.5 }}
         />
         <motion.h2 
-          className="absolute inset-0 flex items-center justify-center text-[11.5vw] md:text-[11.75vw] xl:text-[11.925vw] font-mono tracking-wide font-bold text-background z-10"
+          className="absolute inset-0 flex items-center justify-center text-[13vw] font-mono tracking-wide font-bold text-background z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 7, delay: 0.15 }}
