@@ -10,7 +10,6 @@ export async function Projects() {
     <section id="work" className="min-h-screen px-6 py-24">
       <div className=" mx-auto">
         <div className="mb-16">
-          <p className="text-muted-foreground mb-2">02</p>
           <h2 className="text-3xl md:text-5xl tracking-tight">
             SELECTED WORKS
           </h2>
