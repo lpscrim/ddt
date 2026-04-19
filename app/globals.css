@@ -239,7 +239,7 @@ html {
 }
 
 h1, h2, h3, h4, button, .title {
-  font-family: 'Bigbird','Birdie','Futura PT' sans-serif;
+  font-family: 'Bigbird','Birdie','Futura PT', sans-serif;
 }
 
 @layer utilities {
