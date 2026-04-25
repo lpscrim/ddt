@@ -58,7 +58,7 @@
 
 @font-face {
   font-family: 'Akshar';
-  src: 'Akshar-VariableFont_wght.ttf' format('truetype');
+  src: url('/font/Akshar/Akshar-VariableFont_wght.ttf') format('truetype');
   font-display: swap;
 }
 

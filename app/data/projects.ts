@@ -106,37 +106,58 @@ async function fetchCloudinaryResources(folder: string): Promise<string[]> {
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
-  if (!cloudName || !apiKey || !apiSecret) return [];
-  
-  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
-  
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        expression: `folder:photos/${folder}/*`,
-        max_results: 500,
-        resource_type: "image",
-        type: "upload",
-        fields: ["public_id", "format", "filename", "original_filename", "display_name"],
-      }),
-      next: {
-        revalidate: CLOUDINARY_REVALIDATE_SECONDS,
-        tags: [CLOUDINARY_CACHE_TAG],
-      },
+  if (!cloudName || !apiKey || !apiSecret) {
+    console.warn("Cloudinary credentials are missing; skipping image resource fetch.");
+    return [];
+  }
+
+  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
+
+  try {
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          expression: `folder:photos/${folder}/*`,
+          max_results: 500,
+          resource_type: "image",
+          type: "upload",
+          fields: ["public_id", "format", "filename", "original_filename", "display_name"],
+        }),
+        next: {
+          revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+          tags: [CLOUDINARY_CACHE_TAG],
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error(
+        `Cloudinary image search failed for folder ${folder}: ${response.status} ${response.statusText}`
+      );
+      return [];
     }
-  );
-  
-  const data: CloudinarySearchResponse = await response.json();
-  return data.resources
-    .filter((r) => !isDescriptionResource(r))
-    .map((r) => r.public_id)
-    .sort();
+
+    const data: CloudinarySearchResponse = await response.json();
+    if (!Array.isArray(data.resources)) {
+      console.error(`Cloudinary image search returned malformed data for folder ${folder}.`);
+      return [];
+    }
+
+    return data.resources
+      .filter((r) => !isDescriptionResource(r))
+      .map((r) => r.public_id)
+      .filter(Boolean)
+      .sort();
+  } catch (error) {
+    console.error(`Cloudinary image search threw for folder ${folder}:`, error);
+    return [];
+  }
 }
 
 async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
@@ -179,7 +200,12 @@ async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
       }
     );
 
-    if (!response.ok) return "";
+    if (!response.ok) {
+      console.error(
+        `Cloudinary raw search failed for folder ${folder}: ${response.status} ${response.statusText}`
+      );
+      return "";
+    }
 
     const data: CloudinarySearchResponse = await response.json();
     const candidates = data.resources
@@ -202,9 +228,15 @@ async function fetchCloudinaryDescriptionText(folder: string): Promise<string> {
       },
     });
 
-    if (!textResponse.ok) return "";
+    if (!textResponse.ok) {
+      console.error(
+        `Cloudinary description fetch failed for folder ${folder}: ${textResponse.status} ${textResponse.statusText}`
+      );
+      return "";
+    }
     return normalizeText(await textResponse.text());
-  } catch {
+  } catch (error) {
+    console.error(`Failed to fetch description text for folder ${folder}:`, error);
     return "";
   }
 }
@@ -213,43 +245,77 @@ async function fetchCloudinaryFolders(): Promise<string[]> {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  
-  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
-  
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/folders/photos`,
-    {
-      headers: {
-        'Authorization': `Basic ${auth}`,
-      },
-      next: {
-        revalidate: CLOUDINARY_REVALIDATE_SECONDS,
-        tags: [CLOUDINARY_CACHE_TAG],
-      },
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    console.warn("Cloudinary credentials are missing; skipping folder fetch.");
+    return [];
+  }
+
+  const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
+
+  try {
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/folders/photos`,
+      {
+        headers: {
+          Authorization: `Basic ${auth}`,
+        },
+        next: {
+          revalidate: CLOUDINARY_REVALIDATE_SECONDS,
+          tags: [CLOUDINARY_CACHE_TAG],
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error(`Cloudinary folder fetch failed: ${response.status} ${response.statusText}`);
+      return [];
     }
-  );
-  
-  const data = await response.json();
-  return data.folders?.map((f: { name: string }) => f.name) ?? [];
+
+    const data = await response.json();
+    if (!Array.isArray(data.folders)) return [];
+
+    return data.folders
+      .map((f: { name?: string }) => f.name)
+      .filter((name: string | undefined): name is string => Boolean(name));
+  } catch (error) {
+    console.error("Cloudinary folder fetch threw:", error);
+    return [];
+  }
 }
 
 export async function getProjects(): Promise<Project[]> {
   const folders = await fetchCloudinaryFolders();
-  
-  const projects: Project[] = await Promise.all(
+
+  const projects = await Promise.all(
     folders.map(async (folder) => {
       // Parse folder name: {id}_{name}_{date}_{category,category}
       const parts = folder.split("_");
-      
+
+      if (parts.length < 4) {
+        console.warn(`Skipping folder with unexpected format: ${folder}`);
+        return null;
+      }
+
       // Extract id from first part
       const id = parseInt(parts.shift() ?? "0", 10);
-      
+
+      if (!Number.isFinite(id) || id < 0) {
+        console.warn(`Skipping folder with invalid numeric id: ${folder}`);
+        return null;
+      }
+
       // Last part is categories, second to last is date
       const categories = parts.pop()?.split(",") ?? [];
       const year = parts.pop() ?? new Date().getFullYear().toString();
-      
+
       // Remaining parts form the project name
       const projectName = parts.join("_");
+
+      if (!projectName) {
+        console.warn(`Skipping folder with empty project name: ${folder}`);
+        return null;
+      }
 
       // Format title: replace hyphens/underscores with spaces and uppercase
       const title = projectName
@@ -277,7 +343,7 @@ export async function getProjects(): Promise<Project[]> {
       return {
         id,
         title,
-        categories,
+        categories: categories.filter(Boolean),
         year,
         imageUrl: coverImage ?? "",
         ...(galleryImages.length > 0 && { galleryImages }),
@@ -286,8 +352,10 @@ export async function getProjects(): Promise<Project[]> {
     })
   );
 
+  const validProjects: Project[] = projects.filter((p): p is Project => p !== null);
+
   // Sort by year (newest first), then by title
-  return projects.sort((a, b) => {
+  return validProjects.sort((a, b) => {
     if (b.year !== a.year) return b.year.localeCompare(a.year);
     return a.title.localeCompare(b.title);
   });

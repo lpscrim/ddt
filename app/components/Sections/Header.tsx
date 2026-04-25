@@ -73,24 +73,22 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8 ">
-            <button className="relative title text-xl">
-              <Link href="/work" className="cursor-crosshair">
-                <span
-                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-                  }`}
-                >
-                  WORK
-                </span>
-                <span
-                  className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                  }`}
-                >
-                  WORK
-                </span>
-              </Link>
-            </button>
+            <Link href="/work" className="relative title text-xl cursor-crosshair">
+              <span
+                className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
+                  isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+                }`}
+              >
+                WORK
+              </span>
+              <span
+                className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
+                  isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                WORK
+              </span>
+            </Link>
             <button className="relative title text-xl cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
@@ -141,19 +139,17 @@ export function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className={`md:hidden flex flex-col gap-4 text-lg pt-4 `}>
-            <button
+            <Link
+              href="/work"
               onClick={() => setIsMenuOpen(false)}
               className={`title pop-up opacity-0 text-left transition-colors ${
                 isLight
                   ? "text-background hover:text-foreground"
                   : "text-foreground hover:text-muted-foreground"
               }`}
-              
             >
-              <Link href="/work" className="cursor-crosshair">
-                WORK
-              </Link>
-            </button>
+              WORK
+            </Link>
             <button
             
               className={`title pop-up-2 opacity-0 text-left transition-colors cursor-crosshair ${
