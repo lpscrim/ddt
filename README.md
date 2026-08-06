@@ -7,11 +7,14 @@ Photography & visual art portfolio built with Next.js App Router.
 From the `ddt` folder:
 
 ```bash
+nvm use
 npm install
 npm run dev
 ```
 
 Open `http://localhost:3000`.
+
+Use Node 20.9 or newer. Next 16 will fail to build on older Node versions.
 
 ## Scripts
 
