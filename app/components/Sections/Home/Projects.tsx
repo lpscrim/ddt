@@ -30,7 +30,7 @@ export async function Projects() {
                   <ImageWithFallback
                     src={project.imageUrl}
                     alt={project.title}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 48vw, 90vw"
                     quality="auto:eco"
                     dpr={1}
                     className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
