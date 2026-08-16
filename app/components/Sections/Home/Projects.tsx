@@ -20,7 +20,7 @@ export async function Projects() {
           {projects
             .sort((a, b) => a.id - b.id)
             .slice(0, 6)
-            .map((project, idx) => (
+            .map((project) => (
               <Link
                 key={project.id}
                 href={`/work?project=${project.id}`}
@@ -33,7 +33,6 @@ export async function Projects() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     quality="auto:eco"
                     dpr={1}
-                    priority={idx < 6}
                     className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
                       project.categories.includes("COLOUR")
                         ? "grayscale group-hover:grayscale-0"
@@ -60,7 +59,7 @@ export async function Projects() {
         </div>
         <div className="mt-24 text-center  ">
           <Button size="xl">
-            <Link href="/work">MORE</Link>
+            <Link href="/work" className="cursor-crosshair">MORE</Link>
           </Button>
         </div>
       </div>
