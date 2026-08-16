@@ -4,7 +4,7 @@ import Button from "@/app/components/UI/Layout/Button";
 import Link from "next/link";
 
 export async function Projects() {
-  const projects = await getProjects();
+  const projects = await getProjects({ includeGallery: false, includeText: false });
 
   return (
     <section id="work" className="min-h-screen px-6 py-24">

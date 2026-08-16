@@ -8,6 +8,11 @@ interface Project {
   text: string;
 }
 
+interface GetProjectsOptions {
+  includeGallery?: boolean;
+  includeText?: boolean;
+}
+
 interface CloudinaryResource {
   public_id: string;
   secure_url?: string;
@@ -284,7 +289,10 @@ async function fetchCloudinaryFolders(): Promise<string[]> {
   }
 }
 
-export async function getProjects(): Promise<Project[]> {
+export async function getProjects({
+  includeGallery = true,
+  includeText = true,
+}: GetProjectsOptions = {}): Promise<Project[]> {
   const folders = await fetchCloudinaryFolders();
 
   const projects = await Promise.all(
@@ -322,11 +330,10 @@ export async function getProjects(): Promise<Project[]> {
         .replace(/[-_]/g, " ")
         .toUpperCase();
 
-      // Fetch images from Cloudinary
-      const images = await fetchCloudinaryResources(folder);
-
-      // Fetch optional project description text (from description.cd uploaded as a raw file)
-      const text = await fetchCloudinaryDescriptionText(folder);
+      const [images, text] = await Promise.all([
+        fetchCloudinaryResources(folder),
+        includeText ? fetchCloudinaryDescriptionText(folder) : Promise.resolve(""),
+      ]);
 
       // Sort so images named "0" (e.g., 0.webp, 0.jpg) come first as cover
       const sortedImages = images.sort((a, b) => {
@@ -346,7 +353,7 @@ export async function getProjects(): Promise<Project[]> {
         categories: categories.filter(Boolean),
         year,
         imageUrl: coverImage ?? "",
-        ...(galleryImages.length > 0 && { galleryImages }),
+        ...(includeGallery && galleryImages.length > 0 && { galleryImages }),
         text,
       };
     })
