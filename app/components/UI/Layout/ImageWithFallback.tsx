@@ -30,7 +30,7 @@ export function ImageWithFallback({
   height,
   sizes,
   priority = false,
-  unoptimized = true,
+  unoptimized = false,
   quality,
   format,
   dpr,
