@@ -220,11 +220,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     </div>
 
                     <div
-                      className={`overflow-hidden ${mobileMenuOpen ? 'h-[50vh]' : ''} transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                        isOpen ? "max-h-[75vh] opacity-100" : "max-h-0 opacity-0"
+                      className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                       }`}
                     >
-                      <div className="bg-background">{renderMenuContent(tab)}</div>
+                      <div className="overflow-hidden">
+                        <div className={`bg-background ${mobileMenuOpen ? 'h-[45vh]' : ''}`}>{renderMenuContent(tab)}</div>
+                      </div>
                     </div>
                   </div>
                 );
