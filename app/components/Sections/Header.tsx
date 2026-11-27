@@ -47,7 +47,7 @@ export function Header() {
   const isLight = !isWorkPage && onHero;
 
   return (
-    <header className={`fixed text-xl top-0 left-0 right-0 z-999 px-6`}>
+    <header className={`fixed text-base top-0 left-0 right-0 z-999 px-6`}>
       {!isLight && (
         <div className="absolute inset-0 w-full h-full bg-background/95 md:backdrop-blur-sm z-0 pointer-events-none transition-all duration-500" />
       )}
@@ -56,14 +56,14 @@ export function Header() {
           {/* Logo with crossfade */}
           <button className="relative cursor-crosshair" onClick={() => { conditionalScrollTo(''); setIsMenuOpen(false); }}>
             <span
-              className={`tracking-wide title font-semibold text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
+              className={`tracking-wide title font-normal text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
                 isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
               }`}
             >
               DAYDREAMTEAM
             </span>
             <span
-              className={`tracking-wide title font-semibold text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
+              className={`tracking-wide title font-normal text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
                 isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
               }`}
             >
@@ -73,7 +73,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8 ">
-            <Link href="/work" className="relative title text-xl cursor-crosshair">
+            <Link href="/work" className="relative title text-base cursor-crosshair">
               <span
                 className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                   isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
@@ -89,7 +89,7 @@ export function Header() {
                 WORK
               </span>
             </Link>
-            <button className="relative title text-xl cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
+            <button className="relative title text-base cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                     isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
@@ -105,7 +105,7 @@ export function Header() {
                   ABOUT
                 </span>
             </button>
-            <button className="relative title text-xl cursor-crosshair " onClick={() => conditionalScrollTo('#contact')}>
+            <button className="relative title text-base cursor-crosshair " onClick={() => conditionalScrollTo('#contact')}>
                 <span
                   className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
                     isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"

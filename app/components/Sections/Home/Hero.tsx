@@ -3,10 +3,9 @@ export function Hero() {
     <section id="home" className="min-h-svh flex flex-col justify-center items-center">
       <div className="w-full h-svh relative overflow-hidden justify-center items-center flex">
         <picture className="absolute inset-0 block h-full w-full">
-          <source media="(min-width: 768px)" srcSet="/tree1-hero.webp" type="image/webp" />
           <img
-            src="/pic1-hero.webp"
-            alt="Tree background"
+            src="/background.webp"
+            alt="Background image"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -14,7 +13,7 @@ export function Hero() {
           />
         </picture>
 
-        <div className="absolute inset-0 flex items-center title justify-center text-[13vw] tracking-wide font-bold text-background z-10">
+        <div className="absolute text-lg lg:text-2xl left-6 sm:left-10 lg:left-16 top-[33vh] z-10 text-foreground/75 uppercase tracking-[0.26em] font-medium leading-none drop-shadow-[0_2px_18px_rgba(0,0,0,0.25)]">
           DAYDREAMTEAM
         </div>
       </div>
