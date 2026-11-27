@@ -29,21 +29,25 @@ Use Node 20.9 or newer. Next 16 will fail to build on older Node versions.
 Create `.env.local` in the `ddt` folder:
 
 ```bash
-# Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
+# Vercel Blob (preferred storage option for this branch)
+BLOB_READ_WRITE_TOKEN=
 
 # Optional (recommended for correct absolute URLs in sitemap/metadata)
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
-# Optional (recommended): invalidate cached Cloudinary data on demand
+# Optional (recommended): invalidate cached project data on demand
 REVALIDATE_SECRET=some-long-random-string
+
+# Legacy fallback values kept temporarily while migrating away from Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
 Notes:
-- `CLOUDINARY_API_*` are used server-side to fetch project folders/resources.
+- `BLOB_READ_WRITE_TOKEN` is the Vercel Blob token used by `lib/blob.ts` and `app/api/blob/route.ts`.
 - `NEXT_PUBLIC_SITE_URL` is used to generate absolute URLs for SEO metadata routes.
+- The Cloudinary values are retained only as a fallback until the image pipeline is fully moved to Blob.
 
 ## SEO (Next.js Standards)
 
@@ -54,21 +58,23 @@ This app uses Next.js metadata routes:
 
 Global SEO tags (Open Graph / Twitter / keywords) live in `app/layout.tsx`, with page-specific metadata added where relevant (e.g. `/work`).
 
-## Updating Images (Cloudinary)
+## Updating Images (Vercel Blob)
 
-Project/folder listings from Cloudinary are cached by Next.js for performance. The cache is tagged (`cloudinary-projects`) so you can invalidate it immediately after uploading/reordering images.
+This branch uses Vercel Blob as the preferred image store. Each project folder can be treated as a prefix under `photos/`, and the helpers in `lib/blob.ts` can list or upload files without needing Cloudinary.
 
-1) Set `REVALIDATE_SECRET` in Vercel project env vars
-2) Call:
+### Recommended setup
 
-```bash
-curl "https://daydreamteam.co.uk/api/revalidate?secret=YOUR_SECRET"
-```
+1) Create a Blob store in the Vercel dashboard
+2) Add `BLOB_READ_WRITE_TOKEN` to the Vercel project environment variables
+3) Upload files under paths such as `photos/1_project_name/` or `photos/2_project_name/`
+4) Keep a `description.txt` or similar metadata file alongside the images when needed
 
-That clears the cached Cloudinary data and revalidates `/` and `/work`.
+### Revalidation
+
+If you still rely on the Cloudinary cache invalidation route, keep `REVALIDATE_SECRET` in place. The app can still call the existing revalidate endpoint while migrating.
 
 ### Project Descriptions
 
-If you upload a `description.txt` file alongside a project's images in its Cloudinary folder, the app will load it into `project.text`.
+If you upload a `description.txt` file alongside a project's images in its Blob folder, the app can load it into `project.text`.
 
 (Legacy `description.cd` is also supported.)
