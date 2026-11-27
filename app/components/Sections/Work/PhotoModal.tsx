@@ -309,13 +309,16 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       >
         {hasPrev && (
           <button
-            className="absolute z-80 cursor-chevron-left focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            className="absolute z-80 focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground/80 hover:text-foreground transition-colors duration-200 flex items-center justify-center h-[85svh] w-[12vw] min-w-[64px] max-w-[120px]"
             onClick={() => {
               startProgress();
               onPrev();
             }}
             aria-label="Previous"
-          ></button>
+          >
+            <span className="block h-10 w-[2px] rotate-45 rounded-full bg-current" />
+            <span className="block h-10 w-[2px] -rotate-45 -ml-[2px] rounded-full bg-current" />
+          </button>
         )}
         <div
           ref={(el) => {
@@ -366,9 +369,9 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 thumbRefs.current[idx] = el;
               }}
               onClick={() => changePhotoId(idx)}
-              className={` ${
-                idx === index ? " shadow-lg" : ""
-              } rounded-none overflow-x-hidden  focus:outline-none shrink-0`}
+              className={`transition-transform duration-300 ease-out hover:-translate-y-0.5 focus:outline-none shrink-0 rounded-none overflow-x-hidden ${
+                idx === index ? "shadow-lg -translate-y-0.5" : "opacity-80"
+              }`}
               style={{ width: 30, height: 40 }}
             >
               <ImageWithFallback
@@ -378,8 +381,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 height={40}
                 fill={false}
                 sizes="40px"
-                className={`object-cover h-full ${
-                  idx === index ? "brightness-110" : "brightness-50"
+                className={`object-cover h-full transition-all duration-300 ease-out ${
+                  idx === index ? "brightness-110" : "brightness-50 hover:brightness-90"
                 }`}
               />
             </button>
