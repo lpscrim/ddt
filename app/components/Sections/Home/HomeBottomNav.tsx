@@ -26,7 +26,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/70 bg-background">
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-3 bg-background">
+      <div className="mx-auto grid w-full grid-cols-3 bg-background">
         {tabItems.map((tab) => {
           const isOpen = activeTab === tab.key;
 
