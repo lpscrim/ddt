@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-
 import { ImageWithFallback } from "@/app/components/UI/Layout/ImageWithFallback";
 
 interface ProjectCardData {
@@ -59,14 +58,14 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="grid grid-cols-2 gap-3 p-3 md:grid-cols-3 ">
+      <div className="grid grid-cols-2 gap-2 p-3 pt-8 md:grid-cols-3 md:gap-3">
         {projects.slice(0, 3).map((project) => (
           <Link
             key={project.id}
             href={`/work?project=${project.id}`}
-            className="group block overflow-hidden border border-border bg-muted/30"
+            className="group block overflow-hidden border border-border bg-background"
           >
-            <div className="relative aspect-4/5 md:aspect-3/4  overflow-hidden">
+            <div className="relative mx-auto aspect-3/4 overflow-hidden">
               <ImageWithFallback
                 src={project.imageUrl}
                 alt={project.title}
@@ -76,13 +75,10 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </div>
-
           </Link>
         ))}
-        <Link
-          href="/work"
-          className="col-span-3 text-center z-65 text-xs"
-        >
+
+        <Link href="/work" className="col-span-3 mt-4 text-center text-[10px] uppercase tracking-[0.2em] text-foreground">
           View More Projects
         </Link>
       </div>
@@ -109,15 +105,16 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               return (
                 <div
                   key={tab.key}
-                  className={`relative border-l border-border/70  first:border-l-0 ${
-                    isOpen ? "bg-muted/10" : "bg-transparent"
+                  className={`relative border-l border-border/70 first:border-l-0 ${
+                    isOpen ? "bg-muted" : "bg-background"
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
-                    className="relative z-20 flex h-10 w-full items-center justify-center overflow-hidden px-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground transition-colors duration-200 hover:text-muted-foreground"
+                    className="relative z-20 flex h-10 w-full items-center justify-center overflow-hidden px-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground transition-colors duration-200"
                   >
+                    {tab.label}
                   </button>
 
                   <div
@@ -188,7 +185,8 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setMobileMenuOpen(true);
                         }}
                         className="flex h-full flex-1 items-center pl-[15px] text-left text-[10px] uppercase tracking-[0.2em] text-foreground"
-                      > <span>{mobileMenuOpen ? tab.label : 'menu'}</span>
+                      >
+                        <span>{tab.label}</span>
                       </button>
 
                       <button

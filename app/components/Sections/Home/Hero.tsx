@@ -14,8 +14,19 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-background/5" />
 
-      <div className="absolute left-6 top-[33vh] z-10 text-lg uppercase tracking-[0.26em] text-foreground/80 sm:left-10 lg:left-16 lg:text-2xl">
-        DAYDREAMTEAM
+      <div className="absolute left-6 top-[30vh] z-10 text-lg uppercase tracking-[0.26em] text-foreground/90 sm:left-10 lg:left-16 lg:text-2xl">
+        <span className="text-foreground/80">D</span>
+        <span className="text-foreground/70">A</span>
+        <span className="text-foreground/60">Y</span>
+        <span className="text-foreground/70">D</span>
+        <span className="text-foreground/80">R</span>
+        <span className="text-foreground/70">E</span>
+        <span className="text-foreground/60">A</span>
+        <span className="text-foreground/50">M</span>
+        <span className="text-foreground/45">T</span>
+        <span className="text-foreground/40">E</span>
+        <span className="text-foreground/35">A</span>
+        <span className="text-foreground/30">M</span>
       </div>
     </section>
   );
