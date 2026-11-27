@@ -309,16 +309,16 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       >
         {hasPrev && (
           <button
-            className="absolute z-80 focus:outline-none left-0 top-1/2 -translate-y-1/2 text-foreground/80 hover:text-foreground transition-colors duration-200 flex items-center justify-center h-[85svh] w-[12vw] min-w-[64px] max-w-[120px]"
+            className="absolute z-80 focus:outline-none left-0 top-1/2 -translate-y-1/2 h-[85svh] w-[12vw] min-w-[64px] max-w-[120px]"
+            style={{
+              cursor: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M30 10 16 24l14 14' fill='none' stroke='%23f5f5f5' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") 24 24, auto",
+            }}
             onClick={() => {
               startProgress();
               onPrev();
             }}
             aria-label="Previous"
-          >
-            <span className="block h-10 w-[2px] rotate-45 rounded-full bg-current" />
-            <span className="block h-10 w-[2px] -rotate-45 -ml-[2px] rounded-full bg-current" />
-          </button>
+          />
         )}
         <div
           ref={(el) => {
@@ -346,13 +346,16 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         </div>
         {hasNext && (
           <button
-            className="absolute z-80 cursor-chevron-right focus:outline-none right-0 top-1/2 -translate-y-1/2 text-foreground text-3xl h-[85svh] w-1/2"
+            className="absolute z-80 focus:outline-none right-0 top-1/2 -translate-y-1/2 h-[85svh] w-[12vw] min-w-[64px] max-w-[120px]"
+            style={{
+              cursor: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M18 10l14 14-14 14' fill='none' stroke='%23f5f5f5' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") 24 24, auto",
+            }}
             onClick={() => {
               startProgress();
               onNext();
             }}
             aria-label="Next"
-          ></button>
+          />
         )}
       </div>
       {/* Tiny scrollable thumbnail strip */}
