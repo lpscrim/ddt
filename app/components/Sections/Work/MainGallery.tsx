@@ -19,28 +19,19 @@ interface Project {
 export interface MainGalleryProps {
   viewMode: "projects" | "photos";
   setViewMode: React.Dispatch<React.SetStateAction<"projects" | "photos">>;
-  selectedCategories: string[];
-  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
   filteredProjects: Project[];
   filteredPhotos: string[];
-  sortedVisibleCategories: [string, number][];
-  toggleCategory: (cat: string) => void;
   onCardClick: (mode: "photos" | "projects", index: number, project?: Project) => void;
 }
 
 export function MainGallery({
   viewMode,
   setViewMode,
-  selectedCategories,
-  setSelectedCategories,
   filteredProjects,
   filteredPhotos,
-  sortedVisibleCategories,
-  toggleCategory,
-    onCardClick,
+  onCardClick,
 }: MainGalleryProps) {
-  const selectedCategoriesKey = selectedCategories.join("|");
-  const photosResetKey = `${selectedCategoriesKey}|${filteredPhotos.length}`;
+  const photosResetKey = `${viewMode}|${filteredPhotos.length}`;
 
   return (
     <>
@@ -48,35 +39,17 @@ export function MainGallery({
         <div className="xl:w-1/2 text-sm sm:text-base py-2">
           <div>
             <button
-              onClick={() => { setViewMode("projects"); setSelectedCategories([]); }}
-              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" && selectedCategories.length === 0 ? "text-foreground" : "text-foreground/50"}`}
+              onClick={() => setViewMode("projects")}
+              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" ? "text-foreground" : "text-foreground/50"}`}
             >
               PROJECTS [{filteredProjects.length}]
             </button>
             <button
-              onClick={() => { setViewMode("photos"); setSelectedCategories([]); }}
-              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "photos" && selectedCategories.length === 0 ? "text-foreground" : "text-foreground/50"}`}
+              onClick={() => setViewMode("photos")}
+              className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "photos" ? "text-foreground" : "text-foreground/50"}`}
             >
               PHOTOS [{filteredPhotos.length}]
             </button>
-          </div>
-          <div className="flex flex-wrap gap-0 mt-2">
-            {sortedVisibleCategories.map(([category, count]) => {
-              const categoryStr = String(category);
-              const isSelected = selectedCategories.includes(categoryStr);
-              const isUnselectable = count === 0;
-              return (
-                <span key={categoryStr} className="inline-flex items-center text-sm sm:text:base">
-                  <button
-                    onClick={() => !isUnselectable && toggleCategory(categoryStr)}
-                    disabled={isUnselectable}
-                    className={`pr-1 py-1 rounded transition-colors cursor-crosshair text-foreground ${isSelected ? "underline font-semibold" : ""} ${isUnselectable ? "opacity-30 cursor-not-allowed" : "hover:bg-background/10"}`}
-                  >
-                    {categoryStr} <span className="text-foreground/60">[{count}]</span>
-                  </button>
-                </span>
-              );
-            })}
           </div>
         </div>
       </div>
@@ -102,10 +75,6 @@ export function MainGallery({
                 <h3 className="tracking-tight text-background wrap-break-word">
                   {project.title}
                 </h3>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-background wrap-break-word max-w-full">
-                  <span className="wrap-break-word max-w-full">[{project.categories.map(category => category).join(', ')}]</span>
-                  <span>{project.year}</span>
-                </div>
               </div>
             </div>
           ))}

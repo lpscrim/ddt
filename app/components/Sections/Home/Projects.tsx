@@ -33,11 +33,7 @@ export async function Projects() {
                     sizes="(min-width: 1024px) 30vw, (min-width: 768px) 48vw, 90vw"
                     quality="auto:eco"
                     dpr={1}
-                    className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
-                      project.categories.includes("COLOUR")
-                        ? "grayscale group-hover:grayscale-0"
-                        : ""
-                    }`}
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                 </div>

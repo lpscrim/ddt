@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "title": "Project Title",
+  "year": "2025",
+  "categories": ["COLOUR", "PORTRAIT", "STILL LIFE"],
+  "tags": ["tag-one", "tag-two", "tag-three"],
+  "description": "A short project description.",
+  "location": "Location name",
+  "medium": "Digital photography",
+  "notes": "Optional additional notes about the project."
+}

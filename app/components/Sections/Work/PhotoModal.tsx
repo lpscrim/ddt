@@ -255,11 +255,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         modalRef.current = el;
         swipeableRef(el);
       }}
-      className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
+      className="fixed inset-0 top-8 z-50 flex flex-col bg-background"
       {...swipeHandlers}
     >
         {showLoadProgress && (
-            <div className="absolute left-6 right-6 top-[4.5vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
+            <div className="absolute left-6 right-6 top-[3.5vh] z-999 h-0.5 bg-foreground/20 overflow-hidden ">
               <div
                 className="h-full bg-foreground transition-[width] duration-150 ease-out"
                 style={{ width: `${loadProgress}%` }}
@@ -269,7 +269,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       <div className="relative py-0 flex flex-row w-full justify-between z-100 bg-background ">
         <div className="flex py-2 px-6 w-full items-center z-100">
           {isProject && (
-            <span className="text-foreground">
+            <span className="text-foreground text-sm">
               {name} {year}
             </span>
           )}
@@ -278,13 +278,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         <div className="flex flex-row  w-50">
             <div className="flex justify-center w-21 -mr-4 text-foreground z-100">
               {isProject && text && (
-              <Button onClick={() => setTextOpen(!textOpen)} size="sm">
+              <Button onClick={() => setTextOpen(!textOpen)} size="xs">
                 TEXT
               </Button>
                         )}
             </div>
           <div className="flex justify-center w-23 md:w-23 text-foreground z-100">
-            <Button onClick={onClose} size="sm">
+            <Button onClick={onClose} size="xs">
               BACK
             </Button>
           </div>
@@ -292,12 +292,12 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       </div>
       {isProject && text && (
         <div
-          className={` flex w-full border-b border-muted z-90 py-8 bg-background items-center -translate-y-100 opacity-0 ${
+          className={` flex w-full border-b border-muted z-90 py-4 bg-background items-center -translate-y-100 opacity-0 ${
             textOpen ? "translate-y-0 opacity-100" : ""
           }  transition-all duration-300 ease-in-out overflow-y-auto z-40`}
         >
           <div
-            className={`max-w-3xl mx-auto px-6 text-center text-foreground `}
+            className={`max-w-3xl mx-auto px-6 text-center text-sm text-foreground `}
           >
             <p className="whitespace-pre-line">{text}</p>
           </div>

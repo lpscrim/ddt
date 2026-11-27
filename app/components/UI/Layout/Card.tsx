@@ -28,11 +28,7 @@ export function Card(project: {
         quality={project.imageQuality}
         dpr={project.imageDpr}
         priority={project.imagePriority}
-        className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
-          project.categories.includes("COLOUR")
-            ? "md:grayscale group-hover:grayscale-0"
-            : ""
-        }`}
+        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
     </div>

@@ -51,7 +51,7 @@ export function Header() {
       {!isLight && (
         <div className="absolute inset-0 w-full h-full bg-background/95 md:backdrop-blur-sm z-0 pointer-events-none transition-all duration-500" />
       )}
-      <div className="relative mx-auto py-4 z-10">
+      <div className="relative mx-auto pt-2 pb-1 z-10">
         <div className="flex items-center justify-between">
           {/* Logo with crossfade */}
           <button className="relative cursor-crosshair" onClick={() => { conditionalScrollTo(''); setIsMenuOpen(false); }}>
