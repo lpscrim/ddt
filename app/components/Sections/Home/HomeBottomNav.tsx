@@ -25,6 +25,11 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     { key: "work", label: "Work" },
   ];
 
+  const closeAllMenus = () => {
+    setMobileMenuOpen(false);
+    setActiveTab(null);
+  };
+
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
@@ -54,14 +59,14 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="grid grid-cols-1 gap-3 p-3 md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 p-3 md:grid-cols-3 ">
         {projects.slice(0, 3).map((project) => (
           <Link
             key={project.id}
             href={`/work?project=${project.id}`}
             className="group block overflow-hidden border border-border bg-muted/30"
           >
-            <div className="relative aspect-[3/4] overflow-hidden">
+            <div className="relative aspect-4/5 md:aspect-3/4  overflow-hidden">
               <ImageWithFallback
                 src={project.imageUrl}
                 alt={project.title}
@@ -71,11 +76,15 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </div>
-            <div className="px-3 py-2 text-[10px] uppercase tracking-[0.2em]">
-              {project.title}
-            </div>
+
           </Link>
         ))}
+        <Link
+          href="/work"
+          className="col-span-3 text-center z-65 text-xs"
+        >
+          View More Projects
+        </Link>
       </div>
     );
   };
@@ -83,6 +92,15 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   return (
     <>
       <div className="hidden sm:block">
+        {activeTab && (
+          <button
+            type="button"
+            aria-label="Close desktop menu"
+            onClick={closeAllMenus}
+            className="fixed inset-0 z-30 bg-transparent"
+          />
+        )}
+
         <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/70 bg-background">
           <div className="mx-auto grid w-full grid-cols-3 bg-background">
             {tabItems.map((tab) => {
@@ -91,7 +109,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               return (
                 <div
                   key={tab.key}
-                  className={`relative border-l border-border/70 first:border-l-0 ${
+                  className={`relative border-l border-border/70  first:border-l-0 ${
                     isOpen ? "bg-muted/10" : "bg-transparent"
                   }`}
                 >
@@ -100,7 +118,6 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
                     className="relative z-20 flex h-10 w-full items-center justify-center overflow-hidden px-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground transition-colors duration-200 hover:text-muted-foreground"
                   >
-                    {tab.label}
                   </button>
 
                   <div
@@ -153,8 +170,8 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
           <div
             id="mobile-home-menu-panel"
-            className={`pointer-events-auto fixed bottom-0 left-0 right-0 z-[60] overflow-hidden bg-background transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              mobileMenuOpen ? "translate-y-0" : "translate-y-[calc(100%-46px)]"
+            className={`pointer-events-auto fixed bottom-0 left-0 right-0 z-[60] overflow-hidden bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-[calc(100%-46px)] opacity-100"
             }`}
           >
             <div className="flex max-h-[calc(100svh-46px)] flex-col overflow-y-auto">
@@ -163,7 +180,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
                 return (
                   <div key={tab.key} className="border-b border-border/70 bg-background last:border-b-0">
-                    <div className="relative flex h-[46px] w-full items-center">
+                    <div className={`relative flex h-[46px] w-full items-center`}>
                       <button
                         type="button"
                         onClick={() => {
@@ -192,7 +209,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                         className="flex h-full w-[46px] items-center justify-end pr-[15px] text-right text-[18px] leading-none text-foreground"
                       >
                         <span
-                          className={`block transition-transform duration-300 ${
+                          className={`block transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                             isOpen ? "rotate-45" : "rotate-0"
                           }`}
                           aria-hidden="true"
@@ -203,7 +220,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     </div>
 
                     <div
-                      className={`overflow-hidden transition-all duration-300 ${
+                      className={`overflow-hidden ${mobileMenuOpen ? 'h-[50vh]' : ''} transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isOpen ? "max-h-[75vh] opacity-100" : "max-h-0 opacity-0"
                       }`}
                     >
