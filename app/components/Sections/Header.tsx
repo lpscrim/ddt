@@ -8,168 +8,75 @@ import NavIcon from "../UI/Nav/NavIcon";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [onHero, setOnHero] = useState(true);
   const pathname = usePathname();
   const router = useRouter();
 
-  const isWorkPage = pathname === "/work";
-
-
-
-  useEffect(() => {
-    const hero = document.getElementById("home");
-    if (!hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setOnHero(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, [pathname]);
-
   const conditionalScrollTo = (hash: string) => {
     if (pathname === "/") {
-      if (hash === '') {
+      if (hash === "") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
-        const el = document.querySelector(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
 
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       router.push("/" + hash);
     }
   };
 
-  const isLight = !isWorkPage && onHero;
-
   return (
-    <header className={`fixed text-base top-0 left-0 right-0 z-999 px-6`}>
-      {!isLight && (
-        <div className="absolute inset-0 w-full h-full bg-background/95 md:backdrop-blur-sm z-0 pointer-events-none transition-all duration-500" />
-      )}
+    <header className="fixed top-0 left-0 right-0 z-999 px-6">
       <div className="relative mx-auto pt-2 pb-1 z-10">
         <div className="flex items-center justify-between">
-          {/* Logo with crossfade */}
-          <button className="relative cursor-crosshair" onClick={() => { conditionalScrollTo(''); setIsMenuOpen(false); }}>
-            <span
-              className={`tracking-wide title font-normal text-foreground hover:text-muted-foreground left-0 top-0 transition-all duration-500 ${
-                isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-              }`}
-            >
-              DAYDREAMTEAM
-            </span>
-            <span
-              className={`tracking-wide title font-normal text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-              }`}
-            >
+          <button className="relative cursor-crosshair" onClick={() => { conditionalScrollTo(""); setIsMenuOpen(false); }}>
+            <span className="tracking-wide title font-normal text-foreground left-0 top-0">
               DAYDREAMTEAM
             </span>
           </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-8 ">
-            <Link href="/work" className="relative title text-base cursor-crosshair">
-              <span
-                className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                  isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-                }`}
-              >
-                WORK
-              </span>
-              <span
-                className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                  isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                }`}
-              >
-                WORK
-              </span>
+          <nav className="hidden md:flex gap-8">
+            <Link href="/work" className="relative title text-base cursor-crosshair text-foreground hover:text-muted-foreground transition-colors duration-300">
+              WORK
             </Link>
-            <button className="relative title text-base cursor-crosshair" onClick={() => conditionalScrollTo('#about')}>
-                <span
-                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-                  }`}
-                >
-                  ABOUT
-                </span>
-                <span
-                  className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                  }`}
-                >
-                  ABOUT
-                </span>
+            <button className="relative title text-base cursor-crosshair text-foreground hover:text-muted-foreground transition-colors duration-300" onClick={() => conditionalScrollTo("#about")}>
+              ABOUT
             </button>
-            <button className="relative title text-base cursor-crosshair " onClick={() => conditionalScrollTo('#contact')}>
-                <span
-                  className={`text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                    isLight ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-                  }`}
-                >
-                  CONTACT
-                </span>
-                <span
-                  className={`text-background hover:text-foreground absolute left-0 top-0 transition-all duration-500 ${
-                    isLight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                  }`}
-                >
-                  CONTACT
-                </span>
+            <button className="relative title text-base cursor-crosshair text-foreground hover:text-muted-foreground transition-colors duration-300" onClick={() => conditionalScrollTo("#contact")}>
+              CONTACT
             </button>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden cursor-crosshair -mr-4.75 -mt-4 -mb-3.75"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <NavIcon
-              color={isLight ? "background" : "foreground"}
-              open={isMenuOpen}
-              hoverColor={isLight ? "background" : "foreground"}
-            />
+            <NavIcon color="foreground" open={isMenuOpen} hoverColor="foreground" />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className={`md:hidden flex flex-col gap-4 text-lg pt-4 `}>
+          <nav className="md:hidden flex flex-col gap-4 text-lg pt-4">
             <Link
               href="/work"
               onClick={() => setIsMenuOpen(false)}
-              className={`title pop-up opacity-0 text-left transition-colors ${
-                isLight
-                  ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-muted-foreground"
-              }`}
+              className="title pop-up opacity-0 text-left transition-colors text-foreground hover:text-muted-foreground"
             >
               WORK
             </Link>
             <button
-            
-              className={`title pop-up-2 opacity-0 text-left transition-colors cursor-crosshair ${
-                isLight
-                  ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-muted-foreground"
-              }`}
-              onClick={() => { conditionalScrollTo('#about'); setIsMenuOpen(false); }}
+              className="title pop-up-2 opacity-0 text-left transition-colors cursor-crosshair text-foreground hover:text-muted-foreground"
+              onClick={() => { conditionalScrollTo("#about"); setIsMenuOpen(false); }}
             >
-                ABOUT
+              ABOUT
             </button>
             <button
-              className={`title pop-up opacity-0 text-left transition-colors cursor-crosshair ${
-                isLight
-                  ? "text-background hover:text-foreground"
-                  : "text-foreground hover:text-muted-foreground"
-              }`}
-              onClick={() => { conditionalScrollTo('#contact'); setIsMenuOpen(false); }}
+              className="title pop-up opacity-0 text-left transition-colors cursor-crosshair text-foreground hover:text-muted-foreground"
+              onClick={() => { conditionalScrollTo("#contact"); setIsMenuOpen(false); }}
             >
-                CONTACT
+              CONTACT
             </button>
           </nav>
         )}
