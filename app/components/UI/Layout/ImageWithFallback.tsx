@@ -1,12 +1,12 @@
 'use client'
+import Image from 'next/image'
 import { useState } from 'react'
-import { CldImage } from 'next-cloudinary'
 
 const ERROR_IMG_SRC =
   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg=='
 
 interface ImageWithFallbackProps {
-  src: string;  // Cloudinary public ID
+  src: string;
   alt: string;
   className?: string;
   fill?: boolean;
@@ -39,6 +39,10 @@ export function ImageWithFallback({
 }: ImageWithFallbackProps) {
   const [didError, setDidError] = useState(false)
 
+  void quality
+  void format
+  void dpr
+
   const handleError = () => {
     setDidError(true)
   }
@@ -56,19 +60,10 @@ export function ImageWithFallback({
     )
   }
 
-  const computedSizes =
-    sizes ?? (fill ? '100vw' : width ? `${width}px` : undefined)
-
-  // Cloudinary automatic delivery optimizations.
-  // - format="auto" enables WebP/AVIF when supported
-  // - quality="auto" lets Cloudinary pick a good compression level
-  // - dpr="auto" serves crisp images without overshooting bytes
-  const computedFormat = format ?? 'auto'
-  const computedQuality = quality ?? 'auto'
-  const computedDpr = dpr ?? 'auto'
+  const computedSizes = sizes ?? (fill ? '100vw' : width ? `${width}px` : undefined)
 
   return (
-    <CldImage
+    <Image
       src={src}
       alt={alt}
       className={className}
@@ -76,13 +71,9 @@ export function ImageWithFallback({
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
       sizes={computedSizes}
-      format={computedFormat}
-      quality={computedQuality}
-      dpr={computedDpr}
-      preload={priority}
+      priority={priority}
       loading={priority ? 'eager' : 'lazy'}
       unoptimized={unoptimized}
-      placeholder="empty"
       onLoad={onLoad}
       onError={handleError}
       {...rest}

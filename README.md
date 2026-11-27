@@ -29,7 +29,7 @@ Use Node 20.9 or newer. Next 16 will fail to build on older Node versions.
 Create `.env.local` in the `ddt` folder:
 
 ```bash
-# Vercel Blob (preferred storage option for this branch)
+# Required for Vercel Blob reads and uploads
 BLOB_READ_WRITE_TOKEN=
 
 # Optional (recommended for correct absolute URLs in sitemap/metadata)
@@ -37,17 +37,11 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 # Optional (recommended): invalidate cached project data on demand
 REVALIDATE_SECRET=some-long-random-string
-
-# Legacy fallback values kept temporarily while migrating away from Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
 ```
 
 Notes:
 - `BLOB_READ_WRITE_TOKEN` is the Vercel Blob token used by `lib/blob.ts` and `app/api/blob/route.ts`.
 - `NEXT_PUBLIC_SITE_URL` is used to generate absolute URLs for SEO metadata routes.
-- The Cloudinary values are retained only as a fallback until the image pipeline is fully moved to Blob.
 
 ## SEO (Next.js Standards)
 
@@ -60,7 +54,7 @@ Global SEO tags (Open Graph / Twitter / keywords) live in `app/layout.tsx`, with
 
 ## Updating Images (Vercel Blob)
 
-This branch uses Vercel Blob as the preferred image store. Each project folder can be treated as a prefix under `photos/`, and the helpers in `lib/blob.ts` can list or upload files without needing Cloudinary.
+This branch uses Vercel Blob as the preferred image store. Each project folder can be treated as a prefix under `photos/`, and the helpers in `lib/blob.ts` can list or upload files directly from Blob storage.
 
 ### Recommended setup
 
@@ -71,10 +65,35 @@ This branch uses Vercel Blob as the preferred image store. Each project folder c
 
 ### Revalidation
 
-If you still rely on the Cloudinary cache invalidation route, keep `REVALIDATE_SECRET` in place. The app can still call the existing revalidate endpoint while migrating.
+Keep `REVALIDATE_SECRET` in place to clear project cache entries after uploads or reordering.
+
+### Project Metadata
+
+Project data now comes from a metadata file inside each Blob project folder instead of the old folder-name convention.
+
+Supported files:
+- `project.json`
+- `metadata.json`
+- `project.txt`
+- `metadata.txt`
+
+Example `project.json`:
+
+```json
+{
+  "id": 12,
+  "title": "North Harbor",
+  "year": "2025",
+  "categories": ["COLOUR", "PORTRAIT", "STILL LIFE"],
+  "tags": ["coastal", "summer", "beach"],
+  "description": "A series exploring morning light on the harbor edge."
+}
+```
+
+The app reads the metadata file and ignores folder naming as the source of truth. If a project folder has no metadata file, it is skipped.
 
 ### Project Descriptions
 
-If you upload a `description.txt` file alongside a project's images in its Blob folder, the app can load it into `project.text`.
+If you keep a `description.txt` file alongside a project's images, it can still populate `project.text` when you want a plain-text summary.
 
 (Legacy `description.cd` is also supported.)

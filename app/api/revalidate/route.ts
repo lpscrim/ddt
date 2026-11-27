@@ -1,9 +1,9 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
-const CLOUDINARY_CACHE_TAG = 'cloudinary-projects';
+const PROJECTS_CACHE_TAG = 'projects';
 
 export async function GET(req: NextRequest) {
   const expectedSecret = process.env.REVALIDATE_SECRET;
@@ -19,9 +19,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid secret' }, { status: 401 });
   }
 
-    revalidateTag(CLOUDINARY_CACHE_TAG, 'max');
   revalidatePath('/');
   revalidatePath('/work');
 
-  return NextResponse.json({ revalidated: true, tag: CLOUDINARY_CACHE_TAG });
+  return NextResponse.json({ revalidated: true, tag: PROJECTS_CACHE_TAG });
 }
