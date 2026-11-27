@@ -43,16 +43,65 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
     if (tab.key === "contact") {
       return (
-        <div className="flex flex-col gap-3 p-4 text-sm sm:text-base">
-          <a href="mailto:lpscrim@gmail.com" className="underline underline-offset-4 hover:opacity-70">
-            LPSCRIM@GMAIL.COM
-          </a>
-          <a href="https://www.instagram.com/daydreamteam/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:opacity-70">
-            INSTAGRAM
-          </a>
-          <a href="https://www.linkedin.com/in/lewis-scrimgeour-13389b243/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:opacity-70">
-            LINKEDIN
-          </a>
+        <div className="flex flex-col gap-4 p-4 text-sm sm:text-base pt-4">
+
+          <form className="flex flex-col gap-3">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="flex flex-col gap-1 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
+                Name
+                <input
+                  type="text"
+                  name="name"
+                  className="border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                  placeholder="Your name"
+                />
+              </label>
+
+              <label className="flex flex-col gap-1 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  className="border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                  placeholder="Your email"
+                />
+              </label>
+            </div>
+
+
+
+            <label className="flex flex-col gap-1 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
+              Message
+              <textarea
+                name="message"
+                rows={4}
+                className="resize-none border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                placeholder="Tell me about the project"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="mt-1 border border-border bg-foreground px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+            >
+              Send
+            </button>
+          </form>
+
+          <div className="flex flex-col gap-2 border-t border-border pt-3 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
+            <a href="mailto:lpscrim@gmail.com" className="flex items-center justify-between gap-2 hover:opacity-70">
+              <span>Email</span>
+              <span>↗</span>
+            </a>
+            <a href="https://www.instagram.com/daydreamteam/" target="_blank" rel="noreferrer" className="flex items-center justify-between gap-2 hover:opacity-70">
+              <span>Instagram</span>
+              <span>↗</span>
+            </a>
+            <a href="https://www.linkedin.com/in/lewis-scrimgeour-13389b243/" target="_blank" rel="noreferrer" className="flex items-center justify-between gap-2 hover:opacity-70">
+              <span>LinkedIn</span>
+              <span>↗</span>
+            </a>
+          </div>
         </div>
       );
     }
@@ -78,7 +127,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
           </Link>
         ))}
 
-        <Link href="/work" className="col-span-3 mt-4 text-center text-[10px] uppercase tracking-[0.2em] text-foreground">
+        <Link href="/work" className="col-span-3 mt-16 text-center text-[10px] uppercase tracking-[0.2em] text-foreground">
           View More Projects
         </Link>
       </div>
@@ -114,7 +163,6 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
                     className="relative z-20 flex h-10 w-full items-center justify-center overflow-hidden px-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground transition-colors duration-200"
                   >
-                    {tab.label}
                   </button>
 
                   <div
@@ -186,7 +234,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                         }}
                         className="flex h-full flex-1 items-center pl-[15px] text-left text-[10px] uppercase tracking-[0.2em] text-foreground"
                       >
-                        <span>{tab.label}</span>
+                        <span>{ mobileMenuOpen ? tab.label : "menu"}</span>
                       </button>
 
                       <button
