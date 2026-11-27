@@ -1,19 +1,18 @@
-import { Suspense } from "react";
-import { About } from "./components/Sections/Home/About";
-import { Contact } from "./components/Sections/Home/Contact";
+import { getProjects } from "./data/projects";
 import { Hero } from "./components/Sections/Home/Hero";
-import { Projects } from "./components/Sections/Home/Projects";
-import { ProjectsSkeleton } from "./components/Sections/Home/ProjectsSkeleton";
+import { HomeBottomNav } from "./components/Sections/Home/HomeBottomNav";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects({ includeGallery: false, includeText: false });
+
   return (
-    <main className="min-h-lvh">
+    <main className="h-[100svh] w-full overflow-hidden">
       <Hero />
-      <Suspense fallback={<ProjectsSkeleton />}>
-        <Projects />
-      </Suspense>
-      <About />
-      <Contact />
+      <HomeBottomNav projects={projects.slice(0, 3).map((project) => ({
+        id: project.id,
+        title: project.title,
+        imageUrl: project.imageUrl,
+      }))} />
     </main>
   );
 }

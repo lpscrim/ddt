@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
-import { Header } from "./components/Sections/Header";
-import { Footer } from "./components/Sections/Footer";
+import { SiteShell } from "./components/SiteShell";
 
 
 function getSiteUrl(): string {
@@ -82,9 +81,7 @@ export default function RootLayout({
       <body
         className="antialiased bg-background text-foreground w-full"
       >
-        <Header />
-        {children}
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

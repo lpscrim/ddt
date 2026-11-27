@@ -12,7 +12,7 @@ export default function NavIcon( { open, color, hoverColor } : { open: boolean, 
     <div
       id="nav-icon"
       className={` ${styles.navIcon} ${open ? styles.open : ""} `}
-      style={{ position: "relative", scale: "80%" }}
+      style={{ position: "relative", scale: "55%" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

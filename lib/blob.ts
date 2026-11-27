@@ -128,6 +128,31 @@ export async function listProjectPhotos(folder: string): Promise<string[]> {
   }
 }
 
+export async function listFeaturedPhotos(): Promise<string[]> {
+  if (!hasBlobConfig()) {
+    return [];
+  }
+
+  try {
+    const { blobs } = await list({
+      prefix: `${BLOB_PHOTOS_PREFIX}/featured/`,
+    });
+
+    return blobs
+      .filter(
+        (blob) =>
+          !isDescriptionLikeName(getLastPathSegment(blob.pathname)) &&
+          !isMetadataLikeName(getLastPathSegment(blob.pathname))
+      )
+      .map((blob) => blob.url)
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b));
+  } catch (error) {
+    console.error("Failed to list featured Vercel Blob photos:", error);
+    return [];
+  }
+}
+
 function parseMetadataText(text: string): Record<string, unknown> {
   const trimmed = text.trim();
   if (!trimmed) return {};

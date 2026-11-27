@@ -155,9 +155,11 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       thumbRect.width / 2 -
       stripRect.width / 2;
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
     stripEl.scrollTo({
       left: stripEl.scrollLeft + delta,
-      behavior: "smooth",
+      behavior: isMobile || reducedMotion ? "auto" : "smooth",
     });
   }, [index, images.length, isOpen]);
 
