@@ -1,7 +1,7 @@
 export default function Button(props: Readonly<{
   children: React.ReactNode;
   onClick?: () => void;
-  size: "xs" | "sm" | "md" | "lg";
+  size: "xs" | "sm" | "md" | "lg" | "xl";
 }>) {
   const { children, onClick, size } = props;
   return (
