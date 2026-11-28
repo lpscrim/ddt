@@ -65,7 +65,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="h-[70svh] overflow-y-auto overscroll-contain">
+      <div className="h-[75svh] overflow-y-auto overscroll-contain">
         <WorkGallery
           projects={projects}
           allPhotos={projects.flatMap((project) => [
@@ -213,7 +213,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <div className={`bg-background ${mobileMenuOpen ? 'h-[70vh]' : ''}`}>{renderMenuContent(tab)}</div>
+                        <div className={`bg-background ${mobileMenuOpen ? 'h-[75vh]' : ''}`}>{renderMenuContent(tab)}</div>
                       </div>
                     </div>
                   </div>

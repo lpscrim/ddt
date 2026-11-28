@@ -35,9 +35,9 @@ export function MainGallery({
 
   return (
     <>
-      <div className="pt-12 pb-4 px-0 rounded-xs flex flex-wrap gap-4 w-full">
-        <div className="xl:w-1/2 text-sm sm:text-base py-2">
-          <div>
+      <div className=" pb-4 px-0 flex flex-wrap w-full">
+        <div className="text-sm px-3">
+          <div className="flex gap-1">
             <button
               onClick={() => setViewMode("projects")}
               className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" ? "text-foreground" : "text-foreground/50"}`}
@@ -54,7 +54,7 @@ export function MainGallery({
         </div>
       </div>
       {viewMode === "projects" ? (
-        <div className="grid grid-cols-3 gap-2 px-0">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-2 px-0">
           {filteredProjects.map((project, idx) => (
             <div key={project.id} className="relative group">
             <Card
@@ -107,7 +107,7 @@ function PhotosGrid({
 
   return (
     <>
-      <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-1">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 gap-1">
         {photosToRender.map((photo, index) => (
           <Card
             key={photo + index}

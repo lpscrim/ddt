@@ -14,7 +14,7 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-background/5" />
 
-      <h1 className=" title absolute left-6 top-[10vh] lg:top-[30vh] z-10 text-lg uppercase tracking-[0.26em] text-foreground/90 sm:left-10 lg:left-16 lg:text-2xl">
+      <h1 className=" title absolute left-6 top-[5vh] lg:top-[30vh] z-10 text-xl uppercase tracking-[0.45em] text-foreground/90 sm:left-10 lg:left-16 lg:text-2xl">
         <span className="text-foreground/80">D</span>
         <span className="text-foreground/70">A</span>
         <span className="text-foreground/60">Y</span>
