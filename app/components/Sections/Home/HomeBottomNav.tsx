@@ -19,6 +19,9 @@ interface HomeBottomNavProps {
 
 export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const [activeTab, setActiveTab] = useState<"about" | "contact" | "work" | null>(null);
+  const [desktopOpenTabs, setDesktopOpenTabs] = useState<
+    Set<"about" | "contact" | "work">
+  >(() => new Set());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const tabItems: Array<{ key: "about" | "contact" | "work"; label: string }> = [
@@ -31,26 +34,41 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const closeAllMenus = () => {
     setMobileMenuOpen(false);
     setActiveTab(null);
+    setDesktopOpenTabs(new Set());
+  };
+
+  const toggleDesktopTab = (tab: "about" | "contact" | "work") => {
+    setDesktopOpenTabs((current) => {
+      const next = new Set(current);
+
+      if (next.has(tab)) {
+        next.delete(tab);
+      } else {
+        next.add(tab);
+      }
+
+      return next;
+    });
   };
 
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="p-2 text-xs leading-relaxed text-foreground/80 sm:text-base">
-          I&apos;m a photographer and web developer/designer exploring landscapes,
-          architecture and culture. The relationship between space, light, and human
-          experience fascinates me, and I try to capture that through visual stories
-          shaped by both intuition and discipline.
+        <div className="p-2 text-sm lg:text-xs leading-relaxed text-justify hyphens-auto text-foreground/80">
+          Lewis Scrimgeour is a photographer and web designer exploring
+          landscape, architecture and culture. His work examines the relationships
+          between space, light and human experience, translating them into considered
+          visual stories shaped by both intuition and precision.
         </div>
       );
     }
 
     if (tab.key === "contact") {
       return (
-        <div className="flex flex-col mx-auto max-w-xl justify-center gap-4 p-2 text-sm sm:text-base pt-4">
+        <div className="flex flex-col mx-auto max-w-xl justify-center gap-4 p-2 text-xs">
 
           
-          <div className="flex flex-col gap-2 pt-3 text-xs tracking-[0.2em] text-foreground/80">
+          <div className="flex flex-col gap-2 pt-3  tracking-[0.2em] text-foreground/80">
             <a href="mailto:lpscrim@proton.me" className="flex items-center justify-between gap-2 hover:opacity-70">
               <span>lpscrim@proton.me</span>
             </a>
@@ -58,7 +76,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               <span>@daydreamteam</span>
             </a>
           </div>
-                <p className="text-muted-foreground lowercase text-xs">© {new Date().getFullYear()} LEWIS SCRIMGEOUR. ALL RIGHTS RESERVED.</p>
+                <p className="text-muted-foreground lowercase ">© {new Date().getFullYear()} LEWIS SCRIMGEOUR. ALL RIGHTS RESERVED.</p>
 
         </div>
       );
@@ -66,7 +84,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
     return (
       <div className="work-drawer-scroll h-svh overflow-y-auto overscroll-contain">
-        {activeTab === "work" && (
+        {(activeTab === "work" || desktopOpenTabs.has("work")) && (
           <WorkGallery
             projects={projects}
             allPhotos={projects.flatMap((project) => [
@@ -86,7 +104,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
         <div className="fixed bottom-0 left-0 right-0 z-60 bg-background/80">
           <div className="mx-auto grid w-full grid-cols-6 bg-background">
             {[...tabItems].reverse().map((tab) => {
-              const isOpen = activeTab === tab.key;
+              const isOpen = desktopOpenTabs.has(tab.key);
 
               return (
                 <div
@@ -104,13 +122,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                         : "pointer-events-none translate-y-[100%]"
                     }`}
                   >
-                    <div className="mx-0 overflow-hidden  bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center justify-between bg-background px-4 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
+                    <div className="mx-0 overflow-hidden bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
+                      <div className="flex items-center border-b pb-1 justify-between bg-background px-2 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
                         <span>{tab.label}</span>
                         <button
                           type="button"
                           aria-label={`Close ${tab.label}`}
-                          onClick={closeAllMenus}
+                          onClick={() => toggleDesktopTab(tab.key)}
                           className={`text-base leading-none ${isOpen ? "" : "hidden"}`}
                         >
                           <span aria-hidden="true">×</span>
@@ -118,7 +136,9 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       </div>
 
                       <div className="overflow-hidden">
-                        <div className={`${activeTab === "work" ? "h-[90vh]" : ""}`}>{renderMenuContent(tab)}</div>
+                        <div className={desktopOpenTabs.has("work") && tab.key === "work" ? "h-[90vh]" : ""}>
+                          {renderMenuContent(tab)}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -132,7 +152,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 key={tab.key}
                 type="button"
                 aria-label={`Open ${tab.label}`}
-                onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
+                onClick={() => toggleDesktopTab(tab.key)}
                 className={`h-8 cursor-pointer touch-manipulation ${
                   tab.key === "work" ? "col-span-4" : "col-span-1"
                 }`}

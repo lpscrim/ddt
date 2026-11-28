@@ -35,20 +35,20 @@ export function MainGallery({
 
   return (
     <>
-      <div className=" pb-4 px-0 flex flex-wrap w-full">
-        <div className="text-xs pl-2">
+      <div className=" pb-4 px-1.5 pt-2 flex flex-wrap w-full">
+        <div className="text-xs ">
           <div className="flex">
             <button
               onClick={() => setViewMode("projects")}
               className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" ? "text-foreground" : "text-foreground/50"}`}
             >
-              projects [{filteredProjects.length}]
+              projects {filteredProjects.length}
             </button>
             <button
               onClick={() => setViewMode("photos")}
               className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "photos" ? "text-foreground" : "text-foreground/50"}`}
             >
-              photos [{filteredPhotos.length}]
+              photos {filteredPhotos.length}
             </button>
           </div>
         </div>
