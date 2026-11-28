@@ -135,7 +135,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       </div>
 
                       <div className="overflow-hidden">
-                        <div className={tab.key === "work" ? "h-[90vh]" : undefined}>
+                        <div className={tab.key === "work" ? "h-[90svh]" : undefined}>
                           {renderMenuContent(tab)}
                         </div>
                       </div>
