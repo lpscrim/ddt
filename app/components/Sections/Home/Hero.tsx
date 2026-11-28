@@ -19,10 +19,10 @@ export function Hero({ mobileWorkMenuOpen = false }: HeroProps) {
       <div className="absolute inset-0 bg-background/5" />
 
       <h1
-        className={`title absolute z-10 uppercase tracking-[0.4em] text-foreground/90 transition-[left,top,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`title absolute z-10 uppercase tracking-[0.4em] text-foreground/90 transition-[left,top] duration-300 ease-out ${
           mobileWorkMenuOpen
-            ? "left-1/2 top-[calc(14svh-20px)] text-xl -translate-x-1/2 text-center"
-            : "left-6 top-[30vh] text-xl sm:left-10 lg:left-12 lg:text-2xl"
+            ? "left-[calc(50%-8.75rem)] top-[calc(14svh-70px)] text-center text-2xl"
+            : "left-6 top-[30vh] text-left text-lg sm:left-10 lg:left-12 lg:text-xl"
         }`}
       >
         <span className="text-foreground/80 hero-letter">D</span>
