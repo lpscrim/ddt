@@ -26,9 +26,9 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const [workHasOpened, setWorkHasOpened] = useState(false);
 
   const tabItems: Array<{ key: "about" | "contact" | "work"; label: string }> = [
-    { key: "work", label: "Work" },
-    { key: "about", label: "About" },
-    { key: "contact", label: "Contact" },
+    { key: "work", label: "work" },
+    { key: "about", label: "about" },
+    { key: "contact", label: "contact" },
   ];
   const mobileTabItems = [...tabItems];
 
