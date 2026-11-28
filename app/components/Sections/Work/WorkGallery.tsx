@@ -25,7 +25,7 @@ export function WorkGallery({
   allPhotos,
 }: WorkGalleryProps) {
 
-  const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
+  const [viewMode, setViewMode] = useState<"projects" | "photos">("photos");
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImages, setModalImages] = useState<string[]>([]);

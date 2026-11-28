@@ -41,7 +41,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
-  const viewerRef = useRef<HTMLDivElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const lastWheelAtRef = useRef<number>(0);
 
@@ -52,8 +51,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   const progressTimerRef = useRef<number | null>(null);
   const progressHideTimerRef = useRef<number | null>(null);
   const progressStartedForImageRef = useRef<string | null>(null);
-
-  const [thumbStripTop, setThumbStripTop] = useState<number | null>(null);
 
   const startProgress = useCallback(() => {
     if (progressTimerRef.current !== null) {
@@ -104,39 +101,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
     };
   }, []);
 
-  const positionThumbStrip = useCallback(() => {
-    if (!isOpen) return;
-    if (images.length <= 1) return;
-
-    const stripEl = stripRef.current;
-    const viewerEl = viewerRef.current;
-    if (!stripEl || !viewerEl) return;
-
-    const viewerRect = viewerEl.getBoundingClientRect();
-    const stripRect = stripEl.getBoundingClientRect();
-
-    // Use the *maximum* image height (from class max-h-[82vh]) so position
-    // doesn't change when an image renders shorter (e.g. landscape).
-    const MAX_IMAGE_VH = 0.82;
-    const maxImageHeight = Math.min(
-      viewerRect.height,
-      window.innerHeight * MAX_IMAGE_VH
-    );
-    const viewerCenterY = (viewerRect.top + viewerRect.bottom) / 2;
-    const maxImageBottom = viewerCenterY + maxImageHeight / 2;
-
-    // Midpoint between bottom of max image area and bottom of screen
-    const targetCenterY = (maxImageBottom + window.innerHeight) / 2;
-    let nextTop = targetCenterY - stripRect.height / 2;
-
-    // Keep it on-screen
-    const minTop = 8;
-    const maxTop = window.innerHeight - stripRect.height - 8;
-    nextTop = Math.max(minTop, Math.min(maxTop, nextTop));
-
-    setThumbStripTop(nextTop);
-  }, [isOpen, images.length]);
-
   // Center active thumbnail when index changes
   useEffect(() => {
     if (!isOpen) return;
@@ -162,18 +126,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       behavior: isMobile || reducedMotion ? "auto" : "smooth",
     });
   }, [index, images.length, isOpen]);
-
-  // Reposition the strip when the modal opens, the image changes, or viewport resizes
-  useEffect(() => {
-    if (!isOpen) return;
-    const raf = requestAnimationFrame(positionThumbStrip);
-    const onResize = () => positionThumbStrip();
-    window.addEventListener("resize", onResize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", onResize);
-    };
-  }, [isOpen, image, positionThumbStrip]);
 
   const startProgressIfNeeded = useCallback(() => {
     if (!image) return;
@@ -268,26 +220,26 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               />
             </div>
           )}
-      <div className="relative py-0 flex flex-row w-full justify-between z-100 bg-background ">
-        <div className="flex py-2 px-6 w-full items-center z-100">
+      <div className="relative z-100 flex w-full shrink-0 flex-row justify-between bg-background py-0">
+        <div className="flex py-2 px-2 w-full items-center z-100">
           {isProject && (
-            <span className="text-foreground text-sm">
+            <span className="text-foreground text-xs">
               {name} {year}
             </span>
           )}
           {!isProject && <span className="opacity-0">{"0"}</span>}
         </div>
-        <div className="flex flex-row  w-50">
+        <div className="flex flex-row  w-30">
             <div className="flex justify-center w-21 -mr-4 text-foreground z-100">
               {isProject && text && (
               <Button onClick={() => setTextOpen(!textOpen)} size="xs">
-                TEXT
+                Text
               </Button>
                         )}
             </div>
           <div className="flex justify-center w-23 md:w-23 text-foreground z-100">
             <Button onClick={onClose} size="xs">
-              BACK
+              Back
             </Button>
           </div>
         </div>
@@ -299,16 +251,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           }  transition-all duration-300 ease-in-out overflow-y-auto z-40`}
         >
           <div
-            className={`max-w-3xl mx-auto px-6 text-center text-sm text-foreground `}
+            className={`max-w-3xl mx-auto px-2 text-center text-sm text-foreground `}
           >
             <p className="whitespace-pre-line">{text}</p>
           </div>
         </div>
       )}
-      <div
-        ref={viewerRef}
-        className="fixed items-center justify-center inset-0 top-10 z-60 flex  "
-      >
+      <div className="fixed inset-x-0 top-20 bottom-16 z-60 flex items-center justify-center overflow-hidden">
         {hasPrev && (
           <button
             className="absolute z-80 focus:outline-none left-0 top-1/2 -translate-y-1/2 h-[85svh] w-[12vw] min-w-[64px] max-w-[120px]"
@@ -329,7 +278,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             // (Avoids setState-in-effect lint while still reacting to image changes.)
             startProgressIfNeeded();
           }}
-          className=""
+          className="flex h-full w-full px-1 items-center justify-center"
         >
         
           <ImageWithFallback
@@ -339,11 +288,8 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             height={800}
             fill={false}
             sizes="90vw"
-            className="max-h-[82vh] max-w-[90vw] object-contain"
-            onLoad={() => {
-              finishProgress();
-              positionThumbStrip();
-            }}
+            className="max-h-full object-contain"
+            onLoad={finishProgress}
           />
         </div>
         {hasNext && (
@@ -364,8 +310,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
       {images.length > 1 && (
         <div
           ref={stripRef}
-          className="fixed left-0 right-0 px-4 flex items-center overflow-x-auto w-full space-x-0 py-2.5 hide-scrollbar bg-background z-999"
-          style={thumbStripTop === null ? undefined : { top: thumbStripTop }}
+          className="fixed bottom-0 left-0 right-0 z-999 flex w-full items-center overflow-x-auto space-x-0 bg-background px-1 py-2.5 hide-scrollbar"
         >
           {images.map((img, idx) => (
             <button
