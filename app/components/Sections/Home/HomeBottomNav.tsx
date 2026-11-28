@@ -45,14 +45,15 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
       return (
         <div className="flex flex-col gap-4 p-4 text-sm sm:text-base pt-4">
 
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" autoComplete="off">
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="flex flex-col gap-1 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
                 Name
                 <input
                   type="text"
                   name="name"
-                  className="border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                  autoComplete="off"
+                  className=" bg-foreground/80 px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-background outline-none placeholder:text-background/40 placeholder:text-[10px]"
                   placeholder="Your name"
                 />
               </label>
@@ -62,7 +63,8 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 <input
                   type="email"
                   name="email"
-                  className="border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                  autoComplete="off"
+                  className=" bg-foreground/80 px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-background outline-none placeholder:text-background/40 placeholder:text-[10px]"
                   placeholder="Your email"
                 />
               </label>
@@ -75,20 +77,21 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               <textarea
                 name="message"
                 rows={4}
-                className="resize-none border border-border bg-background px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-foreground outline-none placeholder:text-foreground/40"
+                autoComplete="off"
+                className="resize-none  bg-foreground/80 px-3 py-2 text-[12px] uppercase tracking-[0.1em] text-background outline-none placeholder:text-background/40 placeholder:text-[10px]"
                 placeholder="Tell me about the project"
               />
             </label>
 
             <button
               type="submit"
-              className="mt-1 border border-border bg-foreground px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+              className="mt-1  bg-foreground px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-background transition-opacity hover:opacity-80"
             >
               Send
             </button>
           </form>
 
-          <div className="flex flex-col gap-2 border-t border-border pt-3 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
+          <div className="flex flex-col gap-2 pt-3 text-[10px] uppercase tracking-[0.2em] text-foreground/80">
             <a href="mailto:lpscrim@gmail.com" className="flex items-center justify-between gap-2 hover:opacity-70">
               <span>Email</span>
               <span>↗</span>
@@ -142,11 +145,11 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
             type="button"
             aria-label="Close desktop menu"
             onClick={closeAllMenus}
-            className="fixed inset-0 z-0 bg-blue-100"
+            className="fixed inset-0 z-10 cursor-default bg-transparent"
           />
         )}
 
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/70 bg-background">
+        <div className="fixed bottom-0 left-0 right-0 z-20 -/70 bg-background">
           <div className="mx-auto grid w-full grid-cols-3 bg-background">
             {tabItems.map((tab) => {
               const isOpen = activeTab === tab.key;
@@ -154,24 +157,24 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               return (
                 <div
                   key={tab.key}
-                  className={`relative border-l border-border/70 first:border-l-0 ${
+                  className={`relative -l -/70 first:-l-0 ${
                     isOpen ? "bg-muted" : "bg-background"
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
-                    className="relative z-20 flex h-10 w-full items-center justify-center overflow-hidden px-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground transition-colors duration-200"
+                    className="relative z-30 flex h-10 w-full"
                   >
                   </button>
 
                   <div
-                    className={`pointer-events-none absolute inset-x-0 bottom-full z-10 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`pointer-events-none absolute inset-x-0 bottom-full z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isOpen ? "pointer-events-auto translate-y-0" : "translate-y-[100%]"
                     }`}
                   >
-                    <div className="mx-0 overflow-hidden border border-border bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="border-b border-border/70 bg-background px-4 py-2.5 text-[10px] uppercase tracking-[0.28em] text-foreground/80">
+                    <div className="mx-0 overflow-hidden  bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
+                      <div className="-b -/70 bg-background px-4 py-2.5 text-[10px] uppercase tracking-[0.28em] text-foreground/80">
                         {tab.label}
                       </div>
 
@@ -224,7 +227,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 const isOpen = activeTab === tab.key;
 
                 return (
-                  <div key={tab.key} className="border-b border-border/70 bg-background last:border-b-0">
+                  <div key={tab.key} className="-b -/70 bg-background last:-b-0">
                     <div className={`relative flex h-[46px] w-full items-center`}>
                       <button
                         type="button"
