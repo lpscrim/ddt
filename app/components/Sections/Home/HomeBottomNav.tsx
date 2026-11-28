@@ -30,7 +30,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     { key: "about", label: "About" },
     { key: "contact", label: "Contact" },
   ];
-  const mobileTabItems = [...tabItems].reverse();
+  const mobileTabItems = [...tabItems];
 
   const toggleDesktopTab = (tab: "about" | "contact" | "work") => {
     if (tab === "work") {
