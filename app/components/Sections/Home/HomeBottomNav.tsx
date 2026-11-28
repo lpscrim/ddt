@@ -254,7 +254,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       <div className="overflow-hidden">
                         <div
                           className={`bg-background ${
-                            tab.key === "work" ? "h-[70vh]" : ""
+                            tab.key === "work" ? "h-[70svh]" : ""
                           }`}
                         >
                           {renderMenuContent(tab)}
