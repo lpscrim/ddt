@@ -35,7 +35,7 @@ export function MainGallery({
 
   return (
     <>
-      <div className=" pb-4 px-1.5 pt-0 flex flex-wrap w-full">
+      <div className=" pb-4 px-1.5 pt-2 flex flex-wrap w-full">
         <div className="text-xs ">
           <div className="flex">
             <button
@@ -71,11 +71,7 @@ export function MainGallery({
               imageDpr={1}
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
-            <div className="absolute inset-x-0 top-8 px-4 group-hover:opacity-100 opacity-0 flex flex-col group-hover:mt-2 z-60 transition-all duration-500 pointer-events-none max-w-full">
-                <h3 className="tracking-tight text-background wrap-break-word">
-                  {project.title}
-                </h3>
-              </div>
+           
             </div>
           ))}
         </div>

@@ -54,7 +54,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="p-2 max-w-3xl mx-auto text-xs lg:text-xs leading-relaxed lg:text-justify text-left text-hyphens-auto text-foreground/80">
+        <div className="px-2 md:px-4 lg:px-2 mx-auto text-xs lg:text-xs leading-relaxed lg:text-justify text-left text-hyphens-auto text-foreground/80">
           Lewis Scrimgeour is a photographer and web designer exploring
           landscape, architecture and culture. His work examines the relationships
           between space, light and human experience, translating them into considered
@@ -65,7 +65,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
     if (tab.key === "contact") {
       return (
-        <div className="flex flex-col mx-auto max-w-xl justify-center gap-4 p-2 text-xs">
+        <div className="flex flex-col mx-auto gap-4 p-2 text-xs">
 
           
           <div className="flex flex-col gap-2 pt-3  tracking-[0.2em] text-foreground/80">
@@ -83,7 +83,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="work-drawer-scroll overflow-y-auto overscroll-contain">
+      <div className="work-drawer-scroll h-full overflow-y-auto overscroll-contain">
         {(activeTab === "work" || desktopOpenTabs.has("work")) && (
           <WorkGallery
             projects={projects}
@@ -209,7 +209,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setActiveTab((current) => (current === tab.key ? null : tab.key));
                           setMobileMenuOpen(true);
                         }}
-                        className="flex h-full flex-1 items-center pl-2 text-left text-xs tracking-[0.2em] text-foreground"
+                        className="flex h-full flex-1 border-b items-center pl-2 text-left text-xs tracking-[0.2em] text-foreground"
                       >
                         <span>{ mobileMenuOpen ? tab.label : "menu"}</span>
                       </button>
@@ -228,10 +228,10 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setActiveTab(tab.key);
                           setMobileMenuOpen(true);
                         }}
-                        className="flex h-full w-[46px] items-center justify-end pr-2 text-right text-[18px] leading-none text-foreground"
+                        className="flex h-full w-[46px] items-center justify-end pr-4 text-right text-[18px] leading-none text-foreground"
                       >
                         <span
-                          className={` ${mobileMenuOpen ? 'block' : 'hidden'} transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          className={` ${mobileMenuOpen ? 'block' : 'hidden'}  transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                             isOpen ? "rotate-45" : "rotate-0"
                           }`}
                           aria-hidden="true"
@@ -247,7 +247,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <div className={`bg-background ${mobileMenuOpen ? 'h-[75vh]' : ''}`}>{renderMenuContent(tab)}</div>
+                        <div
+                          className={`bg-background ${
+                            tab.key === "work" && mobileMenuOpen ? "h-[75vh]" : ""
+                          }`}
+                        >
+                          {renderMenuContent(tab)}
+                        </div>
                       </div>
                     </div>
                   </div>
