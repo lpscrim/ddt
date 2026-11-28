@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorkGallery } from "../Work/WorkGallery";
 
 interface ProjectCardData {
@@ -15,15 +15,20 @@ interface ProjectCardData {
 
 interface HomeBottomNavProps {
   projects: ProjectCardData[];
+  onWorkMenuOpenChange?: (isOpen: boolean) => void;
 }
 
-export function HomeBottomNav({ projects }: HomeBottomNavProps) {
+export function HomeBottomNav({ projects, onWorkMenuOpenChange }: HomeBottomNavProps) {
   const [activeTab, setActiveTab] = useState<"about" | "contact" | "work" | null>(null);
   const [desktopOpenTabs, setDesktopOpenTabs] = useState<
     Set<"about" | "contact" | "work">
   >(() => new Set());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [workHasOpened, setWorkHasOpened] = useState(false);
+
+  useEffect(() => {
+    onWorkMenuOpenChange?.(mobileMenuOpen && activeTab === "work");
+  }, [activeTab, mobileMenuOpen, onWorkMenuOpenChange]);
 
   const tabItems: Array<{ key: "about" | "contact" | "work"; label: string }> = [
     { key: "work", label: "work" },

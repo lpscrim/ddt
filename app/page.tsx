@@ -1,14 +1,8 @@
 import { getProjects } from "./data/projects";
-import { Hero } from "./components/Sections/Home/Hero";
-import { HomeBottomNav } from "./components/Sections/Home/HomeBottomNav";
+import { HomePageClient } from "./components/Sections/Home/HomePageClient";
 
 export default async function Home() {
   const projects = await getProjects();
 
-  return (
-    <main className=" w-full overflow-hidden">
-      <Hero />
-      <HomeBottomNav projects={projects} />
-    </main>
-  );
+  return <HomePageClient projects={projects} />;
 }

@@ -1,6 +1,10 @@
 import Image from "next/image";
 
-export function Hero() {
+interface HeroProps {
+  mobileWorkMenuOpen?: boolean;
+}
+
+export function Hero({ mobileWorkMenuOpen = false }: HeroProps) {
   return (
     <section id="home" className="relative h-svh overflow-hidden">
       <Image
@@ -14,7 +18,13 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-background/5" />
 
-      <h1 className=" title absolute left-6 top-[5vh] lg:top-[30vh] z-10 text-xl uppercase tracking-[0.4em] text-foreground/90 sm:left-10 lg:left-12 lg:text-2xl">
+      <h1
+        className={`title absolute z-10 uppercase tracking-[0.4em] text-foreground/90 transition-[left,top,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          mobileWorkMenuOpen
+            ? "left-1/2 top-[calc(14svh-20px)] text-xl -translate-x-1/2 text-center"
+            : "left-6 top-[30vh] text-xl sm:left-10 lg:left-12 lg:text-2xl"
+        }`}
+      >
         <span className="text-foreground/80 hero-letter">D</span>
         <span className="text-foreground/70 hero-letter">A</span>
         <span className="text-foreground/60 hero-letter">Y</span>
