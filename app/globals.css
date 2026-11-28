@@ -79,59 +79,6 @@ body, input, h2, h3, h4, button, textarea, a, label, p {
   font-family: 'Manrope', sans-serif;
 }
 
-@layer utilities {
-  /* Custom chevron cursors for gallery navigation. Fallbacks keep behavior usable everywhere. */
-  .cursor-chevron-left {
-    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20width%3D'32'%20height%3D'32'%20viewBox%3D'0%200%2032%2032'%3E%3Cpath%20d%3D'M19%208l-8%208%208%208'%20fill%3D'none'%20stroke%3D'%23111'%20stroke-width%3D'3'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'/%3E%3C/svg%3E") 16 16,
-      w-resize;
-  }
-
-  .cursor-chevron-right {
-    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20width%3D'32'%20height%3D'32'%20viewBox%3D'0%200%2032%2032'%3E%3Cpath%20d%3D'M13%208l8%208-8%208'%20fill%3D'none'%20stroke%3D'%23111'%20stroke-width%3D'3'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'/%3E%3C/svg%3E") 16 16,
-      e-resize;
-  }
-
-}
-
-#contact a {
-  font-family: 'Manrope', sans-serif;
-}
-
-/* Animations */
-@keyframes pop-up {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.pop-up {
-  animation: pop-up 0.3s ease forwards;
-}
-.pop-up-2 {
-  animation: pop-up 0.3s ease 0.05s forwards;
-}
-.pop-up-3 {
-  animation: pop-up 0.3s ease 0.1s forwards;
-}
-
-.fade-in {
-  animation: fade-in 1s ease forwards;
-}
-
 .hero-letter {
   cursor: default;
   transition: color 1.2s ease;

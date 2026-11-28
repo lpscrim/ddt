@@ -1,8 +1,8 @@
-import { list, put } from "@vercel/blob";
+import { list } from "@vercel/blob";
 
 export const BLOB_PHOTOS_PREFIX = "photos";
 
-const DESCRIPTION_FORMATS = ["txt", "cd"] as const;
+const DESCRIPTION_FORMATS = ["txt"] as const;
 const METADATA_FILE_NAMES = [
   "project.json",
   "metadata.json",
@@ -24,21 +24,6 @@ function stripExtension(filename: string): string {
 
 function normalizeText(text: string): string {
   return text.replace(/\r\n/g, "\n").trim();
-}
-
-function parseStringList(value: unknown): string[] {
-  if (Array.isArray(value)) {
-    return value.flatMap((entry) => parseStringList(entry));
-  }
-
-  if (typeof value !== "string") {
-    return [];
-  }
-
-  return value
-    .split(/[\n,|;]/)
-    .map((entry) => entry.trim())
-    .filter(Boolean);
 }
 
 function isMetadataLikeName(name: string): boolean {
@@ -93,6 +78,9 @@ export async function listProjectFolders(): Promise<string[]> {
       if (segments[0] !== BLOB_PHOTOS_PREFIX || segments.length < 3) {
         continue;
       }
+      if (segments[1].toLowerCase() === "featured") {
+        continue;
+      }
       folders.add(segments[1]);
     }
 
@@ -124,31 +112,6 @@ export async function listProjectPhotos(folder: string): Promise<string[]> {
       .sort((a, b) => a.localeCompare(b));
   } catch (error) {
     console.error(`Failed to list Vercel Blob photos for ${folder}:`, error);
-    return [];
-  }
-}
-
-export async function listFeaturedPhotos(): Promise<string[]> {
-  if (!hasBlobConfig()) {
-    return [];
-  }
-
-  try {
-    const { blobs } = await list({
-      prefix: `${BLOB_PHOTOS_PREFIX}/featured/`,
-    });
-
-    return blobs
-      .filter(
-        (blob) =>
-          !isDescriptionLikeName(getLastPathSegment(blob.pathname)) &&
-          !isMetadataLikeName(getLastPathSegment(blob.pathname))
-      )
-      .map((blob) => blob.url)
-      .filter(Boolean)
-      .sort((a, b) => a.localeCompare(b));
-  } catch (error) {
-    console.error("Failed to list featured Vercel Blob photos:", error);
     return [];
   }
 }
@@ -288,24 +251,3 @@ export async function fetchProjectDescriptionText(folder: string): Promise<strin
   }
 }
 
-export async function uploadProjectPhoto(
-  file: File,
-  folder: string,
-  filename: string,
-  options: { access?: "public" | "private"; addRandomSuffix?: boolean } = {}
-): Promise<{ url: string; pathname: string }> {
-  if (!hasBlobConfig()) {
-    throw new Error("BLOB_READ_WRITE_TOKEN is not set.");
-  }
-
-  const safeFolder = folder.trim().replace(/^\/+|\/+$/g, "");
-  const safeFilename = filename.trim() || file.name;
-  const pathname = `${BLOB_PHOTOS_PREFIX}/${safeFolder ? `${safeFolder}/` : ""}${safeFilename}`;
-
-  const { url } = await put(pathname, file, {
-    access: options.access ?? "public",
-    addRandomSuffix: options.addRandomSuffix ?? false,
-  });
-
-  return { url, pathname };
-}

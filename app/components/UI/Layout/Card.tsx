@@ -3,31 +3,16 @@ import { ImageWithFallback } from "./ImageWithFallback";
 export function Card(project: {
   imageUrl: string;
   title: string;
-  categories: string[];
-  galleryImages?: string[];
-  year: string;
-  imageSizes?: string;
-  imageWidth?: number;
-  imageHeight?: number;
-  imageQuality?: number | string;
-  imageDpr?: number | string;
-  imagePriority?: boolean;
+  imageSizes: string;
   handleOnClick?: () => void;
 }) {
-  const useFill = project.imageWidth == null || project.imageHeight == null;
-
   return (
     <div onClick={project.handleOnClick} className="group relative aspect-4/5 bg-muted overflow-hidden mb-0 cursor-crosshair">
       <ImageWithFallback
         src={project.imageUrl}
         alt={project.title}
         sizes={project.imageSizes}
-        fill={useFill}
-        width={!useFill ? project.imageWidth : undefined}
-        height={!useFill ? project.imageHeight : undefined}
-        quality={project.imageQuality}
-        dpr={project.imageDpr}
-        priority={project.imagePriority}
+        fill
         className="w-full h-full object-cover"
       />
     </div>

@@ -40,7 +40,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   // Refs for thumbnails
   const stripRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const imageWrapRef = useRef<HTMLDivElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const lastWheelAtRef = useRef<number>(0);
 
@@ -272,8 +271,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           />
         )}
         <div
-          ref={(el) => {
-            imageWrapRef.current = el;
+          ref={() => {
             // Start the progress bar when the modal mounts or when the image element remounts.
             // (Avoids setState-in-effect lint while still reacting to image changes.)
             startProgressIfNeeded();
@@ -306,7 +304,6 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           />
         )}
       </div>
-      {/* Tiny scrollable thumbnail strip */}
       {images.length > 1 && (
         <div
           ref={stripRef}

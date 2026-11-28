@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
-const PROJECTS_CACHE_TAG = 'projects';
-
 export async function GET(req: NextRequest) {
   const expectedSecret = process.env.REVALIDATE_SECRET;
   if (!expectedSecret) {
@@ -20,7 +18,6 @@ export async function GET(req: NextRequest) {
   }
 
   revalidatePath('/');
-  revalidatePath('/work');
 
-  return NextResponse.json({ revalidated: true, tag: PROJECTS_CACHE_TAG });
+  return NextResponse.json({ revalidated: true });
 }

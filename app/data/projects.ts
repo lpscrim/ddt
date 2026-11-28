@@ -16,11 +16,6 @@ export interface Project {
   tags?: string[];
 }
 
-interface GetProjectsOptions {
-  includeGallery?: boolean;
-  includeText?: boolean;
-}
-
 function normalizeText(text: string): string {
   return text.replace(/\r\n/g, "\n").trim();
 }
@@ -41,17 +36,14 @@ function normalizeStringList(value: unknown): string[] {
     .map((entry) => entry.toUpperCase());
 }
 
-export async function getProjects({
-  includeGallery = true,
-  includeText = true,
-}: GetProjectsOptions = {}): Promise<Project[]> {
+export async function getProjects(): Promise<Project[]> {
   const folders = await listProjectFolders();
 
   const projects = await Promise.all(
     folders.map(async (folder) => {
       const [images, text, metadata] = await Promise.all([
         listProjectPhotos(folder),
-        includeText ? fetchProjectDescriptionText(folder) : Promise.resolve(""),
+        fetchProjectDescriptionText(folder),
         fetchProjectMetadata(folder),
       ]);
 
@@ -103,7 +95,7 @@ export async function getProjects({
         categories: categories.filter(Boolean),
         year,
         imageUrl: coverImage ?? "",
-        ...(includeGallery && galleryImages.length > 0 && { galleryImages }),
+        ...(galleryImages.length > 0 && { galleryImages }),
         text: normalizeText(descriptionText),
         ...(tags.length > 0 && { tags }),
       } satisfies Project;

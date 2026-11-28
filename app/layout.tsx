@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
-import { SiteShell } from "./components/SiteShell";
-
 
 function getSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
@@ -81,7 +79,7 @@ export default function RootLayout({
       <body
         className="antialiased h-svh bg-background text-foreground w-full"
       >
-        <SiteShell>{children}</SiteShell>
+        {children}
       </body>
     </html>
   );

@@ -31,12 +31,6 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
   ];
 
-  const closeAllMenus = () => {
-    setMobileMenuOpen(false);
-    setActiveTab(null);
-    setDesktopOpenTabs(new Set());
-  };
-
   const toggleDesktopTab = (tab: "about" | "contact" | "work") => {
     setDesktopOpenTabs((current) => {
       const next = new Set(current);

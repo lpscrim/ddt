@@ -15,9 +15,6 @@ interface ImageWithFallbackProps {
   sizes?: string;
   priority?: boolean;
   unoptimized?: boolean;
-  quality?: number | string;
-  format?: string;
-  dpr?: number | string;
   onLoad?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }
 
@@ -31,17 +28,10 @@ export function ImageWithFallback({
   sizes,
   priority = false,
   unoptimized = false,
-  quality,
-  format,
-  dpr,
   onLoad,
   ...rest
 }: ImageWithFallbackProps) {
   const [didError, setDidError] = useState(false)
-
-  void quality
-  void format
-  void dpr
 
   const handleError = () => {
     setDidError(true)

@@ -58,17 +58,9 @@ export function MainGallery({
           {filteredProjects.map((project, idx) => (
             <div key={project.id} className="relative group">
             <Card
-              key={project.id}
-              categories={project.categories}
               imageUrl={project.imageUrl}
-              galleryImages={project.galleryImages}
-              year={project.year}
               title={project.title}
               imageSizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-              imageWidth={600}
-              imageHeight={750}
-              imageQuality="auto:eco"
-              imageDpr={1}
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
            
@@ -107,15 +99,9 @@ function PhotosGrid({
         {photosToRender.map((photo, index) => (
           <Card
             key={photo + index}
-            categories={[]}
             imageUrl={photo}
-            year=""
             title=""
             imageSizes="(min-width: 1024px) 12.5vw, (min-width: 768px) 16.7vw, 33vw"
-            imageWidth={360}
-            imageHeight={450}
-            imageQuality="auto:eco"
-            imageDpr={1}
             handleOnClick={() => onCardClick("photos", index)}
           />
         ))}
