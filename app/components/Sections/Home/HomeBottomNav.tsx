@@ -54,7 +54,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="p-2 text-sm lg:text-xs leading-relaxed text-justify hyphens-auto text-foreground/80">
+        <div className="p-2 max-w-3xl mx-auto text-xs lg:text-xs leading-relaxed lg:text-justify text-left text-hyphens-auto text-foreground/80">
           Lewis Scrimgeour is a photographer and web designer exploring
           landscape, architecture and culture. His work examines the relationships
           between space, light and human experience, translating them into considered
@@ -83,7 +83,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="work-drawer-scroll h-svh overflow-y-auto overscroll-contain">
+      <div className="work-drawer-scroll overflow-y-auto overscroll-contain">
         {(activeTab === "work" || desktopOpenTabs.has("work")) && (
           <WorkGallery
             projects={projects}
@@ -123,7 +123,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     }`}
                   >
                     <div className="mx-0 overflow-hidden bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center border-b pb-1 justify-between bg-background px-2 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
+                      <div className="flex items-center border-b pb-2 justify-between bg-background px-2 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
                         <span>{tab.label}</span>
                         <button
                           type="button"
@@ -184,7 +184,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 setMobileMenuOpen((current) => !current);
                 if (mobileMenuOpen) setActiveTab(null);
               }}
-              className="flex h-[46px] w-full cursor-pointer items-center pl-2 text-left text-xs uppercase tracking-[0.2em] text-foreground"
+              className="flex h-8 w-full cursor-pointer items-center pl-2 text-left text-xs uppercase tracking-[0.2em] text-foreground"
             >
               {mobileMenuOpen ? "Close" : "Menu"}
             </button>
@@ -193,16 +193,16 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
           <div
             id="mobile-home-menu-panel"
             className={`pointer-events-auto fixed bottom-0 left-0 right-0 z-[60] overflow-hidden bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-[calc(100%-46px)] opacity-100"
+              mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-[calc(100%-40px)] opacity-100"
             }`}
           >
-            <div className="flex max-h-[calc(100svh-46px)] flex-col overflow-y-auto">
+            <div className="flex max-h-[calc(100svh-40px)] flex-col overflow-y-auto">
               {tabItems.map((tab) => {
                 const isOpen = activeTab === tab.key;
 
                 return (
                   <div key={tab.key} className="bg-background ">
-                    <div className={`relative flex h-[46px] w-full items-center`}>
+                    <div className={`relative flex h-10 w-full items-center`}>
                       <button
                         type="button"
                         onClick={() => {

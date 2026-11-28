@@ -12,7 +12,7 @@
 :root {
   font-family: 'Manrope', sans-serif;
   --font-size: 16px;
-  --background: #f6f6f6;
+  --background: #f0edeb;
   --foreground: oklch(0.145 0 0);
   --muted: #f3f3f1;
   --muted-foreground: #5f5a52;

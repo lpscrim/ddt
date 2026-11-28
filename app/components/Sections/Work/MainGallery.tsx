@@ -35,7 +35,7 @@ export function MainGallery({
 
   return (
     <>
-      <div className=" pb-4 px-1.5 pt-2 flex flex-wrap w-full">
+      <div className=" pb-4 px-1.5 pt-0 flex flex-wrap w-full">
         <div className="text-xs ">
           <div className="flex">
             <button
