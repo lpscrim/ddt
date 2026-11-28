@@ -107,12 +107,12 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="grid grid-cols-2 gap-2 p-3 pt-8 md:grid-cols-3 md:gap-3">
+      <div className="grid grid-cols-2 gap-2 p-3 pt-0 md:grid-cols-3 md:gap-3">
         {projects.slice(0, 3).map((project) => (
           <Link
             key={project.id}
             href={`/work?project=${project.id}`}
-            className="group block overflow-hidden border border-border bg-background"
+            className="group block overflow-hidden bg-background"
           >
             <div className="relative mx-auto aspect-3/4 overflow-hidden">
               <ImageWithFallback
@@ -121,13 +121,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 sizes="(min-width: 768px) 33vw, 100vw"
                 quality="auto:eco"
                 dpr={1}
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                className="h-full w-auto object-contain "
               />
             </div>
           </Link>
         ))}
 
-        <Link href="/work" className="col-span-3 mt-16 text-center text-[10px] uppercase tracking-[0.2em] text-foreground">
+        <Link href="/work" className="col-span-3 mt-4 text-center text-[10px] uppercase tracking-[0.2em] text-foreground">
           View More Projects
         </Link>
       </div>

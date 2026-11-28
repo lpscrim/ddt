@@ -28,7 +28,7 @@ export function FeaturedGallery({ images }: FeaturedGalleryProps) {
             <button
               key={`${src}-${index}`}
               type="button"
-              className="relative aspect-[3/4] overflow-hidden bg-muted cursor-crosshair text-left"
+              className="relative h-[220px] overflow-hidden bg-muted cursor-crosshair text-left sm:h-[260px] lg:h-[300px]"
               onClick={() => {
                 setActiveIndex(index);
                 setOpen(true);
@@ -41,7 +41,7 @@ export function FeaturedGallery({ images }: FeaturedGalleryProps) {
                 sizes="(min-width: 1280px) 16vw, (min-width: 768px) 25vw, 50vw"
                 quality="auto:eco"
                 dpr={1}
-                className="h-full w-full object-cover"
+                className="h-full w-auto object-contain"
               />
             </button>
           ))}
