@@ -36,7 +36,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="p-2 text-sm leading-relaxed text-foreground/80 sm:text-base">
+        <div className="p-2 text-xs leading-relaxed text-foreground/80 sm:text-base">
           I&apos;m a photographer and web developer/designer exploring landscapes,
           architecture and culture. The relationship between space, light, and human
           experience fascinates me, and I try to capture that through visual stories
@@ -83,7 +83,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     <>
       <div className="hidden lg:block">
 
-        <div className="fixed bottom-0 left-0 right-0 z-20  bg-background/80">
+        <div className="fixed bottom-0 left-0 right-0 z-60 bg-background/80">
           <div className="mx-auto grid w-full grid-cols-6 bg-background">
             {[...tabItems].reverse().map((tab) => {
               const isOpen = activeTab === tab.key;
@@ -95,17 +95,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     tab.key === "work" ? "col-span-4" : "col-span-1"
                   } ${isOpen ? "bg-muted" : "bg-background"}`}
                 >
-                  <button
-                    type="button"
-                    aria-label={`Open ${tab.label}`}
-                    onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
-                    className="relative z-30 flex h-8 w-full"
-                  >
-                  </button>
+                  <div className="h-8 w-full" />
 
                   <div
-                    className={`pointer-events-none absolute inset-x-0 bottom-full z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isOpen ? "pointer-events-auto translate-y-0" : "translate-y-[100%]"
+                    className={`absolute inset-x-0 bottom-full z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isOpen
+                        ? "pointer-events-auto translate-y-0"
+                        : "pointer-events-none translate-y-[100%]"
                     }`}
                   >
                     <div className="mx-0 overflow-hidden  bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
@@ -129,6 +125,19 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 </div>
               );
             })}
+          </div>
+          <div className="absolute inset-x-0 bottom-0 z-100 grid grid-cols-6">
+            {[...tabItems].reverse().map((tab) => (
+              <button
+                key={tab.key}
+                type="button"
+                aria-label={`Open ${tab.label}`}
+                onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
+                className={`h-8 cursor-pointer touch-manipulation ${
+                  tab.key === "work" ? "col-span-4" : "col-span-1"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
