@@ -36,7 +36,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="p-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
+        <div className="p-2 text-sm leading-relaxed text-foreground/80 sm:text-base">
           I&apos;m a photographer and web developer/designer exploring landscapes,
           architecture and culture. The relationship between space, light, and human
           experience fascinates me, and I try to capture that through visual stories
@@ -47,7 +47,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
     if (tab.key === "contact") {
       return (
-        <div className="flex flex-col mx-auto max-w-xl justify-center gap-4 p-4 text-sm sm:text-base pt-4">
+        <div className="flex flex-col mx-auto max-w-xl justify-center gap-4 p-2 text-sm sm:text-base pt-4">
 
           
           <div className="flex flex-col gap-2 pt-3 text-xs tracking-[0.2em] text-foreground/80">
@@ -65,14 +65,16 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="h-[75svh] overflow-y-auto overscroll-contain">
-        <WorkGallery
-          projects={projects}
-          allPhotos={projects.flatMap((project) => [
-            project.imageUrl,
-            ...(project.galleryImages ?? []),
-          ])}
-        />
+      <div className="work-drawer-scroll h-[75svh] overflow-y-auto overscroll-contain">
+        {activeTab === "work" && (
+          <WorkGallery
+            projects={projects}
+            allPhotos={projects.flatMap((project) => [
+              project.imageUrl,
+              ...(project.galleryImages ?? []),
+            ])}
+          />
+        )}
       </div>
     );
   };
@@ -114,7 +116,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     }`}
                   >
                     <div className="mx-0 overflow-hidden  bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="-b -/70 bg-background px-4 py-2.5 text-xs uppercase tracking-[0.28em] text-foreground/80">
+                      <div className="bg-background px-4 py-2.5 text-xs uppercase tracking-[0.28em] text-foreground/80">
                         {tab.label}
                       </div>
 
@@ -150,7 +152,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 setMobileMenuOpen((current) => !current);
                 if (mobileMenuOpen) setActiveTab(null);
               }}
-              className="flex h-[46px] w-full cursor-pointer items-center pl-[15px] text-left text-xs uppercase tracking-[0.2em] text-foreground"
+              className="flex h-[46px] w-full cursor-pointer items-center pl-2 text-left text-xs uppercase tracking-[0.2em] text-foreground"
             >
               {mobileMenuOpen ? "Close" : "Menu"}
             </button>
@@ -167,7 +169,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                 const isOpen = activeTab === tab.key;
 
                 return (
-                  <div key={tab.key} className="-b -/70 bg-background last:-b-0">
+                  <div key={tab.key} className="bg-background ">
                     <div className={`relative flex h-[46px] w-full items-center`}>
                       <button
                         type="button"
@@ -175,7 +177,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setActiveTab((current) => (current === tab.key ? null : tab.key));
                           setMobileMenuOpen(true);
                         }}
-                        className="flex h-full flex-1 items-center pl-[15px] text-left text-xs uppercase tracking-[0.2em] text-foreground"
+                        className="flex h-full flex-1 items-center pl-2 text-left text-xs uppercase tracking-[0.2em] text-foreground"
                       >
                         <span>{ mobileMenuOpen ? tab.label : "menu"}</span>
                       </button>
@@ -194,10 +196,10 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setActiveTab(tab.key);
                           setMobileMenuOpen(true);
                         }}
-                        className="flex h-full w-[46px] items-center justify-end pr-[15px] text-right text-[18px] leading-none text-foreground"
+                        className="flex h-full w-[46px] items-center justify-end pr-2 text-right text-[18px] leading-none text-foreground"
                       >
                         <span
-                          className={`block transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          className={` ${mobileMenuOpen ? 'block' : 'hidden'} transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                             isOpen ? "rotate-45" : "rotate-0"
                           }`}
                           aria-hidden="true"

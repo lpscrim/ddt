@@ -145,6 +145,23 @@ fade-in {
   background: var(--background, #ffffff);
 }
 
+@media (max-width: 1023px) {
+  .work-drawer-scroll {
+    scrollbar-width: none;
+  }
+
+  .work-drawer-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .work-drawer-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--foreground, #030213) var(--background, #ffffff);
+  }
+}
+
 /* Firefox */
 html {
   scrollbar-width: thin;
