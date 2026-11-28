@@ -54,7 +54,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const renderMenuContent = (tab: { key: "about" | "contact" | "work"; label: string }) => {
     if (tab.key === "about") {
       return (
-        <div className="px-2 md:px-4 lg:px-2 mx-auto text-xs lg:text-xs leading-relaxed lg:text-justify text-left text-hyphens-auto text-foreground/80">
+        <div className="p-2 mx-auto text-xs lg:text-xs leading-relaxed lg:text-justify text-left text-hyphens-auto text-foreground/80">
           Lewis Scrimgeour is a photographer and web designer exploring
           landscape, architecture and culture. His work examines the relationships
           between space, light and human experience, translating them into considered
