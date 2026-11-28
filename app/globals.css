@@ -71,11 +71,11 @@ html {
   }
 }
 
-h1, h2, h3, h4, button, .title {
+h1,  .title {
   font-family: 'Bigbird', sans-serif;
 }
 
-body, input, textarea, a, label, p {
+body, input, h2, h3, h4, button, textarea, a, label, p {
   font-family: 'Manrope', sans-serif;
 }
 

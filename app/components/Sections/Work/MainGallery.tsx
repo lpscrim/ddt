@@ -42,13 +42,13 @@ export function MainGallery({
               onClick={() => setViewMode("projects")}
               className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "projects" ? "text-foreground" : "text-foreground/50"}`}
             >
-              PROJECTS [{filteredProjects.length}]
+              projects [{filteredProjects.length}]
             </button>
             <button
               onClick={() => setViewMode("photos")}
               className={`mr-2 cursor-crosshair transition-opacity ${viewMode === "photos" ? "text-foreground" : "text-foreground/50"}`}
             >
-              PHOTOS [{filteredPhotos.length}]
+              photos [{filteredPhotos.length}]
             </button>
           </div>
         </div>
@@ -135,7 +135,7 @@ function PhotosGrid({
               )
             }
           >
-            LOAD MORE [{Math.min(
+            load more [{Math.min(
               filteredPhotos.length,
               visiblePhotosCount + PHOTOS_PAGE_SIZE
             )}
