@@ -22,7 +22,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const tabItems: Array<{ key: "about" | "contact" | "work"; label: string }> = [
-        { key: "work", label: "Work" },
+    { key: "work", label: "Work" },
     { key: "about", label: "About" },
     { key: "contact", label: "Contact" },
 
@@ -65,7 +65,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="work-drawer-scroll h-[75svh] overflow-y-auto overscroll-contain">
+      <div className="work-drawer-scroll h-svh overflow-y-auto overscroll-contain">
         {activeTab === "work" && (
           <WorkGallery
             projects={projects}
@@ -82,31 +82,24 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   return (
     <>
       <div className="hidden lg:block">
-        {activeTab && (
-          <button
-            type="button"
-            aria-label="Close desktop menu"
-            onClick={closeAllMenus}
-            className="fixed inset-0 z-10 cursor-default bg-transparent"
-          />
-        )}
 
-        <div className="fixed bottom-0 left-0 right-0 z-20 -/70 bg-background">
-          <div className="mx-auto grid w-full grid-cols-3 bg-background">
-            {tabItems.map((tab) => {
+        <div className="fixed bottom-0 left-0 right-0 z-20  bg-background/80">
+          <div className="mx-auto grid w-full grid-cols-6 bg-background">
+            {[...tabItems].reverse().map((tab) => {
               const isOpen = activeTab === tab.key;
 
               return (
                 <div
                   key={tab.key}
-                  className={`relative -l -/70 first:-l-0 ${
-                    isOpen ? "bg-muted" : "bg-background"
-                  }`}
+                  className={`relative  ${
+                    tab.key === "work" ? "col-span-4" : "col-span-1"
+                  } ${isOpen ? "bg-muted" : "bg-background"}`}
                 >
                   <button
                     type="button"
+                    aria-label={`Open ${tab.label}`}
                     onClick={() => setActiveTab((current) => (current === tab.key ? null : tab.key))}
-                    className="relative z-30 flex h-10 w-full"
+                    className="relative z-30 flex h-8 w-full"
                   >
                   </button>
 
@@ -116,11 +109,21 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                     }`}
                   >
                     <div className="mx-0 overflow-hidden  bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="bg-background px-4 py-2.5 text-xs uppercase tracking-[0.28em] text-foreground/80">
-                        {tab.label}
+                      <div className="flex items-center justify-between bg-background px-4 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
+                        <span>{tab.label}</span>
+                        <button
+                          type="button"
+                          aria-label={`Close ${tab.label}`}
+                          onClick={closeAllMenus}
+                          className={`text-base leading-none ${isOpen ? "" : "hidden"}`}
+                        >
+                          <span aria-hidden="true">×</span>
+                        </button>
                       </div>
 
-                      {renderMenuContent(tab)}
+                      <div className="overflow-hidden">
+                        <div className={`${activeTab === "work" ? "h-[90vh]" : ""}`}>{renderMenuContent(tab)}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
