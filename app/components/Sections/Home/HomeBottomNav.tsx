@@ -23,6 +23,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     Set<"about" | "contact" | "work">
   >(() => new Set());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [workHasOpened, setWorkHasOpened] = useState(false);
 
   const tabItems: Array<{ key: "about" | "contact" | "work"; label: string }> = [
     { key: "work", label: "Work" },
@@ -32,6 +33,10 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
   ];
 
   const toggleDesktopTab = (tab: "about" | "contact" | "work") => {
+    if (tab === "work") {
+      setWorkHasOpened(true);
+    }
+
     setDesktopOpenTabs((current) => {
       const next = new Set(current);
 
@@ -78,7 +83,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
     return (
       <div className="work-drawer-scroll h-full overflow-y-auto overscroll-contain">
-        {(activeTab === "work" || desktopOpenTabs.has("work")) && (
+        {workHasOpened && (
           <WorkGallery
             projects={projects}
             allPhotos={projects.flatMap((project) => [
@@ -110,14 +115,14 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                   <div className="h-8 w-full" />
 
                   <div
-                    className={`absolute inset-x-0 bottom-full z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`absolute inset-x-0 bottom-0 z-110 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isOpen
                         ? "pointer-events-auto translate-y-0"
-                        : "pointer-events-none translate-y-[100%]"
+                        : "pointer-events-none translate-y-[calc(100%-2rem)]"
                     }`}
                   >
                     <div className="mx-0 overflow-hidden bg-background shadow-[0_-6px_20px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center border-b pb-2 justify-between bg-background px-2 pt-2  text-[10px] uppercase tracking-[0.28em] text-foreground/80">
+                      <div className="flex h-8 items-center justify-between border-b bg-background px-2 text-[10px] uppercase tracking-[0.28em] text-foreground/80">
                         <span>{tab.label}</span>
                         <button
                           type="button"
@@ -130,7 +135,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       </div>
 
                       <div className="overflow-hidden">
-                        <div className={desktopOpenTabs.has("work") && tab.key === "work" ? "h-[90vh]" : ""}>
+                        <div className={tab.key === "work" ? "h-[90vh]" : undefined}>
                           {renderMenuContent(tab)}
                         </div>
                       </div>
@@ -200,6 +205,9 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       <button
                         type="button"
                         onClick={() => {
+                          if (tab.key === "work") {
+                            setWorkHasOpened(true);
+                          }
                           setActiveTab((current) => (current === tab.key ? null : tab.key));
                           setMobileMenuOpen(true);
                         }}
@@ -220,6 +228,9 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           }
 
                           setActiveTab(tab.key);
+                          if (tab.key === "work") {
+                            setWorkHasOpened(true);
+                          }
                           setMobileMenuOpen(true);
                         }}
                         className="flex h-full w-[46px] items-center justify-end pr-4 text-right text-[18px] leading-none text-foreground"
@@ -243,7 +254,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       <div className="overflow-hidden">
                         <div
                           className={`bg-background ${
-                            tab.key === "work" && mobileMenuOpen ? "h-[75vh]" : ""
+                            tab.key === "work" ? "h-[75vh]" : ""
                           }`}
                         >
                           {renderMenuContent(tab)}

@@ -112,7 +112,7 @@ function PhotosGrid({
       {filteredPhotos.length > visiblePhotosCount && (
         <div className="flex justify-center py-10">
           <button
-            className="cursor-crosshair transition-opacity text-foreground/80 hover:text-foreground"
+            className="cursor-crosshair text-xs transition-opacity text-foreground/80 hover:text-foreground"
             onClick={() =>
               setVisiblePhotosCount((n) =>
                 Math.min(filteredPhotos.length, n + PHOTOS_PAGE_SIZE)
