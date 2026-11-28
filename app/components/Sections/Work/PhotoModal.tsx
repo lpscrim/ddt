@@ -286,6 +286,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             height={800}
             fill={false}
             sizes="90vw"
+            quality={95}
             className="max-h-full object-contain"
             onLoad={finishProgress}
           />

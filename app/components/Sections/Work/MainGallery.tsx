@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Card } from "../../UI/Layout/Card";
 
-const INITIAL_PHOTOS_TO_RENDER = 40;
-const PHOTOS_PAGE_SIZE = 48;
+const INITIAL_PHOTOS_TO_RENDER = 24;
+const PHOTOS_PAGE_SIZE = 24;
 
 interface Project {
   id: number;
@@ -60,7 +60,8 @@ export function MainGallery({
             <Card
               imageUrl={project.imageUrl}
               title={project.title}
-              imageSizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+              imageSizes="(min-width: 1024px) 34vw, (min-width: 768px) 33vw, 50vw"
+              priority={idx < 2}
               handleOnClick={() => onCardClick("projects", idx, project)}
             />
            
@@ -101,7 +102,8 @@ function PhotosGrid({
             key={photo + index}
             imageUrl={photo}
             title=""
-            imageSizes="(min-width: 1024px) 12.5vw, (min-width: 768px) 16.7vw, 33vw"
+            imageSizes="(min-width: 1024px) 23vw, (min-width: 768px) 25vw, 50vw"
+            priority={index < 6}
             handleOnClick={() => onCardClick("photos", index)}
           />
         ))}
