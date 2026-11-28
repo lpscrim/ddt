@@ -136,13 +136,13 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
 
   return (
     <>
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         {activeTab && (
           <button
             type="button"
             aria-label="Close desktop menu"
             onClick={closeAllMenus}
-            className="fixed inset-0 z-30 bg-transparent"
+            className="fixed inset-0 z-0 bg-blue-100"
           />
         )}
 
@@ -185,7 +185,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
         </div>
       </div>
 
-      <div className="sm:hidden">
+      <div className="md:hidden">
         <div className="pointer-events-none fixed inset-0 z-40">
           {mobileMenuOpen && (
             <button

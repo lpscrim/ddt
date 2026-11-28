@@ -1,74 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicLight.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicBook.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicMedium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicDemi.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicBold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Futura PT';
-  src: url('/font/futura-pt/FuturaCyrillicHeavy.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Akshar';
-  src: url('/font/Akshar/Akshar-VariableFont_wght.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Birdie';
-  src: url('/font/TAYBirdieRegular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: 'Bigbird';
@@ -77,16 +8,9 @@
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: 'Tallboy';
-  src: url('/font/TAYTallboy.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Manrope', sans-serif;
   --font-size: 16px;
   --background: #f6f6f6;
   --foreground: oklch(0.145 0 0);
@@ -122,60 +46,6 @@
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
-@layer base {
-  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
-    h1 {
-      font-size: var(--text-2xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h2 {
-      font-size: var(--text-xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h3 {
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h4 {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    p {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-
-    label {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    button {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    input {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-  }
-}
 
 html {
   font-size: var(--font-size);
@@ -202,7 +72,11 @@ html {
 }
 
 h1, h2, h3, h4, button, .title {
-  font-family: 'Bigbird','Birdie','Futura PT', sans-serif;
+  font-family: 'Bigbird', sans-serif;
+}
+
+body, input, textarea, a, label, p {
+  font-family: 'Manrope', sans-serif;
 }
 
 @layer utilities {
@@ -220,7 +94,7 @@ h1, h2, h3, h4, button, .title {
 }
 
 #contact a {
-  font-family: 'Futura PT', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 /* Animations */
