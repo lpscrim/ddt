@@ -29,8 +29,8 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     { key: "work", label: "Work" },
     { key: "about", label: "About" },
     { key: "contact", label: "Contact" },
-
   ];
+  const mobileTabItems = [...tabItems].reverse();
 
   const toggleDesktopTab = (tab: "about" | "contact" | "work") => {
     if (tab === "work") {
@@ -196,7 +196,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
             }`}
           >
             <div className="flex max-h-[calc(100svh-40px)] flex-col overflow-y-auto">
-              {tabItems.map((tab) => {
+              {mobileTabItems.map((tab) => {
                 const isOpen = activeTab === tab.key;
 
                 return (
@@ -254,7 +254,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                       <div className="overflow-hidden">
                         <div
                           className={`bg-background ${
-                            tab.key === "work" ? "h-[75vh]" : ""
+                            tab.key === "work" ? "h-[70vh]" : ""
                           }`}
                         >
                           {renderMenuContent(tab)}
