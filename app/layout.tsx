@@ -79,7 +79,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body
-        className="antialiased bg-background text-foreground w-full"
+        className="antialiased h-svh bg-background text-foreground w-full"
       >
         <SiteShell>{children}</SiteShell>
       </body>

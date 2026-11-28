@@ -6,7 +6,7 @@ export default async function Home() {
   const projects = await getProjects({ includeGallery: false, includeText: false });
 
   return (
-    <main className="h-[100svh] w-full overflow-hidden">
+    <main className=" w-full overflow-hidden">
       <Hero />
       <HomeBottomNav projects={projects.slice(0, 3).map((project) => ({
         id: project.id,
