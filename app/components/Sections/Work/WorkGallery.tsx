@@ -1,8 +1,7 @@
 
 "use client";
 
-import  { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { PhotoModal } from "./PhotoModal";
 import { MainGallery } from "./MainGallery";
 
@@ -26,10 +25,6 @@ export function WorkGallery({
   allPhotos,
 }: WorkGalleryProps) {
 
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
-
   const [viewMode, setViewMode] = useState<"projects" | "photos">("projects");
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,12 +34,6 @@ export function WorkGallery({
   const [name, setName] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [text, setText] = useState<string>("");
-
-  const lastOpenedProjectIdRef = useRef<number | null>(null);
-
-  const projectsById = useMemo(() => {
-    return new Map(projects.map((p) => [p.id, p] as const));
-  }, [projects]);
 
   const filteredProjects = projects;
   const filteredPhotos = allPhotos;
@@ -68,52 +57,8 @@ export function WorkGallery({
     setModalOpen(true);
   };
 
-  // Deep link: /work?project={project.id}
-  useEffect(() => {
-    const projectParam = searchParams.get("project");
-    if (!projectParam) return;
-
-    const projectId = Number(projectParam);
-    if (!Number.isFinite(projectId)) return;
-
-    const project = projectsById.get(projectId);
-    if (!project) return;
-
-    if (lastOpenedProjectIdRef.current === projectId && modalOpen) return;
-    lastOpenedProjectIdRef.current = projectId;
-
-    let cancelled = false;
-    queueMicrotask(() => {
-      if (cancelled) return;
-
-      setViewMode("projects");
-
-      const imgs = [project.imageUrl, ...(project.galleryImages || [])];
-      setIsProject(true);
-      setName(project.title);
-      setYear(project.year);
-      setText(project.text || "");
-      setModalImages(imgs);
-      setModalIndex(0);
-      setModalOpen(true);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [searchParams, projectsById, modalOpen]);
-
   const handleCloseModal = () => {
     setModalOpen(false);
-
-    // If this modal was opened via a deep link, clear the param so it doesn't reopen.
-    const projectParam = searchParams.get("project");
-    if (!projectParam) return;
-
-    const next = new URLSearchParams(searchParams.toString());
-    next.delete("project");
-    const qs = next.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   const handleThumbClick = (idx: number) => {

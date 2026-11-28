@@ -54,7 +54,7 @@ export function MainGallery({
         </div>
       </div>
       {viewMode === "projects" ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 px-0">
+        <div className="grid grid-cols-3 gap-2 px-0">
           {filteredProjects.map((project, idx) => (
             <div key={project.id} className="relative group">
             <Card

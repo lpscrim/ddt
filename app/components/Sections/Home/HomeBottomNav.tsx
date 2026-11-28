@@ -1,13 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { ImageWithFallback } from "@/app/components/UI/Layout/ImageWithFallback";
+import { WorkGallery } from "../Work/WorkGallery";
 
 interface ProjectCardData {
   id: number;
   title: string;
+  categories: string[];
+  year: string;
   imageUrl: string;
+  galleryImages?: string[];
+  text?: string;
 }
 
 interface HomeBottomNavProps {
@@ -62,29 +65,14 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
     }
 
     return (
-      <div className="grid grid-cols-2 gap-2 p-3 pt-0 lg:grid-cols-3 lg:gap-3">
-        {projects.slice(0, 3).map((project) => (
-          <Link
-            key={project.id}
-            href={`/work?project=${project.id}`}
-            className="group block overflow-hidden bg-background"
-          >
-            <div className="relative mx-auto aspect-3/4 overflow-hidden">
-              <ImageWithFallback
-                src={project.imageUrl}
-                alt={project.title}
-                sizes="(min-width: 768px) 33vw, 100vw"
-                quality="auto:eco"
-                dpr={1}
-                className="h-full w-auto object-contain "
-              />
-            </div>
-          </Link>
-        ))}
-
-        <Link href="/work" className="col-span-3 mt-4 text-center text-xs uppercase tracking-[0.2em] text-foreground">
-          View More Projects
-        </Link>
+      <div className="h-[70svh] overflow-y-auto overscroll-contain">
+        <WorkGallery
+          projects={projects}
+          allPhotos={projects.flatMap((project) => [
+            project.imageUrl,
+            ...(project.galleryImages ?? []),
+          ])}
+        />
       </div>
     );
   };
