@@ -28,9 +28,8 @@ export function Card(project: {
         quality={project.imageQuality}
         dpr={project.imageDpr}
         priority={project.imagePriority}
-        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.03]"
+        className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
     </div>
   );
 }

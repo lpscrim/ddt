@@ -177,7 +177,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
                           setActiveTab((current) => (current === tab.key ? null : tab.key));
                           setMobileMenuOpen(true);
                         }}
-                        className="flex h-full flex-1 items-center pl-2 text-left text-xs uppercase tracking-[0.2em] text-foreground"
+                        className="flex h-full flex-1 items-center pl-2 text-left text-xs tracking-[0.2em] text-foreground"
                       >
                         <span>{ mobileMenuOpen ? tab.label : "menu"}</span>
                       </button>
