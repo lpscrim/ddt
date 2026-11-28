@@ -195,7 +195,7 @@ export function HomeBottomNav({ projects }: HomeBottomNavProps) {
               mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-[calc(100%-40px)] opacity-100"
             }`}
           >
-            <div className="flex max-h-[calc(100svh-40px)] flex-col overflow-y-auto">
+            <div className="hide-scrollbar flex max-h-[calc(100svh-40px)] flex-col overflow-y-auto">
               {mobileTabItems.map((tab) => {
                 const isOpen = activeTab === tab.key;
 
